@@ -1,0 +1,33 @@
+tipo: asunto #id
+
+cuerpo
+
+### tipo
+# feat (nueva funcionalidad)
+# fix (corrección de bugs)
+# refactor (refactorización de código)
+# docs (actualización de documentación)
+# test (incorporación o modificación de tests)
+# conf (modificación de archivos de configuración)
+
+### asunto
+# Consiste en una breve descripción del problema que se ha tratado y que debe de comenzar con un verbo en participio.
+
+### id (opcional)
+# Se referenciará la issue correspondiente (en caso de existir) tal que: `#<ID_issue>`
+
+### cuerpo (opcional)
+# Se utilizará en caso de que el asunto no sea suficientemente descriptivo o se quiera ser más preciso.
+# En caso de existir varios pasos o aclaraciones indicarlos separandolos por saltos de línea y guiones.
+
+### Ejemplo
+# conf: Actualizado docker-compose.yml #1
+#
+# Se actualiza el archivo `docker-compose.yml` para reflejar las últimas configuraciones y dependencias necesarias para el entorno de desarrollo.
+#
+# - Se actualizaron las versiones de los servicios, incluyendo las imágenes de contenedores.
+# - Se añadieron nuevas variables de entorno en el archivo `docker-compose.yml`.
+# - Se realizaron correcciones menores en la configuración del entorno.
+
+### Aclaración
+# Esta es una plantilla de commits adaptada al proyecto decide-single-juanymedio-fork-1 que se debe emplear de forma orientativa, pero no definitiva.
