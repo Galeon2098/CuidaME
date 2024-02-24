@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm
 from main.models import Cliente
 from django.contrib.auth.models import User
+from django.shortcuts import render
+from django.http import HttpResponse
 
 # Create your views here.
 def index(request):

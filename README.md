@@ -11,6 +11,3 @@ Para instalar el entorno:
 
 4. Ejecutar projecto:
  python manage.py runserver (debes estar en la carpeta del manage.py)
-
- cambios
- 
