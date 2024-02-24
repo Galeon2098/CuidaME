@@ -7,7 +7,7 @@ Para instalar el entorno:
  https://www.python.org/downloads/
 
 3. Instalar django 4.1.1:
- python -m pip install django=4.1.1
+ python -m pip install django==4.1.1
 
 4. Ejecutar projecto:
  python manage.py runserver (debes estar en la carpeta del manage.py)
