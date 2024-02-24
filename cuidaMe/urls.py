@@ -24,5 +24,8 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('registro_cliente/', views.register_cliente, name='registro_cliente'),
-    path('registro_cuidador/', views.register_cuidador, name='registro_cuidador')
+    path('registro_cuidador/', views.register_cuidador, name='registro_cuidador'),
+    path('mi_perfil/', views.my_profile_detail, name='my_profile_detail'),
+    path('mi_perfil/editar', views.edit_profile, name='edit_profile'),
+    path('perfil/<int:user_id>/', views.profile_detail, name='profile_detail')
 ]
