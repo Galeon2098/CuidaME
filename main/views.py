@@ -7,3 +7,6 @@ def index(request):
 
 def about_us(request):
     return render(request, 'main/aboutUs.html')
+
+def edit_ad(request):
+    return render(request, 'main/edit_ad.html')
