@@ -10,12 +10,12 @@ def publishOffer(request):
         form = OfferForm(request.POST)
         if form.is_valid():
             new_offer = form.save(commit=False)
-            new_offer.user = request.user
+            new_offer.username = request.user.username
             new_offer.available= True
             new_offer.created = datetime.datetime.now()
             new_offer.updated = datetime.datetime.now()          
             new_offer.save()
-            offers = Offer.objects.filter(usuario_id=usuario_id)
+            offers = Offer.objects.filter(username=request.user.username)
             return render(request, 'offers/myOffers.html', {'offers': offers})
 
     else:
