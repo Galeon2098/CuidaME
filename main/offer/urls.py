@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import publishOffer
+from . import views
 
 app_name = 'offer'
 
 urlpatterns = [
-    path('', publishOffer, name='publish'),
+    path('', views.publishOffer, name='publish'),
+    path('<int:id>/', views.edit_offer,name='update'),
 ]

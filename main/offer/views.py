@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from .models import Offer
 from .forms import OfferForm
 import datetime
@@ -23,3 +24,21 @@ def publishOffer(request):
     return render(request,
                 'offers/publish.html',
                 {'form': form})
+
+@login_required
+def edit_offer(request, id):
+    offer = get_object_or_404(Offer, pk=id)
+
+    if request.user != offer.user:
+        return HttpResponseForbidden("No tienes permiso para editar esta oferta.")
+    
+    if request.method == 'POST':
+        form = OfferForm(request.POST, instance=offer)
+        if form.is_valid():
+            form.save()
+            offers = Offer.objects.filter(user=request.user)
+            return render(request, 'offers/myOffers.html', {'offers': offers})
+    else:
+        form = OfferForm(instance=offer)
+    
+    return render(request, 'offers/publish.html', {'form': form, 'offer': offer})
