@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm
+from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm
+from main.models import Cliente
+from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
@@ -27,3 +29,32 @@ def register_cuidador(request):
     else:
         user_form = CuidadorRegistrationForm()
     return render(request, 'main/register_cuidador.html', {'user_form': user_form})
+
+@login_required
+def my_profile_detail(request):
+    user = request.user
+    return render(request, 'main/my_profile_detail.html', {'user': user})
+
+@login_required
+def edit_profile(request):
+    try:
+        profile = request.user.cliente
+        form_class = ClienteProfileForm
+    except Cliente.DoesNotExist:
+        profile = request.user.cuidador
+        form_class = CuidadorProfileForm
+
+    if request.method == 'POST':
+        form = form_class(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('my_profile_detail')
+    else:
+        form = form_class(instance=profile)
+
+    return render(request, 'main/edit_profile.html', {'form': form})
+
+@login_required
+def profile_detail(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    return render(request, 'main/profile_detail.html', {'user': user})
