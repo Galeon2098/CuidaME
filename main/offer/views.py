@@ -15,7 +15,7 @@ def publishOffer(request):
             new_offer.created = datetime.datetime.now()
             new_offer.updated = datetime.datetime.now()          
             new_offer.save()
-            offers = Offer.objects.filter(usuario_id=usuario_id)
+            offers = Offer.objects.filter(user=request.user)
             return render(request, 'offers/myOffers.html', {'offers': offers})
 
     else:
