@@ -4,7 +4,7 @@ from .models import Offer
 from .forms import OfferForm
 import datetime
 
-#@login_required
+@login_required
 def publishOffer(request):
     if request.method == 'POST':
         form = OfferForm(request.POST)
