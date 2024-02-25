@@ -4,7 +4,7 @@
     --primary-bg-color: #cae9ff;
     --seconday-bg-color: #AEC4C4;
   }
-  
+
   body {
     background-color: var(--primary-bg-color);
     min-height: 130vh;
@@ -12,38 +12,38 @@
     display: flex;
     flex-direction: column;
   }
-  
+
   header {
     min-height: 50px;
   }
-  
+
   main {
     flex: 1;
-    
+
   }
-  
+
   footer {
     min-width: 50px;
- 
+
   }
-  
+
   header > section > nav {
     margin-right: 20px;
   }
-  
+
   .base-header-primary {
     display: flex;
     justify-content: space-between;
     height: 60px;
-    background-color: #1B4965; 
-    
+    background-color: #1B4965;
+
   }
-  
+
   #header > a > img {
     margin-right: 10px;
   }
   .btn {
-    background-color: #cae9ff;; 
-    color: #1B4965; 
+    background-color: #cae9ff;;
+    color: #1B4965;
     border-color: #1B4965;
 }
