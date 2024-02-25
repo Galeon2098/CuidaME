@@ -22,4 +22,7 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('about/', views.about_us, name='about_us'),
     path('edit_ad/', views.edit_ad, name='edit_ad'),
+    path('mi_perfil/', views.my_profile_detail, name='my_profile_detail'),
+    path('mi_perfil/editar', views.edit_profile, name='edit_profile'),
+    path('perfil/<int:user_id>/', views.profile_detail, name='profile_detail')
 ]
