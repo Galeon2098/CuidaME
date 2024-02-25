@@ -27,3 +27,10 @@ def register_cuidador(request):
     else:
         user_form = CuidadorRegistrationForm()
     return render(request, 'main/register_cuidador.html', {'user_form': user_form})
+
+def about_us(request):
+    return render(request, 'main/aboutUs.html')
+
+def edit_ad(request):
+    return render(request, 'main/edit_ad.html')
+
