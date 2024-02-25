@@ -3,18 +3,39 @@
 {% block title %}Log-in{% endblock %}
 
 {% block content %}
-    <h1>Log-in</h1>
-    {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-    {% else %}
-        <p>Please, use the following form to log-in. If you don't have an account register here<a href="{% url "registro_cliente" %}">as a client</a> or <a href="{% url "registro_cuidador" %}">as a cuidador</a>.</p>
-    {% endif %}
-    <div class="login-form">
-        <form action="{% url 'login' %}" method="post">
-            {{ form.as_p }}
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ next }}" />
-            <p><input type="submit" value="Log-in"></p>
-        </form>
-    </div>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+    
+    <body  style="background-color: #E3F1FA;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="../../static/images/Raster.png" alt="Cliente" style="width: 679px; height: 728px;">
+                </div>
+                <div class="col-md-6">
+                    <div style="background-color: #62B6CB; border-radius: 55px; width: 569px; height: 646px;margin-top: 7%;">
+                        <img src="../../static/images/Logo.png" alt="Logo" style="width: 300px;height: 285px;position: relative;top: -140px;left: 130px;">
+                        <div class="login-form">
+                            <form action="{% url 'login' %}" method="post" style="position: relative;left: 130px; bottom: 80px;">
+                                {{ form.as_p }}
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ next }}" />
+                                <p>
+                                    <input style="color: #FFFFFF;font-family: Lato;font-size: 18px;width: 300px;text-align: center;background-color: #1B4965;border-radius: 5px;width: 300px;height: 48px;" type="submit" value="Log-in">
+                                </p>
+                            </form>
+                        </div>
+                        {% if form.errors %}
+                            <p style="margin: 10%;">Your username and password didn't match. Please try again.</p>
+                        {% else %}
+                            <h4 style="display: flex;justify-content: center;position: relative;bottom: 30px;">Don't have an account?</h4>
+                            <h6 style="position: relative;left: 163px;">Join <a href="{% url "registro_cliente" %}"> as a client</a> or join <a href="{% url "registro_cuidador" %}"> as a career</a>.</p>
+                        {% endif %}
+                    </div>         
+                </div>
+            </div>
+        </div>
+    </body>
+    
 {% endblock %}
