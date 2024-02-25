@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+{% block content %}
+  
+ {% if offers %}
+        <ul>
+            {% for offer in offers %}
+               <a href = "{{offer.get_absolute_url}}"  >  <p>{{ offer.title }} </p>
+               <p>{{offer.user}}</p>
+               </a> <p> {{ offer.city }} - {{ offer.client }}</p>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay ofertas disponibles</p>
+{% endif %}
+
+{% endblock %}

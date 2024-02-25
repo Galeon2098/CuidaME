@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q  
 from .models import Offer
 from .forms import OfferForm
 import datetime
@@ -23,3 +24,44 @@ def publishOffer(request):
     return render(request,
                 'offers/publish.html',
                 {'form': form})
+
+#LIST OFFERS
+def listOffers(request):
+    offers = Offer.objects.filter(available=True)
+    return render(request, 'offers/list.html', {'offers': offers})
+#OFFER DETAIL
+def offerDetail(request, id):
+    offer = get_object_or_404(Offer, id=id, available=True)
+    return render(request, 'offers/detail.html', {'offer': offer})
+
+#SEARCH  BAR OFFERS
+def searchOffers(request):
+    search_query = request.POST.get('search_query', '')
+
+    offers = Offer.objects.all()
+
+    if search_query:
+        offers = offers.filter(Q(city__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
+    
+    return render(request, 'offers/search_results.html', {'offers': offers, 'search_query': search_query})
+
+#FILTER OFFERS
+def filterOffers(request):
+    min_price_filter = request.POST.get('min_price_filter')
+    max_price_filter = request.POST.get('max_price_filter')
+    cliente_type_filter = request.POST.get('cliente_type_filter')
+    offer_type_filter = request.POST.get('offer_type_filter')
+    offers = Offer.objects.all()
+    
+    if(min_price_filter):
+        offers = offers.filter(price_per_hour__gte=min_price_filter)
+    if(max_price_filter):
+        offers = offers.filter(price_per_hour__lte=max_price_filter)
+    if(cliente_type_filter):
+        offers = offers.filter(client__icontains=cliente_type_filter)
+    if(offer_type_filter):
+        offers = offers.filter(offer_type__icontains=offer_type_filter)
+    
+   
+    return render(request, 'offers/list.html', {'offers': offers, 'min_price_filter' : min_price_filter, 'max_price_filter': max_price_filter, 
+                                                'cliente_type_filter':cliente_type_filter, 'offer_type_filter':offer_type_filter } )
