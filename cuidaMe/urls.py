@@ -18,8 +18,7 @@ from django.urls import path,include
 from django.contrib.auth import views as auth_views
 from main import views
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
+urlpatterns = [path('admin/', admin.site.urls),
     path('', views.index, name='home'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
@@ -28,5 +27,7 @@ urlpatterns = [
     path('mi_perfil/', views.my_profile_detail, name='my_profile_detail'),
     path('mi_perfil/editar', views.edit_profile, name='edit_profile'),
     path('perfil/<int:user_id>/', views.profile_detail, name='profile_detail'),
-    path('offer/', include('main.offer.urls', namespace='offer'))
+    path('offer/', include('main.offer.urls', namespace='offer')),
+    path('about/', views.about_us, name='about_us'),
+    path('edit_ad/', views.edit_ad, name='edit_ad'),
 ]
