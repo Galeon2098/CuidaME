@@ -1,0 +1,68 @@
+{% extends "main/base.html" %}
+{% block content %}
+    <h1>Listado Ofertas</h1>
+<form class="form-inline my-2 my-lg-0" method="POST" role="search" action="{% url 'offer:searchOffers' %}">
+    {% csrf_token %}
+    
+    <input class="form-control me-2 mr-sm-2" type="search" placeholder="Buscar" name="search_query" value="{{ search_query }}" aria-label="Search">
+    
+    <button class="btn" type="submit">Buscar</button>
+</form>
+    
+
+     <form method="post" action="{% url 'offer:filterOffers' %}" class="mb-4">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="min_price_filter">Precio mínimo:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"></span>
+                        </div>
+                        <input type="number" class="form-control" id="min_price_filter" name="min_price_filter" value="{{ min_price_filter }}" step="0.01">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="max_price_filter">Precio máximo:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"></span>
+                        </div>
+                        <input type="number" class="form-control" id="max_price_filter" name="max_price_filter" value="{{ max_price_filter }}" step="0.01">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cliente_type_filter">Tipo de cliente:</label>
+                    <select class="form-control" id="cliente_type_filter" name="cliente_type_filter">
+                        <option value="">Todos</option>
+                        <option value="DF" {% if cliente_type_filter == 'DF' %}selected{% endif %}>Discapacidad Física</option>
+                        <option value="DM" {% if cliente_type_filter == 'DM' %}selected{% endif %}>Discapacidad Mental</option>
+                        <option value="NI" {% if cliente_type_filter == 'NI' %}selected{% endif %}>Niños</option>
+                        <option value="AN" {% if cliente_type_filter == 'AN' %}selected{% endif %}>Ancianos</option>
+                        <option value="OT" {% if cliente_type_filter == 'OT' %}selected{% endif %}>Otros</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="offer_type_filter">Tipo de Ofertas:</label>
+                    <select class="form-control" id="offer_type_filter" name="offer_type_filter">
+                        <option value="">Todos</option>
+                        <option value="CO" {% if offer_type_filter == 'CO' %}selected{% endif %}>Compañía</option>
+                        <option value="CU" {% if offer_type_filter == 'CU' %}selected{% endif %}>Cuidado</option>
+                        <option value="TR" {% if offer_type_filter == 'TR' %}selected{% endif %}>Transporte</option>
+                        <option value="DO" {% if offer_type_filter == 'DO' %}selected{% endif %}>Compra a Domicilio</option>
+                        <option value="OT" {% if offer_type_filter == 'OT' %}selected{% endif %}>Otros</option>
+                    </select>
+                </div>
+     <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+            </form>
+    {% for offer in offers%}
+        <a href = "{{offer.get_absolute_url}}"><h2>{{offer.title}}</h2></a>
+        <p>{{offer.user}}</p>
+        <p>{{offer.offer_type}}</p>
+
+        <p>{{offer.client}}</p>
+    {% endfor %}
+{% endblock %}
+```

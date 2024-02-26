@@ -68,3 +68,13 @@ class CuidadorRegistrationForm(forms.ModelForm):
                                         experiencia=self.cleaned_data['experiencia'],
                                         tipo_publico_dirigido=self.cleaned_data['tipo_publico_dirigido'])
             return user, Cuidador
+    
+class ClienteProfileForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ['apellidos', 'tipo_dependencia']
+
+class CuidadorProfileForm(forms.ModelForm):
+    class Meta:
+        model = Cuidador
+        fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido']
