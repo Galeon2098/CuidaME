@@ -29,5 +29,5 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('perfil/<int:user_id>/', views.profile_detail, name='profile_detail'),
     path('offer/', include('main.offer.urls', namespace='offer')),
     path('about/', views.about_us, name='about_us'),
-    path('edit_ad/', views.edit_ad, name='edit_ad'),]
+    path('edit_ad/', views.edit_ad, name='edit_ad'),
 ]
