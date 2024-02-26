@@ -22,7 +22,7 @@ class OfferForm(forms.ModelForm):
     title = forms.CharField(label='Título')
     offer_type= forms.ChoiceField(label='Tipo de oferta', choices=TYPE_CHOICES, initial='OT')
     client = forms.ChoiceField(label='Tipo de cliente', choices=CLIENT_CHOICES, initial='OT')
-    description = forms.CharField(label='Descripción', required=True,widget=forms.Textarea(attrs={'rows': 10, 'cols': 70}))
+    description = forms.CharField(label='Descripción', required=True, widget=forms.Textarea(attrs={'rows': 10, 'cols': 70}))
     price_per_hour = forms.DecimalField(max_digits=10,decimal_places=2)
     city = forms.CharField(label='Ciudad')                            
     
