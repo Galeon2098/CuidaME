@@ -1,25 +1,63 @@
-{% extends 'main/base.html' %}
+{% extends "base.html" %}
 {% block content %}
-<h2>Detalles del Perfil de {{ user.username }}</h2>
-<p><strong>Username:</strong> {{ user.username }}</p>
-<p><strong>First Name:</strong> {{ user.first_name }}</p>
-<p><strong>Last Name:</strong> {{ user.last_name }}</p>
-<p><strong>Email:</strong> {{ user.email }}</p>
+{% load static %}
 
-{% if user.cliente %}
-    <h3>Detalles del Cliente</h3>
-    <p><strong>Apellidos:</strong> {{ user.cliente.apellidos }}</p>
-    <p><strong>Tipo de Dependencia:</strong> {{ user.cliente.tipo_dependencia }}</p>
-{% endif %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
 
-{% if user.cuidador %}
-    <h3>Detalles del Cuidador</h3>
-    <p><strong>DNI:</strong> {{ user.cuidador.dni }}</p>
-    <p><strong>Número de Seguridad Social:</strong> {{ user.cuidador.numero_seguridad_social }}</p>
-    <p><strong>Fecha de Nacimiento:</strong> {{ user.cuidador.fecha_nacimiento }}</p>
-    <p><strong>Formación:</strong> {{ user.cuidador.formacion }}</p>
-    <p><strong>Experiencia:</strong> {{ user.cuidador.experiencia }}</p>
-    <p><strong>Tipo de Público Dirigido:</strong> {{ user.cuidador.tipo_publico_dirigido }}</p>
-{% endif %}
+<main class="container pt-5 pb-3">
+    <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">
+        <div class="col-md-6">
+            <img src="{% static 'Images/anciano.png' %}" alt="anciano" class="img-fluid"
+                style="width: 100%; max-width: 660px; height: auto;">
+        </div>
+        <div class="col-md-6"
+            style="background-color: #62B6CB; color: #1B4965; padding: 20px; border-radius: 10%; font-size: 18px;">
+            <div>
+                <div class="container" style="display: flex; height: 20px;">
+                    <a href="/">
+                        <img src="{% static 'Images/back.png' %}" style="width: 85px; height: 85px; margin-top: 7px;">
+                    </a>
+                </div>
+                <div class="container" style="display: flex; justify-content: center; position: relative;">
+                    {% if user.profile.photo %}
+                    <div style="align-items: center; position: absolute; top: -120px;">
+                        <img src="{{ user.profile.photo.url }}"
+                            style="width: 160px; height: 160px; border-radius: 100%;">
+                    </div>
+                    {% else %}
+                    <!-- Si no hay foto de perfil, se muestra una imagen predeterminada -->
+                    <div style="align-items: center; position: absolute; top: -120px;">
+                        <img src="{% static 'Images/profile_photo(2).png' %}"
+                            style="width: 160px; height: 160px; border-radius: 100%;">
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-12" style="margin-top: 90px;">
+                    <h2 style="text-align: center;">Detalles del Perfil</h2>
+                    <p><strong>Username:</strong> {{ user.username }}</p>
+                    <p><strong>First Name:</strong> {{ user.first_name }}</p>
+                    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+
+                    {% if user.cliente %}
+                    <h3 style="text-align: center;">Detalles del Cliente</h3>
+                    <p><strong>Apellidos:</strong> {{ user.cliente.apellidos }}</p>
+                    <p><strong>Tipo de Dependencia:</strong> {{ user.cliente.tipo_dependencia }}</p>
+                    {% endif %}
+
+                    {% if user.cuidador %}
+                    <h3 style="text-align: center;">Detalles del Cuidador</h3>
+                    <p><strong>DNI:</strong> {{ user.cuidador.dni }}</p>
+                    <p><strong>Número de Seguridad Social:</strong> {{ user.cuidador.numero_seguridad_social }}</p>
+                    <p><strong>Fecha de Nacimiento:</strong> {{ user.cuidador.fecha_nacimiento }}</p>
+                    <p><strong>Formación:</strong> {{ user.cuidador.formacion }}</p>
+                    <p><strong>Experiencia:</strong> {{ user.cuidador.experiencia }}</p>
+                    <p><strong>Tipo de Público Dirigido:</strong> {{ user.cuidador.tipo_publico_dirigido }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
 {% endblock %}

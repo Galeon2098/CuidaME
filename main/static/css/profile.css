@@ -1,0 +1,227 @@
+.available_days {
+    background-color: #FFFFFF;
+    border: 1px solid #8492A6;
+    border-radius: 5px;
+    width: 501px;
+    height: 41px;
+}
+
+.carer_image {
+    width: 660px;
+    height: 660px;
+}
+
+.availables_days_text {
+    color: #1B4965;
+    font-family: Lato;
+    font-size: 20px;
+    line-height: 26px;
+    width: 162px;
+    text-align: left;
+}
+
+.price_per_hour {
+    background-color: #FFFFFF;
+    border: 1px solid #8492A6;
+    border-radius: 5px;
+    width: 152px;
+    height: 42px;
+}
+
+.price_per_hour_text {
+    color: #1B4965;
+    font-family: Lato;
+    font-size: 20px;
+    line-height: 26px;
+    text-align: left;
+}
+
+.available_hours_image_2 {
+    background-color: #1B4965;
+    width: 35px;
+    height: 35px;
+}
+
+.available_hours_image_1 {
+    background-color: #1B4965;
+    width: 35px;
+    height: 35px;
+}
+
+.available_hours_until {
+    background-color: #FFFFFF;
+    border: 1px solid #8492A6;
+    border-radius: 5px;
+    width: 130px;
+    height: 41px;
+}
+
+.available_hours_from {
+    background-color: #FFFFFF;
+    border: 1px solid #8492A6;
+    border-radius: 5px;
+    width: 130px;
+    height: 41px;
+}
+
+.available_hours_text {
+    color: #1B4965;
+    font-family: Lato;
+    font-size: 20px;
+    line-height: 26px;
+    width: 162px;
+    text-align: left;
+}
+
+.calendar_image {
+    background-color: #1B4965;
+    width: 35px;
+    height: 35px;
+}
+
+.input-group-text {
+    background-color: transparent;
+    border: none;
+  }
+  
+
+.description_text {
+    color: #1B4965;
+    font-family: Lato;
+    font-size: 20px;
+    line-height: 26px;
+    text-align: left;
+}
+
+.contact_text {
+    color: #1B4965;
+    font-family: Lato;
+    font-size: 20px;
+    line-height: 26px;
+    text-align: left;
+}
+
+.description {
+    background-color: #FFFFFF;
+    border: 1px solid #8492A6;
+    border-radius: 5px;
+    width: 496px;
+    height: 96px;
+}
+
+.update_text {
+    color: #FFFFFF;
+    font-family: Lato;
+    font-size: 18px;
+    line-height: 62px;
+    width: 202px;
+    text-align: center;
+}
+
+.update_button {
+    background-color: #1B4965;
+    border-radius: 5px;
+    width: 202px;
+    height: 48px;
+}
+
+.remove_text {
+    color: #FFFFFF;
+    font-family: Lato;
+    font-size: 18px;
+    line-height: 62px;
+    width: 202px;
+    text-align: center;
+}
+
+.remove_button {
+    background-color: #F95F62;
+    border-radius: 5px;
+    width: 201px;
+    height: 48px;
+}
+
+.job_text {
+    color: #1B4965;
+    font-family: Lato;
+    font-size: 26px;
+    line-height: 33px;
+    text-align: left;
+}
+
+.ad_photo {
+    background-image: url(https://marvel-live.freetls.fastly.net/canvas/2024/2/31e099eb056745b1a4e43a527f34127e?quality=95&fake=.png);
+    background-size: 100%;
+    border-radius: 100%;
+    width: 213px;
+    height: 215px;
+}
+
+.carer_name_text {
+    color: #1B4965;
+    font-family: Lato;
+    font-size: 26px;
+    line-height: 33px;
+    text-align: left;
+}
+
+.back_button {
+    background-color: #1B4965;
+    width: 85px;
+    height: 86px;
+}
+
+
+
+.form_rectangle {
+    background-color: #62B6CB;
+    border-radius: 55px;
+    width: 624px;
+    height: 663px;
+}
+
+.background {
+    background-color: #E3F1FA;
+    width: 1442px;
+    height: 1024px;
+}
+
+
+/*NAVBAR ITEMS*/
+
+
+.profile_photo {
+    background-image: url(https://marvel-live.freetls.fastly.net/canvas/2024/2/31e099eb056745b1a4e43a527f34127e?quality=95&fake=.png);
+    background-size: 100%;
+    border-radius: 100%;
+    width: 78px;
+    height: 77px;
+}
+
+.publish_ad {
+    background-color: #CAE9FF;
+    width: 64px;
+    height: 64px;
+}
+
+.chats {
+    background-color: #CAE9FF;
+    width: 64px;
+    height: 64px;
+}
+
+.cuidaME_name {
+    color: #CAE9FF;
+    font-family: Lato;
+    font-size: 29px;
+    line-height: 37px;
+    text-align: left;
+}
+
+.navbar {
+    background-color: #1B4965;
+    width: 1440px;
+    height: 106px;
+}
+
+/*END OF THE NAVBAR ITEMS*/
