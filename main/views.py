@@ -36,6 +36,7 @@ def register_cuidador(request):
 def about_us(request):
     return render(request, 'main/aboutUs.html')
 
+@login_required
 def edit_ad(request):
     return render(request, 'main/edit_ad.html')
 
@@ -67,4 +68,3 @@ def edit_profile(request):
 def profile_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     return render(request, 'main/profile_detail.html', {'user': user})
-
