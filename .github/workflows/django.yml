@@ -3,12 +3,12 @@ name: Test Quality Assurance
 on:
   push:
     branches:
-      - develop
       - master
+      - develop
   pull_request:
     branches:
-      -develop
       -master
+      -develop
 
 jobs:
   build:
