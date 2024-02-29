@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 
+
 class Offer(models.Model):
 
     TYPE_CHOICES = (
@@ -38,3 +39,13 @@ class Offer(models.Model):
         return self.title
     def get_absolute_url(self):
         return reverse('offer:detail', args=[self.id])
+    
+
+class Review(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
+    description = models.CharField(max_length=200)
+    valoration = models.IntegerField()
+
+    def __str__(self):
+        return str(self.user.username)

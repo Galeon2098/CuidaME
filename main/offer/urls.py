@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import filterOffers, listOffers, offerDetail,searchOffers, publishOffer,edit_offer
-from .views import publishOffer, myOffers
+from .views import publishOffer, myOffers , rate_offer
 
 app_name = 'offer'
 
@@ -14,4 +14,5 @@ urlpatterns = [
 
     path('publish/', publishOffer, name='publish'),
     path('my_offers', myOffers, name='my_offers'),
+    path('<int:id>/review/', rate_offer, name='review'),
 ]

@@ -1,9 +1,9 @@
 from django.db.models import Q  
-from django.shortcuts import render, redirect, get_object_or_404, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from .models import Offer
-from .forms import OfferForm
+from .models import Offer, Review
+from .forms import OfferForm, ReviewForm
 import datetime
 
 @login_required
@@ -18,7 +18,7 @@ def publishOffer(request):
             new_offer.updated = datetime.datetime.now()          
             new_offer.save()
             offers = Offer.objects.filter(user=request.user)
-            return redirect('/offer/my_offers')  # Redirige a la vista de mis ofertas
+            return redirect('/offer/my_offers')
     else:
         form = OfferForm()
     return render(request, 'offers/publish.html', {'form': form})
@@ -86,3 +86,23 @@ def edit_offer(request, id):
 def myOffers(request):
     offers = Offer.objects.filter(user=request.user)
     return render(request, 'offers/myOffers.html', {'offers': offers})
+
+@login_required
+def rate_offer(request, id):
+    offer = get_object_or_404(Offer, pk=id)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            valoration = form.cleaned_data['valoration']
+            description = form.cleaned_data['description']
+            review = Review(user=request.user, offer=offer, valoration=valoration, description=description)
+            review.save()
+            return redirect('offer:detail', id=id)  
+    else:
+        form = ReviewForm()
+    return render(request, 'offers/rate_offer.html', {'form': form, 'offer': offer})
+
+def offer_detail(request, offer_id):
+    offer = get_object_or_404(Offer, pk=offer_id)
+    form = ReviewForm()
+    return render(request, 'tu_template.html', {'offer': offer, 'form': form})

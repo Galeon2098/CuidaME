@@ -9,6 +9,15 @@
     <h2>{{offer.description}}</h2>
     <h2>{{offer.price_per_hour}}</h2>
     <h2>{{offer.city}}</h2>
+    <div class="opinion-form">
+        <h3>Valorar esta oferta</h3>
+        <form method="post" action="{% url 'offer:review' id=offer.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Opinar</button>
+        </form>
+    </div>
+  
   
  
 {% endblock %}
