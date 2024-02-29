@@ -11,3 +11,9 @@ Para instalar el entorno:
 
 4. Ejecutar projecto:
  python manage.py runserver (debes estar en la carpeta del manage.py)
+
+
+
+
+Enlace a BlueJay
+[![Bluejay Dashboard](https://img.shields.io/badge/Bluejay-Dashboard_09-blue.svg)](http://dashboard.bluejay.governify.io/dashboard/script/dashboardLoader.js?dashboardURL=https://reporter.bluejay.governify.io/api/v4/dashboards/tpa-ISPP-2024-GH-Galeon2098_CuidaME/main)
