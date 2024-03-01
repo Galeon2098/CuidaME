@@ -99,27 +99,11 @@ def rate_offer(request, id):
             review = Review(user=request.user, offer=offer, valoration=valoration, description=description)
             review.save()
             
-            # Recalcula la media de las valoraciones de la oferta
-            offer_reviews = Review.objects.filter(offer=offer)
-            
-            total_valoration = 0
-            num_reviews = 0
-
-            # Calcula la suma total de las valoraciones
-            for review in offer_reviews:
-                total_valoration += review.valoration
-                num_reviews += 1
-
-            # Calcula la media
-            average_rating = total_valoration / num_reviews if num_reviews > 0 else 0
-
-            # Redondea la media a dos decimales
-            average_rating = round(average_rating, 2)
-
-            # Actualiza el campo average_rating del objeto Offer y guardalo
-            offer.average_rating = average_rating
+            # Recalcular la media total de la oferta después de valorarla
+            offer.average_rating = offer.calculate_total_average_rating()
             offer.save()
             
+            # Redireccionar a la vista de detalle de la oferta después de valorarla
             return redirect('offer:detail', id=id)  
     else:
         form = ReviewForm()
@@ -131,3 +115,4 @@ def offer_detail(request, offer_id):
     offer_reviews = Review.objects.filter(offer=offer)
 
     return render(request, 'offers/detail.html', {'offer': offer, 'form': form, 'offer_reviews': offer_reviews})
+
