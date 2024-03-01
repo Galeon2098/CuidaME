@@ -3,11 +3,24 @@ from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from .models import Offer
+from main.models import Cuidador
 from .forms import OfferForm
 import datetime
+from django.contrib import messages
 
 @login_required
 def publishOffer(request):
+
+    cuidador = Cuidador.objects.filter(user=request.user).exists()
+
+    if not cuidador:
+        return render(request, 'main/error_page.html')
+    
+    if Offer.objects.filter(user=request.user).count() >= 5:
+      return render(request, 'main/error_page.html')
+    
+    show_publish_button = Offer.objects.filter(user=request.user).count() < 5
+    
     if request.method == 'POST':
         form = OfferForm(request.POST)
         if form.is_valid():
@@ -21,7 +34,7 @@ def publishOffer(request):
             return redirect('/offer/my_offers')  # Redirige a la vista de mis ofertas
     else:
         form = OfferForm()
-    return render(request, 'offers/publish.html', {'form': form})
+    return render(request, 'offers/publish.html', {'form': form, 'show_publish_button': show_publish_button})
 
 #LIST OFFERS
 def listOffers(request):
@@ -80,6 +93,20 @@ def edit_offer(request, id):
         form = OfferForm(instance=offer)
     
     return render(request, 'offers/publish.html', {'form': form, 'offer': offer})
+
+@login_required
+def delete_offer(request, id):
+    offer = get_object_or_404(Offer, pk=id)
+
+    if request.user != offer.user:
+        return HttpResponseForbidden("No tienes permiso para eliminar esta oferta.")
+
+    if request.method == 'POST':
+        offer.delete()
+        messages.success(request, 'La oferta ha sido eliminada exitosamente.')
+        return redirect('offer:my_offers')
+
+    return render(request, 'offers/delete_confirmation.html', {'offer': offer})
 
 
 @login_required
