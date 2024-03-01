@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
 {% block content %}
 {% load static %}
 
@@ -21,46 +21,44 @@
 </head>
 <body>
 
-    <main class="container pt-5 pb-3">
-        <div class="row d-flex align-items-center justify-content-between" style="height: 80vh; margin-bottom: 10%; margin-top: 5%;">
-          <img src="{% static 'Images/carer.png' %}" alt="Caregiver" class="img-fluid" style="width: 100%; max-width: 660px; height: auto;">
-          <div class="col-md-6" style="background-color: #62B6CB; color: #1B4965; padding: 20px; border-radius: 10%; font-size: 18px;">
-            <div>
-              <div class="container" style="display: flex; height: 20px;">
+    <main class="container-fluid">
+
+        <div class="row" style="margin-top:8%; margin-right: 5%; margin-left:5%;">
+          <div class="col-md-5">
+            <img src="{% static 'Images/carer.png' %}" alt="Caregiver" class="img-fluid" style="width: 100%; max-width: 800px; height: auto;margin-bottom: 7%;">
+          </div>
+
+          <div class="col-md-7" style="background-color: #62B6CB; color: #1B4965; border-radius: 10%; font-size: 18px;">
+              <div class="container-fluid">
+
                 <a href="">
                   <!--añadir aqui la url de my_ads-->
-                  <img src="{% static 'Images/back.png' %}" style="width: 85px; height: 85px; margin-top: 30px;">
+                  <img src="{% static 'Images/back.png' %}" style="width: 10%; height: auto; margin-top: 3%">
                 </a>
-              </div>
-              <div class="container" style="display: flex; justify-content: center; position: relative;">
-                
-              {% if user.profile.photo %}
-                <div style="align-items: center; position: absolute; top: -120px; left: 14vw;">
-                    <img src="{{ user.profile.photo.url }}" style="width: 200px; height: 200px; border-radius: 100%;">
-                </div>
-              {% else %}
-                <!-- Si no hay foto de perfil, se muestra una imagen predeterminada -->
-                <div style="align-items: center; position: absolute; top: -120px; left: 14vw;">
-                    <img src="{% static 'Images/profile_photo(2).png' %}" style="width: 200px; height: 200px; border-radius: 100%;">
-                </div>
-              {% endif %}
-            
-              </div>
+
+                {% if user.profile.photo %}
+                      <img src="{{ user.profile.photo.url }}" style="width: 25%; height: auto; border-radius: 100%;">
+                {% else %}
+                  <!-- Si no hay foto de perfil, se muestra una imagen predeterminada -->
+                      <img src="{% static 'Images/profile_photo(2).png' %}" style="width: 25%; height: auto; border-radius: 100%; margin-left: 27.5%; margin-top: -10%;">
+                {% endif %}
               
-                <div class="form-group d-flex justify-content-center" style="margin-bottom: -15px; margin-top: 80px;">
-                    <h2><b>Carer name</b></h2>
                 </div>
+              
                 <div class="form-group d-flex justify-content-center">
-                    <h3>Profession</h3>
+                    <h2><b>Nombre cuidador</b></h2>
+                </div>
+                <div class="form-group d-flex justify-content-center" style= "margin-top:-1%;">
+                    <h3>Profesión</h3>
                 </div>
         
-                <form method="post">
+                <form method="post" style="margin-right: 5%; margin-left: 5%; font-size:150%; margin-bottom: 5%;">
                   {% csrf_token %}
     
                   <div class="form-group">
-                    <label for="disponibilidad"><b>Available days</b></label>
+                    <label for="disponibilidad"><b>Días disponibles</b></label>
                     <div class="input-group date">
-                        <input type="text" class="form-control" id="disponibilidad" name="disponibilidad" placeholder="Choose your available days from the calendar">
+                        <input type="text" class="form-control" id="disponibilidad" name="disponibilidad" style="font-size:70%;" placeholder="Elige tus días disponibles desde el calendario">
                         <div class="input-group-append">
                             <span class="input-group-text">
                               <img src="{% static 'Images/calendar.png' %}" style="width: 20px; height: 20px;">
@@ -72,36 +70,37 @@
     
                 
                 <div class="form-group">
-                  <label for="disponibilidad"><b>Available hours</b></label>
+                  <label for="disponibilidad"><b>Horas disponibles</b></label>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="input-group">
-                            <select class="form-control" id="from" name="from">
-                              <option value="00:00">12:00 AM</option>
-                              <option value="01:00">1:00 AM</option>
-                              <option value="02:00">2:00 AM</option>
-                              <option value="03:00">3:00 AM</option>
-                              <option value="04:00">4:00 AM</option>
-                              <option value="05:00">5:00 AM</option>
-                              <option value="06:00">6:00 AM</option>
-                              <option value="07:00">7:00 AM</option>
-                              <option value="08:00">8:00 AM</option>
-                              <option value="09:00">9:00 AM</option>
-                              <option value="10:00">10:00 AM</option>
-                              <option value="11:00">11:00 AM</option>
-                              <option value="12:00">12:00 PM</option>
-                              <option value="01:00">1:00 PM</option>
-                              <option value="02:00">2:00 PM</option>
-                              <option value="03:00">3:00 PM</option>
-                              <option value="04:00">4:00 PM</option>
-                              <option value="05:00">5:00 PM</option>
-                              <option value="06:00">6:00 PM</option>
-                              <option value="07:00">7:00 PM</option>
-                              <option value="08:00">8:00 PM</option>
-                              <option value="09:00">9:00 PM</option>
-                              <option value="10:00">10:00 PM</option>
-                              <option value="11:00">11:00 PM</option>
+                            <select class="form-control" id="from" name="Desde">
+                              <option value="00:00" disabled selected>Desde</option>
+                              <option value="00:00">00:00</option>
+                              <option value="01:00">01:00</option>
+                              <option value="02:00">02:00</option>
+                              <option value="03:00">03:00</option>
+                              <option value="04:00">04:00</option>
+                              <option value="05:00">05:00</option>
+                              <option value="06:00">06:00</option>
+                              <option value="07:00">07:00</option>
+                              <option value="08:00">08:00</option>
+                              <option value="09:00">09:00</option>
+                              <option value="10:00">10:00</option>
+                              <option value="11:00">11:00</option>
+                              <option value="12:00">12:00</option>
+                              <option value="13:00">13:00</option>
+                              <option value="14:00">14:00</option>
+                              <option value="15:00">15:00</option>
+                              <option value="16:00">16:00</option>
+                              <option value="17:00">17:00</option>
+                              <option value="18:00">18:00</option>
+                              <option value="19:00">19:00</option>
+                              <option value="20:00">20:00</option>
+                              <option value="21:00">21:00</option>
+                              <option value="22:00">22:00</option>
+                              <option value="23:00">23:00</option>
                             </select>
                         </div>
                       </div>
@@ -109,31 +108,32 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="input-group">
-                            <select class="form-control" id="to" name="to">
-                                <option value="00:00">12:00 AM</option>
-                                <option value="01:00">1:00 AM</option>
-                                <option value="02:00">2:00 AM</option>
-                                <option value="03:00">3:00 AM</option>
-                                <option value="04:00">4:00 AM</option>
-                                <option value="05:00">5:00 AM</option>
-                                <option value="06:00">6:00 AM</option>
-                                <option value="07:00">7:00 AM</option>
-                                <option value="08:00">8:00 AM</option>
-                                <option value="09:00">9:00 AM</option>
-                                <option value="10:00">10:00 AM</option>
-                                <option value="11:00">11:00 AM</option>
-                                <option value="12:00">12:00 PM</option>
-                                <option value="01:00">1:00 PM</option>
-                                <option value="02:00">2:00 PM</option>
-                                <option value="03:00">3:00 PM</option>
-                                <option value="04:00">4:00 PM</option>
-                                <option value="05:00">5:00 PM</option>
-                                <option value="06:00">6:00 PM</option>
-                                <option value="07:00">7:00 PM</option>
-                                <option value="08:00">8:00 PM</option>
-                                <option value="09:00">9:00 PM</option>
-                                <option value="10:00">10:00 PM</option>
-                                <option value="11:00">11:00 PM</option>
+                            <select class="form-control" id="to" name="Hasta">
+                              <option value="00:00" disabled selected>Hasta</option>
+                                <option value="00:00">00:00</option>
+                                <option value="01:00">01:00</option>
+                                <option value="02:00">02:00</option>
+                                <option value="03:00">03:00</option>
+                                <option value="04:00">04:00</option>
+                                <option value="05:00">05:00</option>
+                                <option value="06:00">06:00</option>
+                                <option value="07:00">07:00</option>
+                                <option value="08:00">08:00</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="19:00">19:00</option>
+                                <option value="20:00">20:00</option>
+                                <option value="21:00">21:00</option>
+                                <option value="22:00">22:00</option>
+                                <option value="23:00">23:00</option>
                             </select>
                         </div>
                       </div>
@@ -142,28 +142,28 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="descripcion"><b>Description</b></label>
-                  <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Add here the info related to the service you are offering"></textarea>
+                  <label for="descripcion"><b>Descripción</b></label>
+                  <textarea style="font-size:70%;" class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Añade aquí información relacionada con el servicio que estás ofreciendo"></textarea>
                 </div>
                 
     
                 <div class="form-group">
-                  <label for="contacts"><b>Contacts</b></label>
-                  <textarea class="form-control" id="contact" name="contact" rows="2" placeholder="Email:
-Phone number:"></textarea>
+                  <label for="contacts"><b>Contactos</b></label>
+                  <textarea class="form-control" id="contact" name="contact" rows="2" style="font-size:70%;" placeholder="Email:
+Número de teléfono:"></textarea>
                 </div>
                 
       
                 <div class="form-group">
-                  <label for="precio_hora"><b>Price per hour (€)</b></label>
-                  <input type="number" class="form-control" id="precio_hora" name="precio_hora" placeholder="Precio por hora" style="width: 180px;">
+                  <label for="precio_hora"><b>Precio por hora (€)</b></label>
+                  <input type="number" class="form-control" id="precio_hora" name="precio_hora" style="font-size:70%;" placeholder="Precio por hora" style="width: 180px;">
                 </div>
       
                 
     
                 <div class="form-group d-flex justify-content-center"> 
-                    <button type="submit" class="btn btn-danger remove_button" style="width: 40%; margin-right: 10px;">Remove ad</button>
-                    <button type="submit" class="btn btn-primary update_button" style="width: 40%;">Update</button>
+                    <button type="submit" class="btn btn-danger remove_button" style="width: 50%; min-width: 50%; margin-right: 10px; font-size: 70%;">Eliminar anuncio</button>
+                    <button type="submit" class="btn btn-primary update_button" style="width: 50%;font-size: 70%;">Actualizar</button>
                 </div>
           </div>
           
