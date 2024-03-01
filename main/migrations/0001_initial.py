@@ -14,16 +14,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='ChatRequest',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('accepted', models.BooleanField(default=False)),
-                ('timeSend', models.DateTimeField(auto_now_add=True)),
-                ('receiver', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='received_chat_requests', to=settings.AUTH_USER_MODEL)),
-                ('sender', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='sent_chat_requests', to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
+        
         migrations.CreateModel(
             name='Cuidador',
             fields=[
@@ -34,7 +25,6 @@ class Migration(migrations.Migration):
                 ('formacion', models.TextField()),
                 ('experiencia', models.TextField()),
                 ('tipo_publico_dirigido', models.CharField(max_length=100)),
-                ('chat_requests_received', models.ManyToManyField(related_name='caregiver_received_requests', to='main.chatrequest')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -44,7 +34,6 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('apellidos', models.CharField(max_length=100)),
                 ('tipo_dependencia', models.CharField(choices=[('personaSolitaria', 'Persona Solitaria'), ('enfermedad', 'Enfermedad'), ('cuidados', 'Cuidados')], max_length=20)),
-                ('chat_requests_sent', models.ManyToManyField(related_name='client_sent_requests', to='main.chatrequest')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
