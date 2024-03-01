@@ -34,12 +34,13 @@ class Offer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    
+    average_rating = models.FloatField(default=0)
+
     def __str__(self):
         return self.title
     def get_absolute_url(self):
         return reverse('offer:detail', args=[self.id])
-    
+
 
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

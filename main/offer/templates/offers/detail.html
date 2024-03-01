@@ -3,12 +3,22 @@
     <h1>Detail</h1>
     
     <h1>{{ offer.title }}</h1>
-    <p>{{offer.user}}</p>
-    <h2>{{offer.offer_type}}</h2>
-    <h2>{{offer.client}}</h2>
-    <h2>{{offer.description}}</h2>
-    <h2>{{offer.price_per_hour}}</h2>
-    <h2>{{offer.city}}</h2>
+    <p>{{ offer.user }}</p>
+    <h2>{{ offer.offer_type }}</h2>
+    <h2>{{ offer.client }}</h2>
+    <h2>{{ offer.description }}</h2>
+    <h2>{{ offer.price_per_hour }}</h2>
+    <h2>{{ offer.city }}</h2>
+    <h2>Valoraciones del usuario</h2>
+    {% for review in offer_reviews %}
+        <p>{{ review.valoration }} - {{ review.description }}</p>
+    {% empty %}
+        <p>No hay valoraciones para esta oferta.</p>
+    {% endfor %}
+    {% if offer.average_rating %}
+    <p>Media de las valoraciones de la oferta: {{ offer.average_rating }}</p>
+    {% endif %}
+
     <div class="opinion-form">
         <h3>Valorar esta oferta</h3>
         <form method="post" action="{% url 'offer:review' id=offer.id %}">
@@ -17,7 +27,4 @@
             <button type="submit" class="btn btn-primary">Opinar</button>
         </form>
     </div>
-  
-  
- 
 {% endblock %}
