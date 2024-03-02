@@ -38,7 +38,7 @@ class CuidadorRegistrationForm(forms.ModelForm):
     numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=20)
     fecha_nacimiento = forms.DateField(
         label="Fecha de nacimiento",
-        widget=forms.DateInput(attrs={'type': 'date'}),)    
+        widget=forms.DateInput(attrs={'type': 'date'}),)
     formacion = forms.CharField(label="Formación")
     experiencia = forms.CharField(label="Experiencia")
     tipo_publico_dirigido = forms.CharField(label="Tipo de público al que te diriges", max_length=100)
