@@ -33,17 +33,17 @@
                 </div>
                 <div class="container" style="display: flex; justify-content: center; position: relative;">
                     {% if user.profile.photo %}
-                        <img src="{{ user.profile.photo.url }}" style="width: 35%; height: auto; border-radius: 100%; margin-top: -20%;">
+                        <img src="{{ user.profile.photo.url }}" style="width: 35%; height: auto; border-radius: 100%; margin-top: -30%;">
                      {% else %}
                     <!-- Si no hay foto de perfil, se muestra una imagen predeterminada -->
-                        <img src="{% static 'Images/profile_photo(2).png' %}" style="width: 35%; height: auto; border-radius: 100%; margin-top: -20%;">
+                        <img src="{% static 'Images/profile_photo(2).png' %}" style="width: 35%; height: auto; border-radius: 100%; margin-top: -30%;">
                     {% endif %}
                 </div>
                     <div class="form-group d-flex justify-content-center">
                         <h2><b>{{ user.first_name }}</b></h2>
                     </div>
                     <div class="form-group d-flex justify-content-center">
-                        <h3>Ocupación</h3>
+                        <h3>{{ user.formacion }}</h3>
                     </div>
     
                     <form method="post">

@@ -20,13 +20,50 @@
                 <img src="../../static/images/flecha.png" alt="flecha" class="img-fluid" style="width: 12%; height: auto; position: absolute; top: 5%; left: 5%;">
               </a>
               <h2 class="text-center mt-3"><b>Crear cuenta como cliente</b></h2>
-          <form style="font-size: 120%; font-family: Lato; font-weight: bolder; margin-left: 8%; margin-top: 5%;" method="post">
-            {{ user_form.as_p }}
-            {% csrf_token %}
-            <p style="display: flex; justify-content: center;">
-              <input style="color: #FFFFFF; font-family: Lato; font-weight: bold; text-align: center; background-color: #1B4965; border-radius: 5%; width: 70%;" type="submit" value="Crear cuenta">
-            </p>
-          </form>
+              <form style="font-size: 120%; font-family: Lato; font-weight: bolder; margin-left: 8%; margin-top: 5%;" method="post">
+                <div class="form-group">
+                    <label for="{{ user_form.username.id_for_label }}"><b>Nombre de usuario:</b></label>
+                    {{ user_form.username }}
+                </div>
+            
+                <div class="form-group">
+                    <label for="{{ user_form.first_name.id_for_label }}"><b>Nombre:</b></label>
+                    {{ user_form.first_name }}
+                </div>
+            
+                <div class="form-group">
+                    <label for="{{ user_form.last_name.id_for_label }}"><b>Apellido:</b></label>
+                    {{ user_form.last_name }}
+                </div>
+            
+                <div class="form-group">
+                    <label for="{{ user_form.email.id_for_label }}"><b>Correo electrónico:</b></label>
+                    {{ user_form.email }}
+                </div>
+            
+                <div class="form-group">
+                    <label for="{{ user_form.tipo_dependencia.id_for_label }}"><b>Tipo de Dependencia:</b></label>
+                    {{ user_form.tipo_dependencia }}
+                </div>
+            
+                <div class="form-group">
+                    <label for="{{ user_form.password.id_for_label }}"><b>Contraseña:</b></label>
+                    {{ user_form.password }}
+                </div>
+            
+                <div class="form-group">
+                    <label for="{{ user_form.password2.id_for_label }}"><b>Repetir contraseña:</b></label>
+                    {{ user_form.password2 }}
+                </div>
+            
+                {% csrf_token %}
+                
+                <p style="display: flex; justify-content: center;">
+                    <input style="color: #FFFFFF; font-family: Lato; font-weight: bold; text-align: center; background-color: #1B4965; border-radius: 5%; width: 70%;" type="submit" value="Crear cuenta">
+                </p>
+            </form>
+            
+            
         </div>
       </div>
     </div>

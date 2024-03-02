@@ -36,7 +36,9 @@ class CuidadorRegistrationForm(forms.ModelForm):
     # Añade campos adicionales de Cuidador
     dni = forms.CharField(label='DNI', max_length=20)
     numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=20)
-    fecha_nacimiento = forms.DateField(label="Fecha de nacimiento")
+    fecha_nacimiento = forms.DateField(
+        label="Fecha de nacimiento",
+        widget=forms.DateInput(attrs={'type': 'date'}),)    
     formacion = forms.CharField(label="Formación")
     experiencia = forms.CharField(label="Experiencia")
     tipo_publico_dirigido = forms.CharField(label="Tipo de público al que te diriges", max_length=100)

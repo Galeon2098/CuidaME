@@ -78,7 +78,7 @@ def edit_offer(request, id):
             form.save()
             return redirect('offer:my_offers')
     else:
-        form = OfferForm(instance=offer)
+        form = OfferForm(instance=offer, user=request.user)  # Pasa el usuario como argumento
 
     return render(request, 'offers/edit_offer.html', {'form': form, 'offer': offer})
 
