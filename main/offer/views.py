@@ -19,8 +19,6 @@ def publishOffer(request):
     if Offer.objects.filter(user=request.user).count() >= 5:
       return render(request, 'main/error_page.html')
     
-    show_publish_button = Offer.objects.filter(user=request.user).count() < 5
-    
     if request.method == 'POST':
         form = OfferForm(request.POST)
         if form.is_valid():
@@ -34,7 +32,7 @@ def publishOffer(request):
             return redirect('/offer/my_offers')  # Redirige a la vista de mis ofertas
     else:
         form = OfferForm()
-    return render(request, 'offers/publish.html', {'form': form, 'show_publish_button': show_publish_button})
+    return render(request, 'offers/publish.html', {'form': form})
 
 #LIST OFFERS
 def listOffers(request):
@@ -112,4 +110,7 @@ def delete_offer(request, id):
 @login_required
 def myOffers(request):
     offers = Offer.objects.filter(user=request.user)
-    return render(request, 'offers/myOffers.html', {'offers': offers})
+    
+    show_publish_button = Offer.objects.filter(user_id=request.user).count() < 5
+    
+    return render(request, 'offers/myOffers.html', {'offers': offers, 'show_publish_button': show_publish_button})

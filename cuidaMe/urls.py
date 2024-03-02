@@ -32,4 +32,4 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('edit_ad/', views.edit_ad, name='edit_ad'),
 ]
 
-handler404 = "main.views.handler404"
+#handler404 = "main.views.handler404"
