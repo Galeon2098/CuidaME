@@ -1,7 +1,6 @@
 {% extends "main/base.html" %}
 {% block content %}
     <h1>Detail</h1>
-    
     <h1>{{ offer.title }}</h1>
     <p>{{ offer.user }}</p>
     <h2>{{ offer.offer_type }}</h2>
@@ -21,10 +20,6 @@
 
     <div class="opinion-form">
         <h3>Valorar esta oferta</h3>
-        <form method="post" action="{% url 'offer:review' id=offer.id %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Opinar</button>
-        </form>
+        <a href="{% url 'offer:review' id=offer.id %}" class="btn btn-primary">Opinar</a>
     </div>
 {% endblock %}

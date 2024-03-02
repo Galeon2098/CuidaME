@@ -57,16 +57,6 @@
         </tbody>
     </table>
     <br><br>
-    <div class="opinion-form">
-        <h3>Valorar esta oferta</h3>
-        <form method="post" action="{% url 'offer:review' id=offer.id %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Opinar</button>
-        </form>
-    </div>
 </body>
-
-
 </html>
 {% endblock %}

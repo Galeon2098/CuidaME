@@ -14,11 +14,11 @@ class Offer(models.Model):
     )
 
     CLIENT_CHOICES = (
-        ('DF', 'DISCAPACIDAD FÍSICA'), 
-        ('DM', 'DISCAPACIDAD MENTAL'), 
-        ('NI', 'NIÑOS'), 
-        ('AN', 'ANCIANOS'), 
-        ('OT', 'OTROS') 
+        ('DF', 'DISCAPACIDAD FÍSICA'),
+        ('DM', 'DISCAPACIDAD MENTAL'),
+        ('NI', 'NIÑOS'),
+        ('AN', 'ANCIANOS'),
+        ('OT', 'OTROS')
     )
 
     title = models.CharField(max_length=200, verbose_name='Título')
@@ -32,7 +32,7 @@ class Offer(models.Model):
     updated = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     average_rating = models.FloatField(default=0)
-    Total_average_rating = models.FloatField(default=0)  
+    User.add_to_class('Total_average_rating', models.FloatField(default=0))
 
     def __str__(self):
         return self.title
@@ -40,24 +40,26 @@ class Offer(models.Model):
     def get_absolute_url(self):
         return reverse('offer:detail', args=[self.id])
 
+    def calculate_average_rating(self):
+        reviews = self.reviews.all()
+        valorations = [review.valoration for review in reviews]
+        return sum(valorations) / len(valorations) if valorations else 0
+
     def calculate_total_average_rating(self):
-        # Obtener todas las ofertas del usuario
         user_offers = Offer.objects.filter(user=self.user)
-        # Calcular la suma total de los average_rating de todas las ofertas
-        total_rating = sum(offer.average_rating for offer in user_offers)
-        # Calcular el promedio de los average_rating
-        count = user_offers.count()
-        return total_rating / count if count > 0 else 0
+        reviews = Review.objects.filter(offer__in=user_offers)
+        valorations = [review.valoration for review in reviews]
+        return sum(valorations) / len(valorations) if valorations else 0
 
     def save(self, *args, **kwargs):
-        # Calcular y guardar la media total de la oferta
-        self.Total_average_rating = self.calculate_total_average_rating()
+        self.user.Total_average_rating = self.calculate_total_average_rating()
+        self.user.save()
         super().save(*args, **kwargs)
 
 
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name='reviews')
     description = models.CharField(max_length=200)
     valoration = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
 
