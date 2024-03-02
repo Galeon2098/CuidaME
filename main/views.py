@@ -46,6 +46,9 @@ def edit_profile(request):
         profile = request.user.cuidador
         form_class = CuidadorProfileForm
 
+    if profile.user != request.user:
+        return render(request, 'main/error_page.html')
+
     if request.method == 'POST':
         form = form_class(request.POST, instance=profile)
         if form.is_valid():
@@ -66,4 +69,7 @@ def about_us(request):
 
 def edit_ad(request):
     return render(request, 'main/edit_ad.html')
+
+def handler404(request, exception):
+    return render(request, 'main/error_page.html', status=404)
 

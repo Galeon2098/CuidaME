@@ -31,3 +31,5 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('about/', views.about_us, name='about_us'),
     path('edit_ad/', views.edit_ad, name='edit_ad'),
 ]
+
+handler404 = "main.views.handler404"
