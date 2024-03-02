@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Pasarela de Pago{% endblock %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/payment.css' %}">
+<script src="https://js.stripe.com/v3/"></script>
+
+<body class="background-color">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <img src="../../static/images/image.png" alt="Cliente" class="image">
+            </div>
+            <div class="col">
+                <div class="container login-container">
+                    <img src="../../static/images/Logo.png" alt="Logo" class="logo">
+                    <h1 class="login-title">Pago</h1>
+                    <div class="login-form">
+                        <form action="{% url 'cargo' %}" method="POST" class="form" id="payment-form">
+                            {{ form.as_p }}
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ next }}" />
+                            <label for="cantidad">Elige cantidad</label>
+                            <select name="cantidad" id="cantidad">
+                                <option value="10">10.00 €</option>
+                                <option value="20">20.00 €</option>
+                                <option value="30">30.00 €</option>
+                            </select>
+
+
+                            <label for="card-element">
+                                Tarjeta de Crédito o Débito
+                            </label>
+                            <div id="card-element" class="form-control">
+                                <!-- Stripe Elements Placeholder -->
+                            </div>
+                            <!-- Used to display form errors. -->
+                            <div id="card-errors" role="alert"></div>
+                            <button class="login-button">Confirmar Pago</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var stripe = Stripe('pk_test_51OpUOjLfw5L2IsQ4kcAaoyuJcTxjUmswDO0ReMl35LY8EtzF84DnO5VGIG8Jm6uVH9ybJjRJEKtbREREkFdMAny700pCIL0rdg');
+    var elements = stripe.elements();
+    var style = {
+        base: {
+            color: '#32325d',
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+                color: '#aab7c4'
+            }
+        },
+        invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a',
+        }
+    };
+    var card = elements.create('card', { style: style });
+    card.mount('#card-element');
+    
+    // Handle real-time validation errors from the card Element. 
+    card.on('change', function (event) {
+        var displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+    // Handle form submission.
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        stripe.createToken(card).then(function(result) {
+            if (result.error) {
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+            } else {
+                stripeTokenHandler(result.token);
+            }
+        });
+    });
+
+    // Submit the form with the payment method ID.
+    function stripeTokenHandler(token) {
+        var form = document.getElementById('payment-form');
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeToken');
+        hiddenInput.setAttribute('value', token.id);
+        form.appendChild(hiddenInput);
+        // Submit the form
+        form.submit();
+    }
+</script>
+{% endblock %}
