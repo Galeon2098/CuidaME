@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
 {% block content %}
 {% load static %}
 
@@ -8,10 +8,10 @@
     <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">
         <div class="col-md-6">
             <img src="{% static 'Images/anciano.png' %}" alt="anciano" class="img-fluid"
-                style="width: 100%; max-width: 660px; height: auto;">
+                style="width: 100%; max-width: 660px; height: auto; margin-bottom:15%;">
         </div>
         <div class="col-md-6"
-            style="background-color: #62B6CB; color: #1B4965; padding: 20px; border-radius: 10%; font-size: 18px;">
+            style="background-color: #62B6CB; color: #1B4965; padding: 20px; border-radius: 10%; font-size: 20px;">
             <div>
                 <div class="container" style="display: flex; height: 20px;">
                     <a href="/">
@@ -56,7 +56,7 @@
                     {% endif %}
                     <div style="text-align: center;">
                         <a href="{% url 'edit_profile' %}"><button
-                                style="background-color: #1B4965; color: white; padding-left: 8px; padding-right: 8px;">Editar Perfil</button></a>
+                                style="background-color: #1B4965; color: white; padding-left: 8px; padding-right: 8px; width:60%;">Editar Perfil</button></a>
                     </div>
                 </div>
             </div>
