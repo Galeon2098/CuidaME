@@ -69,7 +69,3 @@ def about_us(request):
 
 def edit_ad(request):
     return render(request, 'main/edit_ad.html')
-
-#def handler404(request, exception):
- #   return render(request, 'main/error_page.html', status=404)
-

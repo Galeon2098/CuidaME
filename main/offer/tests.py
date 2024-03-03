@@ -8,10 +8,10 @@ class PublishOfferTestCase(TestCase):
         self.user = User()
         self.user.username = 'testuser'
 
-        password = 'testpassword'
-        validate_password(password)
+        user_password = 'testpassword'
+        validate_password(user_password)
 
-        self.user.set_password(password)
+        self.user.set_password(user_password)
 
     def test_valid_publish_offer_form(self):
         form_data = {
