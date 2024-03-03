@@ -6,8 +6,7 @@ from django.contrib.auth.password_validation import validate_password
 class PublishOfferTestCase(TestCase):
     def setUp(self):
         self.user = User()
-        self.user.username = 'testuser'
-        
+        self.user.username = 'testuser'        
         solotest = 'solotest'
         validate_password(solotest)
 
