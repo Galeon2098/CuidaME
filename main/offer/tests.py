@@ -7,11 +7,11 @@ class PublishOfferTestCase(TestCase):
     def setUp(self):
         self.user = User()
         self.user.username = 'testuser'
+        
+        solotest = 'solotest'
+        validate_password(solotest)
 
-        user_password = 'testpassword'
-        validate_password(user_password)
-
-        self.user.set_password(user_password)
+        self.user.set_password(solotest)
 
     def test_valid_publish_offer_form(self):
         form_data = {
