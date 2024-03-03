@@ -1,3 +1,3 @@
-# Diagrama de Gantt de CuidaMe - Completo
+# Diagrama de Gantt
 
 ![diagrama_gantt_completo](./img/diagrama_gantt_completo.jpg)
