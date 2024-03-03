@@ -12,7 +12,7 @@ class Cliente(models.Model):
     ]
     
     tipo_dependencia = models.CharField(max_length=20, choices=OPCIONES_DEPENDENCIA)
-    
+    chat_requests_sent = models.ManyToManyField('offer.ChatRequest', related_name='client_sent_requests')
     def __str__(self):
         return self.user.username
 
@@ -24,7 +24,7 @@ class Cuidador(models.Model):
     formacion = models.TextField()
     experiencia = models.TextField()
     tipo_publico_dirigido = models.CharField(max_length=100)
-
+    chat_requests_received = models.ManyToManyField('offer.ChatRequest', related_name='caregiver_received_requests')
     def __str__(self):
         return self.user.username
 
