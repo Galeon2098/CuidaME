@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponseForbidden
 from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
@@ -62,7 +63,7 @@ def filterOffers(request):
         offers = offers.filter(offer_type__icontains=offer_type_filter)
 
 
-    return render(request, 'offers/list.html', {'offers': offers, 'min_price_filter' : min_price_filter, 'max_price_filter': max_price_filter, 
+    return render(request, 'offers/list.html', {'offers': offers, 'min_price_filter' : min_price_filter, 'max_price_filter': max_price_filter,
                                                 'cliente_type_filter':cliente_type_filter, 'offer_type_filter':offer_type_filter } )
 @login_required
 def edit_offer(request, id):
@@ -91,6 +92,15 @@ def myOffers(request):
 @login_required
 def rate_offer(request, id):
     offer = get_object_or_404(Offer, pk=id)
+
+    if request.user == offer.user:
+        messages.error(request, "No puedes valorar tu propia oferta.")
+        return redirect('offer:detail', id=id)
+
+    if Review.objects.filter(user=request.user, offer=offer).exists():
+        messages.error(request, "Ya has valorado esta oferta.")
+        return redirect('offer:detail', id=id)
+
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():

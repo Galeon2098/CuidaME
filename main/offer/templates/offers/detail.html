@@ -1,5 +1,10 @@
 {% extends "main/base.html" %}
 {% block content %}
+    {% for message in messages %}
+        <div class="alert alert-warning" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h1>Detail</h1>
     <h1>{{ offer.title }}</h1>
     <p>{{ offer.user }}</p>
