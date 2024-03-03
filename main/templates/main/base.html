@@ -107,5 +107,14 @@
       <a href="/" class="text-reset fw-bold" style="color: #cae9ff !important; text-decoration: none;">CuidaMe.com</a>
     </div>
   </footer>
+  {% block include_js %}
+  {% endblock %}
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      // DOM loaded
+      {% block domready %}
+      {% endblock %}
+    })
+  </script>
 </body>
 </html>

@@ -2,8 +2,8 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from .models import Offer
-from main.models import Cuidador
+from main.models import Cliente, Cuidador
+from .models import ChatRequest, Offer
 from .forms import OfferForm
 import datetime
 from django.contrib import messages
@@ -110,7 +110,21 @@ def delete_offer(request, offer_id):
 @login_required
 def myOffers(request):
     offers = Offer.objects.filter(user=request.user)
+
     
     show_publish_button = Offer.objects.filter(user_id=request.user).count() < 5
     
     return render(request, 'offers/myOffers.html', {'offers': offers, 'show_publish_button': show_publish_button})
+  
+@login_required
+def send_chat_request(request, cuidador_id, offer_id):
+    cliente = get_object_or_404(Cliente, user=request.user)
+    cuidador = get_object_or_404(Cuidador, id=cuidador_id)
+    oferta = get_object_or_404(Offer, id=offer_id)
+    # Verifica si ya existe una solicitud pendiente para esta oferta
+    existing_request = ChatRequest.objects.filter(sender=cliente.user, receiver=cuidador.user,accepted=False,offer=oferta).first()
+    if not existing_request:
+        # Si no existe, crea una nueva solicitud con la oferta asociada
+        ChatRequest.objects.create(sender=cliente.user, receiver=cuidador.user, offer=oferta)
+    return redirect('offer:list')  
+

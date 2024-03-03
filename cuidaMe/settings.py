@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.offer.apps.OffersConfig',
+    'main.chat.apps.ChatConfig',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +129,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
+
+ASGI_APPLICATION = 'cuidaMe.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('redis://default:QD3w7cwClEiUSEjN4eDIvEU6RQLVgedf@redis-11405.c300.eu-central-1-1.ec2.cloud.redislabs.com:11405')],
+        },
+    },
+}
