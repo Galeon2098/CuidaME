@@ -1,5 +1,4 @@
 from django.urls import path
-from .views import filterOffers, listOffers, offerDetail,searchOffers, publishOffer, edit_offer,
 from .views import filterOffers, listOffers, offerDetail,searchOffers, publishOffer,edit_offer, send_chat_request, myOffers, delete_offer
 
 app_name = 'offer'
