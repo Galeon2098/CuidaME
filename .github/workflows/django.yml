@@ -6,11 +6,17 @@ on:
       - master
       - develop
       - testing
+      - backend
+      - frontend
+      - hotfix
   pull_request:
     branches:
       -master
       -develop
       - testing
+      - backend
+      - frontend
+      - hotfix
 
 jobs:
   build:
