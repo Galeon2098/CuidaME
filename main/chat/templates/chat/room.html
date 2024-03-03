@@ -3,73 +3,109 @@
 {% block title %}Chat room for "{{ chat_request.offer }}"{% endblock %}
 
 {% block content %}
-  <div id="chat">
-  </div>
-  <div id="chat-input">
-    <input id="chat-message-input" type="text">
-    <input id="chat-message-submit" type="submit" value="Send">
-  </div>
-{% endblock %}
+{% load static %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-5" style="height: 100%;float: left;">
+      <form class="d-flex" role="search" style="margin-top: 2%;">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+      <hr style="border: 1px solid #1B4965;opacity: 0.62;">
+      <ul>
+        {% for chat_request in user.cuidador.chat_requests_received.all %}
 
-{% block include_js %}
+        <a class="mb-0" style="color: #1B4965; font-weight: bold;" href="/chat/room/{{chat_request.id}} ">{{ chat_request.sender }}</a>
+        <p>Oferta: {{ chat_request.offer.title }}</p>
+
+        <hr style="border: 1px solid #1B4965;opacity: 0.62;position: relative;left: -20px;">
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-sm-7" style="background-color: rgb(117, 192, 241);float: right;">
+      <div class="col-md-9">
+          <div class="chat-header bg-primary text-white">
+            <!-- Información del contacto -->
+            <div class="contact-info" style="background-color: #1B4965; margin-bottom: 20px;padding-bottom:10px; padding-top:10px; margin-left:-30px; margin-right:-245px;">
+              <h4 class="mb-0 ml-3">{{ chat_request.sender }}</h4>
+            </div>
+          </div>
+          <div class="chat-body" id="chat">
+            <!-- Aquí se mostrarán los mensajes del chat -->
+          </div>
+          <div class="chat-footer" id="chat-input">
+            <div class="input-group" style="margin-top: 10px;">
+              <input id="chat-message-input" type="text" class="form-control" placeholder="Type your message here">
+              <div class="input-group-append">
+                <button id="chat-message-submit" class="btn btn-primary" type="button">Send</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
+
+  {% block include_js %}
   {{ chat_request.id|json_script:"chat-id" }}
   {{ request.user.username|json_script:"request-user" }}
-{% endblock %}
+  {% endblock %}
 
-{% block domready %}
+  {% block domready %}
   const chatId = JSON.parse(
-    document.getElementById('chat-id').textContent
+  document.getElementById('chat-id').textContent
   );
   const requestUser = JSON.parse(
-    document.getElementById('request-user').textContent
+  document.getElementById('request-user').textContent
   );
   const url = 'ws://' + window.location.host +
-              '/ws/chat/room/' + chatId + '/';
+  '/ws/chat/room/' + chatId + '/';
   const chatSocket = new WebSocket(url);
 
   chatSocket.onmessage = function(event) {
-    const data = JSON.parse(event.data);
-    const chat = document.getElementById('chat');
+  const data = JSON.parse(event.data);
+  const chat = document.getElementById('chat');
 
-    const dateOptions = {hour: 'numeric', minute: 'numeric', hour12: true};
-    const datetime = new Date(data.datetime).toLocaleString('en', dateOptions);
-    const isMe = data.user === requestUser;
-    const source = isMe ? 'me' : 'other';
-    const name = isMe ? 'Me' : data.user;
+  const dateOptions = {hour: 'numeric', minute: 'numeric', hour12: true};
+  const datetime = new Date(data.datetime).toLocaleString('en', dateOptions);
+  const isMe = data.user === requestUser;
+  const source = isMe ? 'me' : 'other';
+  const name = isMe ? 'Me' : data.user;
 
-    chat.innerHTML += '<div class="message ' + source + '">' +
-                      '<strong>' + name + '</strong> ' +
-                      '<span class="date">' + datetime + '</span><br>' +
-                      data.message + '</div>';
-    chat.scrollTop = chat.scrollHeight;
+  chat.innerHTML += '<div class="message ' + source + '">' +
+    '<strong>' + name + '</strong> ' +
+    '<span class="date">' + datetime + '</span><br>' +
+    data.message + '</div>';
+  chat.scrollTop = chat.scrollHeight;
   };
 
   chatSocket.onclose = function(event) {
-    console.error('Chat socket closed unexpectedly');
+  console.error('Chat socket closed unexpectedly');
   };
 
   const input = document.getElementById('chat-message-input');
   const submitButton = document.getElementById('chat-message-submit');
 
   submitButton.addEventListener('click', function(event) {
-    const message = input.value;
-    if(message) {
-      // send message in JSON format
-      chatSocket.send(JSON.stringify({'message': message}));
-      // clear input
-      input.value = '';
-      input.focus();
-    }
+  const message = input.value;
+  if(message) {
+  // send message in JSON format
+  chatSocket.send(JSON.stringify({'message': message}));
+  // clear input
+  input.value = '';
+  input.focus();
+  }
   });
 
   input.addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-      // cancel the default action, if needed
-      event.preventDefault();
-      // trigger click event on button
-      submitButton.click();
-    }
+  if (event.key === 'Enter') {
+  // cancel the default action, if needed
+  event.preventDefault();
+  // trigger click event on button
+  submitButton.click();
+  }
   });
 
   input.focus();
-{% endblock %}
+  {% endblock %}
