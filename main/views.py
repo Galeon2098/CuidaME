@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm
 from main.models import Cliente
 from django.contrib.auth.models import User
@@ -81,7 +82,7 @@ def accept_chat_request(request, chat_request_id):
     chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
     chat_request.accepted = True
     chat_request.save()
-    return redirect('chat_requests_for_caregiver')
+    return redirect(reverse('chat:chat_room', kwargs={'chat_id': chat_request.id}))
 
 def reject_chat_request(request, chat_request_id):
     chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
