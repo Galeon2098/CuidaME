@@ -93,8 +93,8 @@ def edit_offer(request, id):
     return render(request, 'offers/publish.html', {'form': form, 'offer': offer})
 
 @login_required
-def delete_offer(request, id):
-    offer = get_object_or_404(Offer, pk=id)
+def delete_offer(request, offer_id):
+    offer = get_object_or_404(Offer, pk=offer_id)
 
     if request.user != offer.user:
         return HttpResponseForbidden("No tienes permiso para eliminar esta oferta.")

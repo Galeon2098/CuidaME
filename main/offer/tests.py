@@ -1,12 +1,17 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .forms import OfferForm
+from django.contrib.auth.password_validation import validate_password
 
 class PublishOfferTestCase(TestCase):
     def setUp(self):
         self.user = User()
         self.user.username = 'testuser'
-        self.user.set_password('testpassword')
+
+        password = 'testpassword'
+        validate_password(password)
+
+        self.user.set_password(password)
 
     def test_valid_publish_offer_form(self):
         form_data = {
