@@ -27,8 +27,8 @@ class Offer(models.Model):
     offer_type= models.CharField(max_length=255, verbose_name='Tipo de oferta', choices=TYPE_CHOICES, default='OT')
     client = models.CharField(max_length=255, verbose_name='Tipo de cliente', choices=CLIENT_CHOICES, default='OT')
     description = models.TextField(blank=True)
-    price_per_hour = models.DecimalField(max_digits=10,decimal_places=2)
-    city = models.CharField(max_length=200, verbose_name='Ciudad')                            
+    price_per_hour = models.DecimalField(max_digits=10,decimal_places=2,validators=[MinValueValidator(0)])
+    city = models.CharField(max_length=200, verbose_name='Ciudad')
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -38,3 +38,14 @@ class Offer(models.Model):
         return self.title
     def get_absolute_url(self):
         return reverse('offer:detail', args=[self.id])
+    
+
+class  ChatRequest(models.Model):
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='sent_chat_requests')
+    receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_chat_requests')
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
+    accepted = models.BooleanField(default=False)
+    time_Send = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.sender} to {self.receiver}'

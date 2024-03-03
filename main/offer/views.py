@@ -1,8 +1,10 @@
 from django.db.models import Q  
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from .models import Offer
+
+from main.models import Cliente, Cuidador
+from .models import ChatRequest, Offer
 from .forms import OfferForm
 import datetime
 
@@ -13,18 +15,15 @@ def publishOffer(request):
         if form.is_valid():
             new_offer = form.save(commit=False)
             new_offer.user = request.user
-            new_offer.available= True
+            new_offer.available = True
             new_offer.created = datetime.datetime.now()
             new_offer.updated = datetime.datetime.now()          
             new_offer.save()
             offers = Offer.objects.filter(user=request.user)
-            return render(request, 'offers/myOffers.html', {'offers': offers})
-
+            return redirect('/offer/my_offers')  # Redirige a la vista de mis ofertas
     else:
         form = OfferForm()
-    return render(request,
-                'offers/publish.html',
-                {'form': form})
+    return render(request, 'offers/publish.html', {'form': form})
 
 #LIST OFFERS
 def listOffers(request):
@@ -83,4 +82,23 @@ def edit_offer(request, id):
         form = OfferForm(instance=offer)
     
     return render(request, 'offers/publish.html', {'form': form, 'offer': offer})
+
+
+@login_required
+def myOffers(request):
+    offers = Offer.objects.filter(user=request.user)
+    return render(request, 'offers/myOffers.html', {'offers': offers})
+
+
+@login_required
+def send_chat_request(request, cuidador_id, offer_id):
+    cliente = get_object_or_404(Cliente, user=request.user)
+    cuidador = get_object_or_404(Cuidador, id=cuidador_id)
+    oferta = get_object_or_404(Offer, id=offer_id)
+    # Verifica si ya existe una solicitud pendiente para esta oferta
+    existing_request = ChatRequest.objects.filter(sender=cliente.user, receiver=cuidador.user,accepted=False,offer=oferta).first()
+    if not existing_request:
+        # Si no existe, crea una nueva solicitud con la oferta asociada
+        ChatRequest.objects.create(sender=cliente.user, receiver=cuidador.user, offer=oferta)
+    return redirect('offer:list')  
 

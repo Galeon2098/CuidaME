@@ -1,10 +1,13 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm
 from main.models import Cliente
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponse
+
+from main.offer.models import ChatRequest
 
 # Create your views here.
 def index(request):
@@ -60,3 +63,28 @@ def edit_profile(request):
 def profile_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     return render(request, 'main/profile_detail.html', {'user': user})
+
+def about_us(request):
+    return render(request, 'main/aboutUs.html')
+
+def edit_ad(request):
+    return render(request, 'main/edit_ad.html')
+
+
+@login_required
+def chat_requests_for_caregiver(request):
+    chat_requests = ChatRequest.objects.filter(receiver=request.user, accepted=False)
+    return render(request, 'chat/chat_list.html', {'chat_requests': chat_requests})
+
+
+#Cuando se acepta te redirige al chat
+def accept_chat_request(request, chat_request_id):
+    chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
+    chat_request.accepted = True
+    chat_request.save()
+    return redirect(reverse('chat:chat_room', kwargs={'chat_id': chat_request.id}))
+
+def reject_chat_request(request, chat_request_id):
+    chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
+    chat_request.delete()
+    return redirect('chat_requests_for_caregiver')

@@ -2,11 +2,33 @@
 {% block title %}Create an account{% endblock %}
 
 {% block content %}
-    <h1>Create an account</h1>
-    <p>Please, sign up using the following form:</p>
-    <form method="post">
-        {{ user_form.as_p }}
-        {% csrf_token %}
-        <p><input type="submit" value="Create my account"></p>
-    </form>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body  style="background-color: #E3F1FA;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <img src="../../static/images/Raster.png" alt="Cliente" style="width: 679px; height: 728px;">
+            </div>
+            <div class="col">
+                <div class="container" style="background-color: #62B6CB; border-radius: 55px; width: 569px; height: 1000px;margin-top: 50px;">
+                    <img src="../../static/images/Logo.png" alt="Logo" style="width: 300px;height: 285px;position: relative;top: -140px;left: 120px;">
+                    <a href="/login">
+                        <img src="../../static/images/flecha.png" alt="flecha" style="width: 85px;height: 86px;position: relative;top: -70px;left: -280px;">
+                    </a>
+                    <h1 style="display: flex;justify-content: center;align-items: center;position: relative;bottom: 200px;">Create an account</h1>
+                    <form style="margin: 15%; position: relative;bottom: 250px;" method="post">
+                        {{ user_form.as_p }}
+                        {% csrf_token %}                   
+                        <p style="display: flex;justify-content: center;align-items: center;">
+                            <input style="color: #FFFFFF;font-family: Lato;font-size: 18px;width: 300px;text-align: center;background-color: #1B4965;border-radius: 5px;width: 300px;height: 48px;" type="submit" value="Sign up">
+                        </p>
+                    </form>
+                </div>         
+            </div>
+        </div>
+    </div>
+</body>
 {% endblock %}
