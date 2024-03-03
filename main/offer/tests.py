@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .forms import OfferForm
+from django.contrib.auth.password_validation import validate_password
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -105,11 +106,15 @@ class EditOfferTestCase(TestCase):
         })
         self.assertEqual(response.status_code, 403)
 
+
 class PublishOfferTestCase(TestCase):
     def setUp(self):
         self.user = User()
         self.user.username = 'testuser'
-        self.user.set_password('testpassword')
+        solotest = 'solotest'
+        validate_password(solotest)
+
+        self.user.set_password(solotest)
 
     def test_valid_publish_offer_form(self):
         form_data = {

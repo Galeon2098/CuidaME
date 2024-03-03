@@ -49,6 +49,9 @@ def edit_profile(request):
         profile = request.user.cuidador
         form_class = CuidadorProfileForm
 
+    if profile.user != request.user:
+        return render(request, 'main/error_page.html')
+
     if request.method == 'POST':
         form = form_class(request.POST, instance=profile)
         if form.is_valid():
@@ -76,7 +79,6 @@ def chat_requests_for_caregiver(request):
     chat_requests = ChatRequest.objects.filter(receiver=request.user, accepted=False)
     return render(request, 'chat/chat_list.html', {'chat_requests': chat_requests})
 
-
 #Cuando se acepta te redirige al chat
 def accept_chat_request(request, chat_request_id):
     chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
@@ -88,3 +90,4 @@ def reject_chat_request(request, chat_request_id):
     chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
     chat_request.delete()
     return redirect('chat_requests_for_caregiver')
+

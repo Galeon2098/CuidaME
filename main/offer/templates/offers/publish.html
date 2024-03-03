@@ -53,9 +53,10 @@
     
                     <form method="post">
                         {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ offer.id }}">
                         <div class="form-group">
                             <label for="title"><b>Title</b></label>
-                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="{{offer.title}}">
                             {% if form.title.errors %}
                                 <p>{{ form.title.errors }}</p>
                             {% endif %}
@@ -66,7 +67,7 @@
                             <div class="input-group">
                                 <select class="form-control" id="offer_type" name="offer_type">
                                     {% for choice in form.offer_type.field.choices %}
-                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                    <option value="{{ choice.0 }}" {% if choice.0 == offer.offer_type %}selected{% endif %}>{{ choice.1 }}</option>
                                     {% endfor %}
                                 </select>
                                 <div class="input-group-append">
@@ -80,9 +81,9 @@
                         <div class="form-group">
                             <label for="client"><b>Client Type</b></label>
                             <div class="input-group">
-                                <select class="form-control" id="client" name="client">
+                                <select class="form-control" id="client" name="client" value="{{offer.client}}">
                                     {% for choice in form.client.field.choices %}
-                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                    <option value="{{ choice.0 }}" {% if choice.0 == offer.client %}selected{% endif %}>{{ choice.1 }}</option>
                                     {% endfor %}
                                 </select>
                                 <div class="input-group-append">
@@ -95,7 +96,7 @@
     
                         <div class="form-group">
                             <label for="description"><b>Description</b></label>
-                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Add here the info related to the service you are offering"></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Add here the info related to the service you are offering">{{ offer.description }}</textarea>
                             {% if form.description.errors %}
                                 <p>{{ form.description.errors }}</p>
                             {% endif %}
@@ -103,7 +104,7 @@
     
                         <div class="form-group">
                             <label for="price_per_hour"><b>Price per hour (€)</b></label>
-                            <input type="number" class="form-control" id="price_per_hour" name="price_per_hour" placeholder="Enter price per hour">
+                            <input type="number" class="form-control" id="price_per_hour" name="price_per_hour" placeholder="Enter price per hour" value="{{offer.price_per_hour}}">
                             {% if form.price_per_hour.errors %}
                                 <p>{{ form.price_per_hour.errors }}</p>
                             {% endif %}
@@ -111,7 +112,7 @@
     
                         <div class="form-group">
                             <label for="city"><b>City</b></label>
-                            <input type="text" class="form-control" id="city" name="city" placeholder="Enter city">
+                            <input type="text" class="form-control" id="city" name="city" placeholder="Enter city" value="{{offer.city}}">
                             {% if form.city.errors %}
                                 <p>{{ form.city.errors }}</p>
                             {% endif %}

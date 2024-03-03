@@ -35,3 +35,5 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('accept_chat_request/<int:chat_request_id>/', views.accept_chat_request, name='accept_chat_request'),
     path('reject_chat_request/<int:chat_request_id>/', views.reject_chat_request, name='reject_chat_request'),
 ]
+
+#handler404 = "main.views.handler404"
