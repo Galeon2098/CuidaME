@@ -1,12 +1,11 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
-# Estructura del grupo
+# Estructura del grupo G9 - CuidaMe
 
-|**Grupo de Prácticas:** G9 - CuidaMe|||
-| - | :- | :- |
 |**Miembros del equipo por orden alfabético** |**Correo** |**Rol(es)**|
+| - | :- | :- |
 |Abulatifa, Mohanad|mohanad.abulatifa@gmail.com|Full stack|
 |Castellano Alonso, Álvaro|acastealonso@gmail.com|Líder Frontend, Analista|
 |De la Prada Prados, Francisco Javier|fraprapra1@alum.us.es|Backend, Analista|
