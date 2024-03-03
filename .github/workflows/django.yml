@@ -42,8 +42,9 @@ jobs:
         pip install codacy-coverage
         pip install coverage
         cp local_settings.gactions.py local_settings.py
-    - name: Run migrations (unnecessary)
+    - name: Run migrations
       run: |
+        python manage.py makemigrations
         python manage.py migrate
     - name: Run tests
       run: |
