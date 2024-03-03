@@ -11,8 +11,8 @@ on:
       - hotfix
   pull_request:
     branches:
-      -master
-      -develop
+      - master
+      - develop
       - testing
       - backend
       - frontend
