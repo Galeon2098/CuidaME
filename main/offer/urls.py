@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import filterOffers, listOffers, offerDetail,searchOffers, publishOffer,edit_offer
-from .views import publishOffer, myOffers, delete_offer
+from .views import filterOffers, listOffers, offerDetail,searchOffers, publishOffer, edit_offer, myOffers, delete_offer
+from .views import 
 
 app_name = 'offer'
 
