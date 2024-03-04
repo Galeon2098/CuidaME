@@ -36,6 +36,10 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('chat/requests/', views.chat_requests_for_caregiver, name='chat_requests_for_caregiver'),
     path('accept_chat_request/<int:chat_request_id>/', views.accept_chat_request, name='accept_chat_request'),
     path('reject_chat_request/<int:chat_request_id>/', views.reject_chat_request, name='reject_chat_request'),
+    path('product_page', views.product_page, name='product_page'), #Con fines de testeo
+    path('payment_successful', views.payment_successful, name='payment_successful'),
+    path('payment_cancelled', views.payment_cancelled, name='payment_cancelled'),
+    path('offer/', include('main.offer.urls', namespace='offer'))
 ]
 
 #handler404 = "main.views.handler404"
