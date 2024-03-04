@@ -19,10 +19,18 @@
       <h3 style="padding-left: 10px;"><a href="/" style="color: #cae9ff;"><strong>CuidaMe</strong></a></h3>
       <nav>
         {% if request.user.is_authenticated %}
-          <a class="btn" href="{% url 'home' %}" role="button">Inicio</a>
-          <a class="btn " href="/offer" role="button">Ofertas</a>
-          <a class="btn" href="/mi_perfil" role="button">Mi perfil</a>
-          <a class="btn" href="/logout" role="button">Cerrar Sesión</a>
+          <a class="btn" href="{% url 'my_profile_detail' %}" role="button">My profile</a>
+          
+          {% if request.user.cuidador %}
+          <a class="btn" href="/offer/my_offers" role="button">My offers</a>
+          <a class="btn" href="/offer/list" role="button">Offers list</a>
+          {% endif %}
+
+          {% if request.user.cliente %}
+          <a class="btn" href="/offer/list" role="button">Offers list</a>
+          {% endif %}
+          
+          <a class="btn " href="{% url 'logout' %}" role="button">Log Out</a>
         {% else %}
           <a class="btn " href="{% url 'home' %}" role="button">Inicio</a>
           <a class="btn" href="/login" role="button">Iniciar sesión</a>
@@ -99,5 +107,14 @@
       <a class="text-reset fw-bold"style=" color: #cae9ff;" href="/">CuidaMe.com</a>
     </div>
   </footer>
+  {% block include_js %}
+  {% endblock %}
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      // DOM loaded
+      {% block domready %}
+      {% endblock %}
+    })
+  </script>
 </body>
     </html>

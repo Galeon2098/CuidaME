@@ -72,6 +72,15 @@
                             <label for="{{ user_form.tipo_publico_dirigido.id_for_label }}"><b>Tipo de público al que te diriges:</b></label>
                             {{ user_form.tipo_publico_dirigido }}
                         </div>
+                        <div class="form-group">
+                            <label for="{{ user_form.password.id_for_label }}"><b>Contraseña:</b></label>
+                            {{ user_form.password }}
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="{{ user_form.password2.id_for_label }}"><b>Repetir contraseña:</b></label>
+                            {{ user_form.password2 }}
+                        </div>
                     
                         {% csrf_token %}                   
                         <p style="display: flex; justify-content: center;">

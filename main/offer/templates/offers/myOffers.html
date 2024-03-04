@@ -32,7 +32,7 @@
             <th>Precio</th>
             <th>Tipo cliente</th>
             <th>Fecha de creación</th>
-            <th>Acciones</th>
+            <th>Opciones</th>
         </tr>
         </thead>
         <tbody>
@@ -44,14 +44,20 @@
                     <td class="num">${{ offer.price_per_hour }}</td>
                     <td>{{ offer.client }}</td>
                     <td>{{ offer.created }}</td>
-                    <td>
-                        <a href="{% url 'offer:edit_offer' offer.id %}" class="btn btn-primary light-dark-btn">Editar</a>
+                    <td><a href="/offer/{{offer.id}}/" class="btn btn-primary">Editar</a>   
+                        <a href="{% url 'offer:delete_offer' offer.id %}" class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <br><br>
+    <br>
+    {% if show_publish_button %}
+        <a class="btn" href="/offer/publish/" role="button">Publish an offer</a><br>
+    {% else %}
+        <p>Numero de ofertas limite alcanzado. Borra alguna oferta para poder publicar</p>
+    {% endif %}
+    <br>
 </body>
 </html>
 {% endblock %}

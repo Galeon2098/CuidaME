@@ -62,6 +62,14 @@
                 <div class="offer-card-description">
                     <p class="card-text offer-card-text" style="margin-top: 0px; margin-left: 5px; margin-right: 5px;">{{ offer.description }}</p>
                 </div>
+                    <form method="post" action="{% url 'offer:send_chat_request' cuidador_id=offer.user.cuidador.id offer_id=offer.id %}">
+                        <div style="display: flex;align-items: center;justify-content: center;">
+                            <button type="submit" style="background-color: #1B4965; border-radius: 5px; width: 373px; height: 66px;">
+                                Enviar Solicitud de Chat
+                            </button>
+                        </div>
+                        {% csrf_token %}       
+                    </form>
             </div>
         </div>
     </div>
