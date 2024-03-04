@@ -73,12 +73,6 @@ def profile_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     return render(request, 'main/profile_detail.html', {'user': user})
 
-def about_us(request):
-    return render(request, 'main/aboutUs.html')
-
-def edit_ad(request):
-    return render(request, 'main/edit_ad.html')
-
 
 @login_required
 def chat_requests_for_caregiver(request):
