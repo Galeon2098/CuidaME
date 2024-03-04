@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -130,6 +135,6 @@ LOGOUT_URL = 'logout'
 
 
 # STRIPE CONFIG
-STRIPE_PUBLIC_KEY_TEST = 'pk_test_51OH5liE1VZogj5Oj0dHBqa4m8iUUnJjHs0LghaN5wIcPLFKBPCUckQhWNOKJdI3uBX1jL1jIrlFOwYhiUcIbVDv300Veb3Ep6W'
-STRIPE_SECRET_KEY_TEST = 'sk_test_51OH5liE1VZogj5OjKwwCo8ZJMfiC3JFxOdgUGlPT5u2N4o9h9kOExlDoUGkerZugsu6rdS36Zmdt2l1e54QprGme00e08qLRsQ'
+STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_PUBLIC_KEY_TEST')
+STRIPE_SECRET_KEY_TEST = os.getenv('STRIPE_SECRET_KEY_TEST')
 REDIRECT_DOMAIN = 'http://127.0.0.1:8000'

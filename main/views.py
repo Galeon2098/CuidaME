@@ -7,7 +7,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import stripe
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -77,18 +76,19 @@ def product_page(request):
         product_id = request.POST.get('product_id')
         price = stripe.Price.list(product=product_id, limit=1)
         checkout_session = stripe.checkout.Session.create(
-			payment_method_types = ['card'],
-            line_items = [
-				{
-					'price': price['data'][0].id,
-					'quantity': 1,
-				},
-			],
-			mode = 'payment',
-			customer_creation = 'always',
-			success_url = settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
-			cancel_url = settings.REDIRECT_DOMAIN + '/payment_cancelled',
-		)
+            payment_method_types=['card'],
+            line_items=[
+                {
+                    'price': price['data'][0].id,
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            customer_creation='always',
+            success_url=settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url=settings.REDIRECT_DOMAIN + '/payment_cancelled',
+        )
+
         return redirect(checkout_session.url, code=303)
     return render(request, 'main/product_page.html')
 
@@ -110,14 +110,14 @@ def payment_successful(request):
 
 
 def payment_cancelled(request):
-        stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
-        user_id = request.user.id
-        user_payment = UserPayment.objects.create(
-            user_id=user_id,
-            payment_bool=False,
-            stripe_checkout_id=''
-        )
-        user_payment.save()
-        return render(request, 'main/payment_cancelled.html')
+    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    user_id = request.user.id
+    user_payment = UserPayment.objects.create(
+        user_id=user_id,
+        payment_bool=False,
+        stripe_checkout_id=''
+    )
+    user_payment.save()
+    return render(request, 'main/payment_cancelled.html')
 
 
