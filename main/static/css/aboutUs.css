@@ -1,11 +1,12 @@
-.body {
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #E3F1FA;
     color: #1B4965;
     display: flex;
-    flex-wrap: wrap;   
+    flex-wrap: wrap;
+    overflow-x: hidden;   
 }
 
 header {
@@ -24,36 +25,45 @@ header {
     flex: 1;
     float: left;
     max-width: 45%;
-    margin: 6% 4% 10% auto;
+    margin: 10% 4% 10% auto;
     padding: 20px;
     border-radius: 5px;
 }
 
 .title-about {
+    font-family: "Lato", sans-serif;
     padding-left: 30%;
+    font-weight: bold;
 }
 
 .services-text {
-    margin-left: 10%;
-    margin-top: 20%;
+    font-size: 58px;
+    font-weight: bold;
+}
+.services-text2 {
+    font-size: 58px;
+    font-weight: bold;
 }
 
 .title-services {
     font-family: "Lato", sans-serif;
     font-size: 50px;
-    padding-left: 42%;
+    padding-left: 43%;
+    font-weight: bolder;
 }
 
 .image1 {
     float: right;
     margin-top: 5%;
-    margin-right: 5%;
+    margin-right: 0%;
+    margin-bottom: 5%;
     border-radius: 10px;
     max-width: 45%;
+    width: 90%;
 }
 
 .image1 img {
-    max-width: 100%;
+    max-width: 90%;
     border-radius: 10px;
     animation: fadeIn 3s ease;
 }
@@ -62,14 +72,16 @@ header {
     float: right;
     margin-top: 5%;
     margin-left: 5%;
+    margin-bottom: 5%;
     border-radius: 10px;
     max-width: 45%;
+    width: 65%;
 }
 
 .image2 img {
-    max-width: 100%;
+    max-width: 75%;
     border-radius: 10px;
-    animation: fadeIn 3s ease;
+    animation: fadeIn 1s ease;
 }
 
 @keyframes fadeIn {
@@ -91,7 +103,7 @@ header {
 
 .section-service {
     display: flex;
-    width: 100%;
+    margin-left: 15%;
 }
 
 .section2 {
@@ -104,6 +116,5 @@ header {
     position: relative;
     display: flex;
     flex-direction: row-reverse;
-    width: 100%;
     margin-left: 10%;
 }

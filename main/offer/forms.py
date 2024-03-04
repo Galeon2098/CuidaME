@@ -3,13 +3,12 @@ from .models import Offer
 
 class OfferForm(forms.ModelForm):
     TYPE_CHOICES = (
-	('CO', 'COMPAÑÍA'),
-	('CU', 'CUIDADO'),
-	('TR', 'TRANSPORTE'),
-	('DO', 'COMPRA A DOMICILIO'),
-	('OT', 'OTROS')
+        ('CO', 'COMPAÑÍA'),
+        ('CU', 'CUIDADO'),
+        ('TR', 'TRANSPORTE'),
+        ('DO', 'COMPRA A DOMICILIO'),
+        ('OT', 'OTROS')
     )
-
 
     CLIENT_CHOICES = (
         ('DF', 'DISCAPACIDAD FÍSICA'), 
@@ -20,16 +19,30 @@ class OfferForm(forms.ModelForm):
     )
 
     title = forms.CharField(label='Título')
-    offer_type= forms.ChoiceField(label='Tipo de oferta', choices=TYPE_CHOICES, initial='OT')
+    offer_type = forms.ChoiceField(label='Tipo de oferta', choices=TYPE_CHOICES, initial='OT')
     client = forms.ChoiceField(label='Tipo de cliente', choices=CLIENT_CHOICES, initial='OT')
     description = forms.CharField(label='Descripción', required=True, widget=forms.Textarea(attrs={'rows': 10, 'cols': 70}))
-    price_per_hour = forms.DecimalField(max_digits=10,decimal_places=2)
+    price_per_hour = forms.DecimalField(label='Precio por hora', max_digits=10, decimal_places=2)
     city = forms.CharField(label='Ciudad')                            
     
     class Meta:
         model = Offer
-        fields = ['title','offer_type','client','description','price_per_hour','city']
+        fields = ['title', 'offer_type', 'client', 'description', 'price_per_hour', 'city']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
+
+class ReviewForm(forms.Form):
+    valoration = forms.IntegerField(
+        widget=forms.RadioSelect(
+            choices=[
+                (5, 'Muy bueno'), (4, 'Bueno'),
+                (3, 'Normal'), (2, 'Malo'), (1, 'Muy Malo')
+            ]
+        ),
+        label='Valoración'
+    )
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 6, 'cols': 50}), label='Descripción de la revisión'
+    )
