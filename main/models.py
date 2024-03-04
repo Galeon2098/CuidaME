@@ -1,5 +1,8 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
+
+
 
 class Cliente(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -29,3 +32,8 @@ class Cuidador(models.Model):
         return self.user.username
 
 
+class UserPayment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    payment_bool = models.BooleanField(default=False)
+    stripe_checkout_id = models.CharField(max_length=500)
+    

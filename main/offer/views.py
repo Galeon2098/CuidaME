@@ -1,7 +1,13 @@
-from django.db.models import Q  
+
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponseForbidden
+from .models import Offer, Review
+from .forms import OfferForm, ReviewForm
+import datetime
+from django.db.models import Avg
 from main.models import Cliente, Cuidador
 from .models import ChatRequest, Offer
 from .forms import OfferForm
@@ -26,10 +32,10 @@ def publishOffer(request):
             new_offer.user = request.user
             new_offer.available = True
             new_offer.created = datetime.datetime.now()
-            new_offer.updated = datetime.datetime.now()          
+            new_offer.updated = datetime.datetime.now()
             new_offer.save()
             offers = Offer.objects.filter(user=request.user)
-            return redirect('/offer/my_offers')  # Redirige a la vista de mis ofertas
+            return redirect('/offer/my_offers')
     else:
         form = OfferForm()
     return render(request, 'offers/publish.html', {'form': form})
@@ -61,7 +67,7 @@ def filterOffers(request):
     cliente_type_filter = request.POST.get('cliente_type_filter')
     offer_type_filter = request.POST.get('offer_type_filter')
     offers = Offer.objects.all()
-    
+
     if(min_price_filter):
         offers = offers.filter(price_per_hour__gte=min_price_filter)
     if(max_price_filter):
@@ -70,9 +76,9 @@ def filterOffers(request):
         offers = offers.filter(client__icontains=cliente_type_filter)
     if(offer_type_filter):
         offers = offers.filter(offer_type__icontains=offer_type_filter)
-    
-   
-    return render(request, 'offers/list.html', {'offers': offers, 'min_price_filter' : min_price_filter, 'max_price_filter': max_price_filter, 
+
+
+    return render(request, 'offers/list.html', {'offers': offers, 'min_price_filter' : min_price_filter, 'max_price_filter': max_price_filter,
                                                 'cliente_type_filter':cliente_type_filter, 'offer_type_filter':offer_type_filter } )
 
 
@@ -111,11 +117,39 @@ def delete_offer(request, offer_id):
 @login_required
 def myOffers(request):
     offers = Offer.objects.filter(user=request.user)
-
-    
     show_publish_button = Offer.objects.filter(user_id=request.user).count() < 5
-    
     return render(request, 'offers/myOffers.html', {'offers': offers, 'show_publish_button': show_publish_button})
+
+@login_required
+def rate_offer(request, id):
+    offer = get_object_or_404(Offer, pk=id)
+
+    if request.user == offer.user:
+        messages.error(request, "No puedes valorar tu propia oferta.")
+        return redirect('offer:detail', id=id)
+
+    if Review.objects.filter(user=request.user, offer=offer).exists():
+        messages.error(request, "Ya has valorado esta oferta.")
+        return redirect('offer:detail', id=id)
+
+    if request.method == 'POST':
+        valoration = int(request.POST.get('rating'))
+        description = request.POST.get('commentary')
+        review = Review(user=request.user, offer=offer, valoration=valoration, description=description)
+        review.save()
+        offer.save()
+
+
+    return redirect('offer:detail', id=id)
+
+
+def offer_detail(request, offer_id):
+    offer = get_object_or_404(Offer, pk=offer_id)
+    form = ReviewForm()
+    offer_reviews = Review.objects.filter(offer=offer)
+
+    return render(request, 'offers/detail.html', {'offer': offer, 'form': form, 'offer_reviews': offer_reviews})
+
   
 @login_required
 def send_chat_request(request, cuidador_id, offer_id):

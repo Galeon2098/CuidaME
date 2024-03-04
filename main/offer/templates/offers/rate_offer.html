@@ -1,0 +1,48 @@
+{% extends "main/base.html" %}
+
+{% block title %} Valorar Oferta {% endblock title %}
+
+{% block content %}
+  <h2>Valorar Oferta</h2>
+  <div class="opinion-section">
+    <div class="opinion-form">
+      <h3>Opina sobre {{ offer.title }}</h3>
+      <form method="post" action="{% url 'offer:review' id=offer.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Opinar</button>
+      </form>
+    </div>
+
+    <div class="opinion-card">
+      {% for review in offer.review_set.all %}
+        <div class="opinion-card">
+          <p>{{ review.user }}</p>
+          <p>{{ review.description }}</p>
+          {% if review.valoration > 0 %}
+            <div class="rating">
+              <input type="radio" id="star5" name="rating{{ forloop.counter }}" value="5" {% if review.valoration == 5 %}checked{% endif %} disabled />
+              <label for="star5"></label>
+              <input type="radio" id="star4" name="rating{{ forloop.counter }}" value="4" {% if review.valoration == 4 %}checked{% endif %} disabled />
+              <label for="star4"></label>
+              <input type="radio" id="star3" name="rating{{ forloop.counter }}" value="3" {% if review.valoration == 3 %}checked{% endif %} disabled />
+              <label for="star3"></label>
+              <input type="radio" id="star2" name="rating{{ forloop.counter }}" value="2" {% if review.valoration == 2 %}checked{% endif %} disabled />
+              <label for="star2"></label>
+              <input type="radio" id="star1" name="rating{{ forloop.counter }}" value="1" {% if review.valoration == 1 %}checked{% endif %} disabled />
+              <label for="star1"></label>
+            </div>
+            <hr>
+          {% else %}
+            <div class="rating">
+              <input type="radio" id="star" name="rating{{ forloop.counter }}" value="1" disabled />
+              <label for="star"></label>
+            </div>
+            <hr>
+            <span>Este usuario aún no ha valorado esta oferta</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}
