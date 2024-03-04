@@ -47,3 +47,69 @@
     color: #1B4965; 
     border-color: #1B4965;
 }
+
+.dark-btn {
+  background-color: #1B4965;
+  color: #cae9ff; 
+  border-color: #1B4965; 
+}
+
+.light-dark-btn {
+  background-color: #4681a6;
+  color: #cae9ff; 
+  border-color: #1B4965; 
+}
+
+.light-btn {
+  font-weight: bolder;
+}
+
+.table.offers thead th {
+  background-color: #4681a6; /* Cambia el color del encabezado de la tabla */
+  color: #cae9ff; /* Cambia el color del texto en el encabezado de la tabla */
+}
+
+.light-dark-container {
+  background-color: #62B6CB; 
+  color: #1B4965; 
+  padding: 20px; 
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.title-container h1 {
+  font-weight: bolder;
+  font-size: 160%;
+  color: #1B4965;
+}
+
+.bold-label {
+  font-weight: bolder;
+  font-size: 100%;
+  color: #1B4965;
+}
+
+.offer-card {
+  border-radius: 15px;
+}
+
+.offer-card-text {
+  margin: 15px;
+  font-size: 110%;
+  color: #1B4965;
+}
+
+.offer-card-title {
+  font-weight: bolder;
+  font-size: 150%;
+  color: #62B6CB;
+  -webkit-text-stroke: 1px #1B4965; /* Para navegadores basados en WebKit como Chrome y Safari */
+  text-stroke: 1px #1B4965; /* Para navegadores que admiten la propiedad text-stroke */
+}
+
+.offer-card-description {
+  margin-left: 15px;
+  margin-right: 15px;
+  background-color: #e5f4f8;
+  border-radius: 3px;
+}

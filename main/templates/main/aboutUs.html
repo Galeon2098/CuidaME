@@ -1,46 +1,62 @@
 {% extends "main/base.html" %}
-{% block title %}About Cuidame{% endblock %}
+{% block title %}Sobre Cuidame{% endblock %}
 {% load static %}
 
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/aboutUs.css' %}">
+<div class="container-fluid">
 
-    <div class="section">
-        <div class="container1">
-            <h2 class="title-about">Who Are We?</h2>
-            <p>At CuidaMe, we are a community committed to your well-being. Our mission is to provide you with the resources and support you need to lead a healthier and happier life.</p>
-            <p>For workers who want to advertise on our app, we offer the opportunity to connect with potential clients and expand your business.</p>
-            <p>Join us, and together let's make personal care a priority.</p>
-            <p>Welcome to CuidaMe!</p>
+    <div class="row" style="margin-top: 5%; font-size: 25px;">
+        <div class="col-md-7">
+            <h1 style="font-weight: bolder; margin-left: 35%; margin-bottom: 3%;color: #1B4965;">¿Quiénes somos?</h1>
+            <div style="margin-left: 5%;font-family: Lato; ">
+                <p>En CuidaMe somos una comunidad comprometida con tu bienestar. Nuestra misión es proporcionarte los recursos y el apoyo que necesitas para llevar una vida más sana y feliz.</p>
+                <p>A los trabajadores que quieran anunciarse en nuestra app, les ofrecemos la oportunidad de conectar con clientes potenciales y ampliar su negocio.</p>
+                <p>Únase a nosotros y hagamos juntos del cuidado personal una prioridad. <b style="color: #1B4965;">¡Bienvenido a CuidaMe!</b></p>
+            </div>
         </div>
-        <!--<div class="image1"><img src="../../images/care.jpg" alt=""></div> -->
-        <div class="image1"><img src="https://media.istockphoto.com/id/1028379220/es/foto/mam%C3%A1-y-ni%C3%B1o-ni%C3%B1a-dibujo-con-l%C3%A1pices-de-colores-en-casa.jpg?s=612x612&w=0&k=20&c=c0P8qCopFReDwBlPh60zb4sEIOcMP32JLgfRYBRrYpE=" alt=""></div>
-    </div>
-    <h1 class="title-services">Services</h1>
-    <div class="section-service2">
-        <div class="container1">
-            <h2 class="services-text">Amor y Atención para Nuestros Mayores: ¡CuidaMe Contigo!</h2>
+        <div class="col-md-5">
+            <img style="margin-right:10%; width: 80%; height: auto; margin-top:-25%;" src="../../static/images/Logo.png" alt="">
         </div>
-        <!-- <div class="image2"><img src="../../images/cuidadora-anciano.jpg" alt=""></div> -->
-        <div class="image1"><img src="https://media.istockphoto.com/id/1028379220/es/foto/mam%C3%A1-y-ni%C3%B1o-ni%C3%B1a-dibujo-con-l%C3%A1pices-de-colores-en-casa.jpg?s=612x612&w=0&k=20&c=c0P8qCopFReDwBlPh60zb4sEIOcMP32JLgfRYBRrYpE=" alt=""></div>
+
 
     </div>
-    <div class="section-service">
-        <div class="container1">
-            <h2 class="services-text">Jugando, Aprendiendo, Creciendo: CuidaMe con Cariño</h2>
+    
+    <h1 style="font-weight: bolder; margin-bottom: 5%; text-align: center; color: #1B4965;">Servicios</h1>
+
+    <div class="row">
+        <div class="col-md-5">
+            <img style="border-radius: 2%; margin-left:10%;width: 80%; height: auto;" src="../../static/images/anciano_y_cuidadora_paseando.jpeg" alt="">
         </div>
-        <!--<div class="image1"><img src="../../images/Niñera.jpg" alt=""></div> -->
-        <div class="image1"><img src="https://media.istockphoto.com/id/1028379220/es/foto/mam%C3%A1-y-ni%C3%B1o-ni%C3%B1a-dibujo-con-l%C3%A1pices-de-colores-en-casa.jpg?s=612x612&w=0&k=20&c=c0P8qCopFReDwBlPh60zb4sEIOcMP32JLgfRYBRrYpE=" alt=""></div>
+        <div class="col-md-7">
+            <h3 style="margin-left: 10%; margin-top: 25%;color: #1B4965;">Amor y Atención para Nuestros Mayores: ¡CuidaMe Contigo!</h3>
+        </div>
+
 
     </div>
 
-    <div class="section-service2">
-        <div class="container1">
-            <h2 class="services-text">Espacios Impecables, Vida Plena: CuidaMe, Cuida tu Hogar</h2>
+    <div class="row" style="margin-top: 5%;">
+        <div class="col-md-7">
+            <h3 style="margin-left: 10%; margin-top: 25%;color: #1B4965;">Jugando, Aprendiendo, Creciendo: CuidaMe con Cariño</h3>
         </div>
-        <!-- <div class="image2"><img src="../../images/Limpiador.jpg" alt=""></div> -->
-        <div class="image1"><img src="https://media.istockphoto.com/id/1028379220/es/foto/mam%C3%A1-y-ni%C3%B1o-ni%C3%B1a-dibujo-con-l%C3%A1pices-de-colores-en-casa.jpg?s=612x612&w=0&k=20&c=c0P8qCopFReDwBlPh60zb4sEIOcMP32JLgfRYBRrYpE=" alt=""></div>
+        <div class="col-md-5">
+            <img style="border-radius: 2%; width: 80%; height: auto;" src="../../static/images/cuidados_ninyos.jpeg" alt="">
+        </div>
+
 
     </div>
+
+    <div class="row" style="margin-top: 5%; margin-bottom:10%;">
+        <div class="col-md-5">
+            <img style="border-radius: 2%; margin-left:10%;width: 80%; height: auto;" src="../../static/images/limpiadora.jpeg" alt="">
+        </div>
+        <div class="col-md-7">
+            <h3 style="margin-left: 10%; margin-top: 25%;color: #1B4965;">Espacios Impecables, Vida Plena: CuidaMe, Cuida tu Hogar</h3>
+        </div>
+
+
+    </div>
+
+</div>
+    
 {% endblock %}
 
