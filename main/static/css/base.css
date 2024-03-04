@@ -4,7 +4,6 @@
     --primary-bg-color: #cae9ff;
     --seconday-bg-color: #AEC4C4;
   }
-  
   body {
     background-color: var(--primary-bg-color);
     min-height: 130vh;
@@ -12,7 +11,7 @@
     display: flex;
     flex-direction: column;
   }
-  
+
   header {
     min-height: 50px;
   }
@@ -35,10 +34,12 @@
     display: flex;
     justify-content: space-between;
     height: 60px;
+
     background-color: #1B4965; 
     
   }
   
+
   #header > a > img {
     margin-right: 10px;
   }
@@ -112,4 +113,5 @@
   margin-right: 15px;
   background-color: #e5f4f8;
   border-radius: 3px;
+
 }

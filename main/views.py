@@ -12,6 +12,9 @@ from main.offer.models import ChatRequest
 def index(request):
     return render(request, 'main/home.html')
 
+def pricing_plan(request):
+    return render(request, 'main/pricingPlan.html')
+
 def register_cliente(request):
     if request.method == 'POST':
         user_form = ClienteRegistrationForm(request.POST)
