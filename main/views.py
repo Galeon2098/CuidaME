@@ -9,6 +9,7 @@ import stripe
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
 
+
 # Create your views here.
 def index(request):
     return render(request, 'main/home.html')
@@ -34,6 +35,13 @@ def register_cuidador(request):
     else:
         user_form = CuidadorRegistrationForm()
     return render(request, 'main/register_cuidador.html', {'user_form': user_form})
+
+def about_us(request):
+    return render(request, 'main/aboutUs.html')
+
+@login_required
+def edit_ad(request):
+    return render(request, 'main/edit_ad.html')
 
 @login_required
 def my_profile_detail(request):
@@ -123,5 +131,4 @@ def payment_cancelled(request):
     )
     user_payment.save()
     return render(request, 'main/payment_cancelled.html')
-
 

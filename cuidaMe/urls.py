@@ -24,6 +24,8 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('registro_cliente/', views.register_cliente, name='registro_cliente'),
     path('registro_cuidador/', views.register_cuidador, name='registro_cuidador'),
+    path('about/', views.about_us, name='about_us'),
+    path('edit_ad/', views.edit_ad, name='edit_ad'),
     path('mi_perfil/', views.my_profile_detail, name='my_profile_detail'),
     path('mi_perfil/editar', views.edit_profile, name='edit_profile'),
     path('perfil/<int:user_id>/', views.profile_detail, name='profile_detail'),
@@ -33,5 +35,5 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('product_page', views.product_page, name='product_page'), #Con fines de testeo
     path('payment_successful', views.payment_successful, name='payment_successful'),
     path('payment_cancelled', views.payment_cancelled, name='payment_cancelled'),
-
+    path('offer/', include('main.offer.urls', namespace='offer'))
 ]
