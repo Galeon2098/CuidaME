@@ -7,6 +7,7 @@
     <groupId>ISPP09</groupId>
     <artifactId>cuidame</artifactId>
     <version>1.0.0</version>
+
     
     <properties>
         <project.projectId>CuidaMe</project.projectId>
@@ -31,7 +32,7 @@
             <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>your.package.name.YourMainClass</mainClass>
+                        <mainClass>CuidaME.cuidaMe</mainClass>
                     </manifest>
                 </archive>
             </configuration>
