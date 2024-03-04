@@ -6,4 +6,4 @@ class OffersConfig(AppConfig):
     name = "main.offer"
 
     def ready(self):
-        pass
+        import main.offer.signals
