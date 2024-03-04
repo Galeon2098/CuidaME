@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import stripe
 from django.conf import settings
+from django.views.decorators.http import require_http_methods
 
 # Create your views here.
 def index(request):
@@ -70,6 +71,7 @@ def edit_ad(request):
     return render(request, 'main/edit_ad.html')
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def product_page(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     if request.method == 'POST':
@@ -94,6 +96,7 @@ def product_page(request):
 
 
 ## use Stripe dummy card: 4242 4242 4242 4242
+@require_http_methods(["GET"])
 def payment_successful(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     checkout_session_id = request.GET.get('session_id', None)
@@ -109,6 +112,7 @@ def payment_successful(request):
     return render(request, 'main/payment_successful.html', {'customer': customer})
 
 
+@require_http_methods(["GET"])
 def payment_cancelled(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     user_id = request.user.id
