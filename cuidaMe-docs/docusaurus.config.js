@@ -72,7 +72,7 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          {to: '/docs/intro', label: 'Inicio', position: 'left'},
+          {to: '/docs/grupo', label: 'Inicio', position: 'left'},
           {
             href: 'https://github.com/Galeon2098/CuidaME',
             label: 'GitHub',
@@ -87,8 +87,8 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Docs',
+                to: '/docs/grupo',
               },
             ],
           },
