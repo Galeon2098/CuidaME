@@ -7,12 +7,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CuidaME - Publish Offer</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <title>CuidaME - Publicar Oferta</title>
   <link rel="stylesheet" href="{% static "css/base.css" %}">
   <link rel="stylesheet" href="{% static "css/publish.css" %}">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.0/main.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.0/main.min.css">
   <!-- Agrega esto en el encabezado de tu HTML -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -22,10 +19,11 @@
 </head>
 <body>
 
-    <main class="container pt-5 pb-3">
+    <main class="container pt-4 pb-3" style="margin: 1%; max-width: 95%;">
         <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">
-            <img src="{% static 'Images/carer.png' %}" alt="Caregiver" class="img-fluid" style="width: 100%; max-width: 660px; height: auto; margin-bottom: 100px;">
-            <div class="col-md-6" style="background-color: #62B6CB; color: #1B4965; padding: 20px; border-radius: 10%; font-size: 18px;">
+            
+            <img src="{% static 'Images/carer.png' %}" alt="Caregiver" class="img-fluid" style="width: 100%; max-width: 50%; height: auto; margin-bottom: 100px;">
+            <div class="col-md-6" style="background-color: #62B6CB; color: #1B4965; padding: 20px; border-radius: 10%; font-size: 18px; margin-top: 2%;">
                 <div class="container" style="display: flex; height: 30%;">
                     <a href="{% url 'offer:list' %}">
                       <img src="{% static 'Images/back.png' %}" alt="Back" style="width: 85px; height: 85px;">
@@ -64,11 +62,6 @@
                                     <option value="{{ choice.0 }}">{{ choice.1 }}</option>
                                     {% endfor %}
                                 </select>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <img src="{% static 'Images/down.png' %}" alt="Down" width="16" height="16">
-                                    </span>
-                                </div>
                             </div>
                         </div>
     
@@ -80,11 +73,6 @@
                                     <option value="{{ choice.0 }}">{{ choice.1 }}</option>
                                     {% endfor %}
                                 </select>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <img src="{% static 'Images/down.png' %}" alt="Down" width="16" height="16">
-                                    </span>
-                                </div>
                             </div>
                         </div>
     
