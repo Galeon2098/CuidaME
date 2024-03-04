@@ -9,7 +9,7 @@
     <version>1.0.0</version>
     
     <properties>
-        <project.projectId>CuidaMe<project.projectId>
+        <project.projectId>CuidaMe</project.projectId>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
