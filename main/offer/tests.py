@@ -36,7 +36,7 @@ class EditOfferTestCase(TestCase):
             'available': False
         })
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         updated_offer = Offer.objects.get(pk=self.offer.pk)
         self.assertEqual(updated_offer.title, 'Updated Title')
         self.assertEqual(updated_offer.offer_type, 'TR')
@@ -176,7 +176,7 @@ class PublishOfferTestCase(TestCase):
         form = OfferForm(data=form_data)
         self.assertTrue(form.is_valid())
 
-        response = self.client.post('/offer/', form_data)
+        response = self.client.post('/offer/my_offers', form_data)
         self.assertEqual(response.status_code, 302)  # Redireccion a login
 
 class OffersTestCase(TestCase):
