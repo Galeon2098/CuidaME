@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-dwje-%dk68nu%%uh9vctrh=na^do-4r=o0g$yt!o-&ltn637ad
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['*','.ew.r.appspot.com', 'localhost']   #'127.0.0.1'
+ALLOWED_HOSTS = ['*','.ew.r.appspot.com', 'localhost', '.oa.r.appspot.com']   #'127.0.0.1'
+CSRF_ALLOW_ORIGIN = ['https://ispp-09-cuidame.oa.r.appspot.com']
 
 
 # Application definition
