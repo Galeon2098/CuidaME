@@ -31,7 +31,6 @@ class Offer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    average_rating = models.FloatField(default=0)
     User.add_to_class('Total_average_rating', models.FloatField(default=0))
 
     def __str__(self):
@@ -39,11 +38,6 @@ class Offer(models.Model):
 
     def get_absolute_url(self):
         return reverse('offer:detail', args=[self.id])
-
-    def calculate_average_rating(self):
-        reviews = self.reviews.all()
-        valorations = [review.valoration for review in reviews]
-        return sum(valorations) / len(valorations) if valorations else 0
 
     def calculate_total_average_rating(self):
         user_offers = Offer.objects.filter(user=self.user)

@@ -102,22 +102,15 @@ def rate_offer(request, id):
         return redirect('offer:detail', id=id)
 
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            valoration = form.cleaned_data['valoration']
-            description = form.cleaned_data['description']
-            review = Review(user=request.user, offer=offer, valoration=valoration, description=description)
-            review.save()
+        valoration = int(request.POST.get('rating'))
+        description = request.POST.get('commentary')
+        review = Review(user=request.user, offer=offer, valoration=valoration, description=description)
+        review.save()
+        offer.save()
 
-            # Recalcular la media total de la oferta después de valorarla
-            offer.average_rating = offer.calculate_average_rating()
-            offer.save()
 
-            # Redireccionar a la vista de detalle de la oferta después de valorarla
-            return redirect('offer:detail', id=id)
-    else:
-        form = ReviewForm()
-    return render(request, 'offers/rate_offer.html', {'form': form, 'offer': offer})
+    return redirect('offer:detail', id=id)
+
 
 def offer_detail(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
