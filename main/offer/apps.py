@@ -6,4 +6,5 @@ class OffersConfig(AppConfig):
     name = "main.offer"
 
     def ready(self):
+        #NO BORRAR ES NECESARIO PARA QUE FUNCIONE LA SEÑAL
         import main.offer.signals
