@@ -32,7 +32,7 @@
             <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>CuidaME.cuidaMe</mainClass>
+                        <mainClass>manage.py</mainClass>
                     </manifest>
                 </archive>
             </configuration>
