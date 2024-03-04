@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-dwje-%dk68nu%%uh9vctrh=na^do-4r=o0g$yt!o-&ltn637ad
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [] #'127.0.0.1'
 
 
 # Application definition
@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.offer.apps.OffersConfig',
+    'main.chat.apps.ChatConfig',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -129,10 +131,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'login' #'dashboard'
+LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
+ASGI_APPLICATION = 'cuidaMe.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('redis://default:QD3w7cwClEiUSEjN4eDIvEU6RQLVgedf@redis-11405.c300.eu-central-1-1.ec2.cloud.redislabs.com:11405')],
+        },
+    },
+}
 
 # STRIPE CONFIG
 STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_PUBLIC_KEY_TEST')

@@ -63,6 +63,11 @@
         <p>{{offer.offer_type}}</p>
 
         <p>{{offer.client}}</p>
+       <form method="post" action="{% url 'offer:send_chat_request' cuidador_id=offer.user.cuidador.id offer_id=offer.id %}">
+
+        {% csrf_token %}
+        <button type="submit">Enviar Solicitud de Chat</button>
+    </form>
     {% endfor %}
 {% endblock %}
 ```

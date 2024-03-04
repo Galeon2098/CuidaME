@@ -9,8 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+  {% block styles %}
+    <link rel="stylesheet" href="{% static "css/base.css" %}">
+  {% endblock styles %}
 
-  <link rel="stylesheet" href="{% static "css/base.css" %}">
   {% block header %}{% endblock header %}
 </head>
 <body>
@@ -29,7 +31,7 @@
           <a class="btn " href="/" role="button">Sign up</a>
           <a class="btn" href="{% url 'login' %}" role="button">Sign in</a>
           <a class="btn " href="/" role="button">My ads</a>
-          
+
         {% endif %}
       </nav>
     </section>
@@ -40,15 +42,15 @@
   <main>
     {% block content %}
 
-    {% endblock content %} 
+    {% endblock content %}
   </main>
   <footer class="text-center text-lg-start bg-light text-muted " >
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"  style="background-color:  #1B4965">
-      
+
       <div class="me-5 d-none d-lg-block" style="padding-left:120px ;color: #cae9ff;">
         <span>Conect with us in our social media</span>
       </div>
-      <div style="padding-right:50px"> 
+      <div style="padding-right:50px">
         <a href="https://www.facebook.com/UniversidaddeSevillaoficial" target="_blank" class="me-4 text-reset" style=" color: #cae9ff;">
           <i class="fab fa-facebook-f"></i>
           Facebook
@@ -76,12 +78,12 @@
             </p>
          </div>
           <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-          
+
             <p>
                 <strong><a href="{% url 'home' %}"class="text-reset" style=" color: #cae9ff; padding-left:30px">CuidaMe</a></strong>
-              
+
             </p>
-            
+
             <img src="{% static 'Images/App_logo.png' %}" alt="Logo de CuidaMe" width="200" height="200">
             <a href="{% url 'about_us' %}" style="color: #cae9ff; padding-left: 30px;">About Us</a>
 
@@ -103,5 +105,6 @@
       <a class="text-reset fw-bold"style=" color: #cae9ff;" href="/">CuidaMe.com</a>
     </div>
   </footer>
+  {% block scripts %}{% endblock scripts %}
 </body>
     </html>

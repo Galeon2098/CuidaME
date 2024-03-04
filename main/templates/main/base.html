@@ -19,15 +19,21 @@
       <h3 style="padding-left: 10px;"><a href="/" style="color: #cae9ff; text-decoration: none;"><strong>CuidaMe</strong></a></h3>
       <nav>
         {% if request.user.is_authenticated %}
-          <a class="btn "href="{% url 'home' %}"role="button">Home</a>
-          <a class="btn " href="/" role="button">History</a>
-          <a class="btn " href="/" role="button">Log Out</a>
+          <a class="btn" href="{% url 'my_profile_detail' %}" role="button">My profile</a>
+          
+          {% if request.user.cuidador %}
+          <a class="btn" href="/offer/my_offers" role="button">My offers</a>
+          <a class="btn" href="/offer/list" role="button">Offers list</a>
+          {% endif %}
+
+          {% if request.user.cliente %}
+          <a class="btn" href="/offer/list" role="button">Offers list</a>
+          {% endif %}
+          
+          <a class="btn " href="{% url 'logout' %}" role="button">Log Out</a>
         {% else %}
-          <a class="btn "href="{% url 'home' %}"role="button">Home</a>
-          <a class="btn" href="/" role="button">My profile</a>
           <a class="btn " href="/" role="button">Sign up</a>
           <a class="btn" href="/" role="button">Sign in</a>
-          <a class="btn " href="/" role="button">My ads</a>
           
         {% endif %}
       </nav>
@@ -82,7 +88,7 @@
             </p>
             
             <img src="{% static 'Images/App_logo.png' %}" alt="Logo de CuidaMe" style="width: 100%; height: auto;" />
-            <p class="text-center"><a style="color: #cae9ff;">About Us</a></p>
+            <p class="text-center"><a href="{% url 'about_us' %}" style="color: #cae9ff;">About Us</a></p>
 
           </div>
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4"  style=" color: #cae9ff;">
@@ -101,5 +107,14 @@
       <a href="/" class="text-reset fw-bold" style="color: #cae9ff !important; text-decoration: none;">CuidaMe.com</a>
     </div>
   </footer>
+  {% block include_js %}
+  {% endblock %}
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      // DOM loaded
+      {% block domready %}
+      {% endblock %}
+    })
+  </script>
 </body>
 </html>
