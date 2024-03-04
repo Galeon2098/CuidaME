@@ -126,5 +126,5 @@ def send_chat_request(request, cuidador_id, offer_id):
     if not existing_request:
         # Si no existe, crea una nueva solicitud con la oferta asociada
         ChatRequest.objects.create(sender=cliente.user, receiver=cuidador.user, offer=oferta)
-    return redirect('offer:list')  
+    return redirect('offer:list')
 
