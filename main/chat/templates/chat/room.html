@@ -7,9 +7,14 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-5" style="height: 100%;float: left;">
-      <form class="d-flex" role="search" style="margin-top: 2%;">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <form class="d-flex" role="search" style="margin-top: 2%; align-items: center; justify-content: center;">
+        <input style="height: 50px;" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button style="height: 50px;" class="btn btn-outline-success" type="submit">Search</button>
+        {% if user.cuidador %}
+        <a href="{% url 'chat_requests_for_caregiver' %}" style="height:70px; width: 70px; display: flex; align-items: center; justify-content: center;">
+          <img src="{% static 'Images/sobre.png' %}" style="width: 80%; height: 80%; margin-left: 10px;">
+        </a>
+        {% endif %}
     </form>
       <hr style="border: 1px solid #1B4965;opacity: 0.62;">
       <ul>
