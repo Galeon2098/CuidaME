@@ -41,7 +41,6 @@
             <th>Precio</th>
             <th>Tipo cliente</th>
             <th>Fecha de creación</th>
-            <th>Opciones</th>
         </tr>
         </thead>
         <tbody>
@@ -53,9 +52,6 @@
                     <td class="num">${{ offer.price_per_hour }}</td>
                     <td>{{ offer.client }}</td>
                     <td>{{ offer.created }}</td>
-                    <td><a href="/offer/{{offer.id}}/" class="btn btn-primary">Editar</a>   
-                        <a href="{% url 'offer:delete_offer' offer.id %}" class="btn btn-danger">Eliminar</a>
-                    </td>
                 </tr>
             {% endfor %}
         </tbody>

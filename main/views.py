@@ -6,7 +6,6 @@ from main.models import Cliente
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponse
-
 from main.offer.models import ChatRequest
 
 # Create your views here.
@@ -19,10 +18,10 @@ def register_cliente(request):
         if user_form.is_valid():
             # Guarda el formulario y sus datos
             user = user_form.save()
-            return render(request, 'main/register_done.html', {'new_user': user})
+            return render(request, 'registration/register_done.html', {'new_user': user})
     else:
         user_form = ClienteRegistrationForm()
-    return render(request, 'main/register_cliente.html', {'user_form': user_form})
+    return render(request, 'registration/register_cliente.html', {'user_form': user_form})
 
 def register_cuidador(request):
     if request.method == 'POST':
@@ -30,10 +29,17 @@ def register_cuidador(request):
         if user_form.is_valid():
             # Guarda el formulario y sus datos
             user = user_form.save()
-            return render(request, 'main/register_done.html', {'new_user': user})
+            return render(request, 'registration/register_done.html', {'new_user': user})
     else:
         user_form = CuidadorRegistrationForm()
-    return render(request, 'main/register_cuidador.html', {'user_form': user_form})
+    return render(request, 'registration/register_cuidador.html', {'user_form': user_form})
+
+def about_us(request):
+    return render(request, 'main/aboutUs.html')
+
+@login_required
+def edit_ad(request):
+    return render(request, 'main/edit_ad.html')
 
 @login_required
 def my_profile_detail(request):
@@ -90,4 +96,3 @@ def reject_chat_request(request, chat_request_id):
     chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
     chat_request.delete()
     return redirect('chat_requests_for_caregiver')
-

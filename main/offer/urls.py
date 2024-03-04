@@ -15,4 +15,3 @@ urlpatterns = [
     path('my_offers', myOffers, name='my_offers'),
     path('send_chat_request/<int:cuidador_id>/<int:offer_id>/', send_chat_request, name='send_chat_request'),
 ]
-

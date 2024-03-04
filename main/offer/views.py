@@ -74,23 +74,24 @@ def filterOffers(request):
    
     return render(request, 'offers/list.html', {'offers': offers, 'min_price_filter' : min_price_filter, 'max_price_filter': max_price_filter, 
                                                 'cliente_type_filter':cliente_type_filter, 'offer_type_filter':offer_type_filter } )
+
+
 @login_required
 def edit_offer(request, id):
     offer = get_object_or_404(Offer, pk=id)
 
     if request.user != offer.user:
         return HttpResponseForbidden("No tienes permiso para editar esta oferta.")
-    
+
     if request.method == 'POST':
         form = OfferForm(request.POST, instance=offer)
         if form.is_valid():
             form.save()
-            offers = Offer.objects.filter(user=request.user)
-            return render(request, 'offers/myOffers.html', {'offers': offers})
+            return redirect('offer:my_offers')
     else:
-        form = OfferForm(instance=offer)
-    
-    return render(request, 'offers/publish.html', {'form': form, 'offer': offer})
+        form = OfferForm(instance=offer, user=request.user)  # Pasa el usuario como argumento
+
+    return render(request, 'offers/edit_offer.html', {'form': form, 'offer': offer})
 
 @login_required
 def delete_offer(request, offer_id):
