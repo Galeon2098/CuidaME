@@ -21,12 +21,12 @@
         {% if request.user.is_authenticated %}
           <a class="btn "href="{% url 'home' %}"role="button">Home</a>
           <a class="btn " href="/" role="button">Historial</a>
-          <a class="btn " href="/" role="button">Cerrar Sesión</a>
+          <a class="btn " href="{% url 'logout' %}" role="button">Cerrar Sesión</a>
         {% else %}
           <a class="btn "href="{% url 'home' %}"role="button">Home</a>
-          <a class="btn" href="/" role="button">My profile</a>
+          <a class="btn" href="{% url 'my_profile_detail' %}" role="button">My profile</a>
           <a class="btn " href="/" role="button">Sign up</a>
-          <a class="btn" href="/" role="button">Sign in</a>
+          <a class="btn" href="{% url 'login' %}" role="button">Sign in</a>
           <a class="btn " href="/" role="button">My ads</a>
           
         {% endif %}

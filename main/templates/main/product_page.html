@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Pagos{% endblock %}
+{% load static %}
+
+{% block content %}
+    <div>
+        <h2>Plan Advanced</h2>
+        <form method="post" class="buy-form" action="{% url 'product_page' %}">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="prod_PfuP7aE6rSI8DL">
+            <button type="submit">Comprar</button>
+        </form>
+    </div>
+     <div>
+        <h2>Plan Pro</h2>
+        <form method="post" class="buy-form" action="{% url 'product_page' %}">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="prod_PfuPwBkhlSRHAP">
+            <button type="submit">Comprar</button>
+        </form>
+    </div>
+    
+{% endblock %}
+
