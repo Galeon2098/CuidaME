@@ -1,0 +1,58 @@
+name: Test Quality Assurance
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - testing
+      - backend
+      - frontend
+      - hotfix
+  pull_request:
+    branches:
+      - master
+      - develop
+      - testing
+      - backend
+      - frontend
+      - hotfix
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        pyversion: ['3.10']
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{matrix.pyversion}}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{matrix.pyversion}}
+    - name: psycopg2 prerequisites
+      run: sudo apt-get install libpq-dev
+    - name: Install dependencies and config
+      run: |
+        python -m pip install --upgrade pip
+        pip install django==4.1.1
+        pip install -r requirements.txt
+        pip install codacy-coverage
+        pip install coverage
+        cp local_settings.gactions.py local_settings.py
+    - name: Run migrations
+      run: |
+        python manage.py makemigrations
+        python manage.py migrate
+    - name: Run tests
+      run: |
+        coverage run --branch --source=. ./manage.py test  --keepdb
+        coverage xml
+    - name: Codacy Coverage Reporter
+      uses: codacy/codacy-coverage-reporter-action@v1
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        coverage-reports: coverage.xml
+

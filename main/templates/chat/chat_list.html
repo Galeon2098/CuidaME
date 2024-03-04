@@ -1,0 +1,36 @@
+
+{% extends 'main/base.html' %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5" style="height: 100%;float: left;">
+            <form class="d-flex" role="search" style="margin-top: 2%;">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <hr style="border: 1px solid #1B4965;opacity: 0.62;">
+            <ul>
+                {% for chat_request in user.cuidador.chat_requests_received.all %}
+                    <b style="color: #1B4965;font-family: Lato;font-size: 36px;line-height: 46px;">{{ chat_request.sender.username }}</b>
+                    <p>{{ chat_request.offer.title }}</p>
+                    <p>{{ chat_request.sender.location }}</p>
+                        <!-- Para aceptar oferta  -->
+                    <a class="btn btn-success" href="{% url 'accept_chat_request' chat_request.id %}" role="button" style="background-color: green; color: white;">
+                        Aceptar
+                    </a>
+                    <!-- Para denegar la oferta -->
+                    <a class="btn btn-danger" href="{% url 'reject_chat_request' chat_request.id %}" role="button" style="background-color: red;color: white;">
+                        Denegar
+                    </a>
+                    <hr style="border: 1px solid #1B4965;opacity: 0.62;position: relative;left: -20px;">
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm-7" style="background-color: white;float: right;">
+            <img src="../../static/images/Raster.png" alt="Imagen" style="width: 75%;height: 100%">
+        </div>
+    </div>
+</div>
+
+{% endblock %}
