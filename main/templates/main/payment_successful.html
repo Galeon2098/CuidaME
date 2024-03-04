@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Pagos{% endblock %}
+{% load static %}
+
+{% block content %}
+    
+    <h1>PAGO COMPLETADO</h1>
+
+    <h2>Datos del Cliente</h2>
+    <p>Nombre: {{ customer.name }}</p>
+    <p>Correo electrónico: {{ customer.email }}</p>
+    
+{% endblock %}
+
