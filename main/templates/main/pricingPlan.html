@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Subscription Plans</title>
+        <h1 style="text-align: center; color: #1B4965; font-weight: bold; margin: 20px;">Princing Plan</h1>
+        <link rel="stylesheet" href="{% static 'css/pricingPlan.css' %}">
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="pricing-table gprice-single">
+                <div class="head">
+                    <h4 class="title">Basic</h4>
+                </div>
+                <div class="content">
+                    <div class="price">
+                        <h1>$ 0.00</h1>
+                    </div>
+                    <ul>
+                        <li>- Allows users to search and access caregiver and healthcare professional profiles. </li>
+                        <li>- Basic search and filter functionalities for profiles. - Limited access to detailed profile information.</li>
+                        <li>- Limited access to detailed profile information.</li>
+                    </ul>
+                    <div class="sign-up">
+                        <a href="#" class="btn bordered radius">Choose </a>
+                    </div>
+                </div>
+            </div>
+                <div class="pricing-table gprice-single">
+                    <div class="head">
+                        <h4 class="title">Premium</h4>
+                    </div>
+                    <div class="content">
+                        <div class="price">
+                            <h1>$ 4.99</h1>
+                        </div>
+                        <ul>
+                            <li>All features of the Basic Plan, plus:</li>
+                            <li>- Full access to client management and scheduling tools.</li>
+                            <li>- Profile highlighting in caregiver searches and listings.</li>
+                            <li>- Ability to set custom rates for services offered.</li>
+                            <li>- Priority customer support.</li>
+
+                        </ul>
+                        <div class="sign-up">
+                            <a href="#" class="btn bordered radius">Choose</a>
+                        </div>
+                    </div>
+                </div>
+                    <div class="pricing-table gprice-single">
+                        <div class="head">
+                            <h4 class="title">Profesional</h4>
+                        </div>
+                        <div class="content">
+                            <div class="price">
+                                <h1>$ 20.00</h1>
+                            </div>
+                            <ul>
+                                <li>All features of the Basic and Premium plans, plus:</li>
+                                <li>- Full access to caregiver profile creation and management tools.</li>
+                                <li>- Advanced search and filter options for job opportunities.</li>
+                                <li>- Enhanced communication features with clients.</li>
+                            </ul>
+                            <div class="sign-up">
+                                <a href="#" class="btn bordered radius">Choose</a>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </body>
+    </html>
+{% endblock %}

@@ -56,8 +56,8 @@ def searchOffers(request):
     offers = Offer.objects.all()
 
     if search_query:
-        offers = offers.filter(Q(city__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
-
+        offers = offers.filter(Q(title__icontains=search_query) | Q(city__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
+    
     return render(request, 'offers/search_results.html', {'offers': offers, 'search_query': search_query})
 
 #FILTER OFFERS
@@ -80,6 +80,8 @@ def filterOffers(request):
 
     return render(request, 'offers/list.html', {'offers': offers, 'min_price_filter' : min_price_filter, 'max_price_filter': max_price_filter,
                                                 'cliente_type_filter':cliente_type_filter, 'offer_type_filter':offer_type_filter } )
+
+
 @login_required
 def edit_offer(request, id):
     offer = get_object_or_404(Offer, pk=id)
@@ -91,12 +93,11 @@ def edit_offer(request, id):
         form = OfferForm(request.POST, instance=offer)
         if form.is_valid():
             form.save()
-            offers = Offer.objects.filter(user=request.user)
-            return render(request, 'offers/myOffers.html', {'offers': offers})
+            return redirect('offer:my_offers')
     else:
-        form = OfferForm(instance=offer)
+        form = OfferForm(instance=offer, user=request.user)  # Pasa el usuario como argumento
 
-    return render(request, 'offers/publish.html', {'form': form, 'offer': offer})
+    return render(request, 'offers/edit_offer.html', {'form': form, 'offer': offer})
 
 @login_required
 def delete_offer(request, offer_id):

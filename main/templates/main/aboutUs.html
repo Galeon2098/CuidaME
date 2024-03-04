@@ -1,5 +1,5 @@
 {% extends "main/base.html" %}
-{% block title %}About Cuidame{% endblock %}
+{% block title %}Sobre Cuidame{% endblock %}
 {% load static %}
 
 {% block content %}
@@ -27,9 +27,13 @@
         <div class="image2"><img src="{% static 'images/cuidadora-anciano.jpg' %}" alt=""></div>
 
     </div>
-    <div class="section-service">
-        <div class="container1">
-            <h2 class="services-text">Jugando, Aprendiendo, Creciendo: CuidaMe con Cariño</h2>
+
+    <div class="row" style="margin-top: 5%;">
+        <div class="col-md-7">
+            <h3 style="margin-left: 10%; margin-top: 25%;color: #1B4965;">Jugando, Aprendiendo, Creciendo: CuidaMe con Cariño</h3>
+        </div>
+        <div class="col-md-5">
+            <img style="border-radius: 2%; width: 80%; height: auto;" src="../../static/images/cuidados_ninyos.jpeg" alt="">
         </div>
         <!--<div class="image1"><img src="../../images/Niñera.jpg" alt=""></div> -->
         <div class="image2"><img src="{% static 'images/Niñera.jpg' %}" alt=""></div>
@@ -44,5 +48,8 @@
         <div class="image2"><img src="{% static 'images/Limpiador.jpg' %}" alt=""></div>
 
     </div>
+
+</div>
+    
 {% endblock %}
 

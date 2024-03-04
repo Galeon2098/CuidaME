@@ -16,16 +16,19 @@ from main.offer.models import ChatRequest
 def index(request):
     return render(request, 'main/home.html')
 
+def pricing_plan(request):
+    return render(request, 'main/pricingPlan.html')
+
 def register_cliente(request):
     if request.method == 'POST':
         user_form = ClienteRegistrationForm(request.POST)
         if user_form.is_valid():
             # Guarda el formulario y sus datos
             user = user_form.save()
-            return render(request, 'main/register_done.html', {'new_user': user})
+            return render(request, 'registration/register_done.html', {'new_user': user})
     else:
         user_form = ClienteRegistrationForm()
-    return render(request, 'main/register_cliente.html', {'user_form': user_form})
+    return render(request, 'registration/register_cliente.html', {'user_form': user_form})
 
 def register_cuidador(request):
     if request.method == 'POST':
@@ -33,10 +36,10 @@ def register_cuidador(request):
         if user_form.is_valid():
             # Guarda el formulario y sus datos
             user = user_form.save()
-            return render(request, 'main/register_done.html', {'new_user': user})
+            return render(request, 'registration/register_done.html', {'new_user': user})
     else:
         user_form = CuidadorRegistrationForm()
-    return render(request, 'main/register_cuidador.html', {'user_form': user_form})
+    return render(request, 'registration/register_cuidador.html', {'user_form': user_form})
 
 def about_us(request):
     return render(request, 'main/aboutUs.html')
