@@ -1,50 +1,19 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
+{% block content %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Página Web</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        h1 {
-            margin: 0;
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 </head>
 <body>
 
 <header>
-    <h1>Mi Página Web</h1>
+    <h1>Home</h1>
 </header>
 
 <div class="container">
@@ -59,3 +28,4 @@
 
 </body>
 </html>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "main/base.html" %}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CuidaME - Lista de Ofertas</title>
+  <link rel="stylesheet" href="{% static "css/base.css" %}">
+  <!-- Agrega esto en el encabezado de tu HTML -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+</head>
+
+<body>
+    <div style="margin: 20px;">
+        <div>
+            <a href="/offer">
+                <img src="{% static 'Images/back.png' %}" alt="Back" style="width: 85px; height: 85px;">
+            </a>
+        </div>
+        <br>
+        <div class="title-container">
+            <h1>Resultados de la Búsqueda:</h1><br>
+        </div>  
+        <div class="row">
+            {% if offers %}
+                {% for offer in offers %}
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card offer-card">
+                            <div class="card-body">
+                                <h2 class="card-title text-center offer-card-title">{{ offer.title }}</h2>
+                                <hr>
+                                <p class="card-text offer-card-text text-center"><strong>Usuario:</strong> {{ offer.user }}</p>
+                                <p class="card-text offer-card-text text-center"><strong>Precio:</strong> {{ offer.price_per_hour }} €/h</p>
+                                <p class="card-text offer-card-text text-center"><strong>Tipo de Oferta:</strong> 
+                                    {% if offer.offer_type == 'CO' %}
+                                        Compañía
+                                    {% elif offer.offer_type == 'CU' %}
+                                        Cuidado
+                                    {% elif offer.offer_type == 'TR' %}
+                                        Transporte
+                                    {% elif offer.offer_type == 'DO' %}
+                                        Compra a Domicilio
+                                    {% elif offer.offer_type == 'OT' %}
+                                        Otros
+                                    {% endif %}
+                                </p>
+                                <p class="card-text offer-card-text text-center"><strong>Tipo de Cliente:</strong>
+                                    {% if offer.client == 'DF' %}
+                                        Discapacidad Física
+                                    {% elif offer.client == 'DM' %}
+                                        Discapacidad Mental
+                                    {% elif offer.client == 'NI' %}
+                                        Niños
+                                    {% elif offer.client == 'AN' %}
+                                        Ancianos
+                                    {% elif offer.client == 'OT' %}
+                                        Otros
+                                    {% endif %}
+                                </p>
+                                <p class="card-text offer-card-text text-center"><strong>Ciudad:</strong> {{ offer.city }}</p>
+                                <hr>
+                                <div class="text-center">
+                                    <form action="{{ offer.get_absolute_url }}" method="get">
+                                        <button type="submit" class="btn light-btn">Ver Detalles</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="col">No hay ofertas disponibles</p>
+            {% endif %}
+        </div>
+    </div> 
+</body>
+</html>
+{% endblock %}

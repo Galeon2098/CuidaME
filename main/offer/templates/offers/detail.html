@@ -1,0 +1,79 @@
+{% extends "main/base.html" %}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CuidaME - Lista de Ofertas</title>
+  <link rel="stylesheet" href="{% static "css/base.css" %}">
+  <!-- Agrega esto en el encabezado de tu HTML -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+</head>
+
+<body>
+
+    <div style="margin-left:5%; margin-right:5%; margin-bottom:5%;">
+        <div>
+            <a href="/offer">
+                <img src="{% static 'Images/back.png' %}" alt="Back" style="width: 85px; height: 85px;">
+            </a>
+        </div>
+        <br>
+        <div class="card offer-card" style="max-width: 500px;">
+            <div class="card-body">
+                <h2 class="card-title offer-card-title">{{ offer.title }}</a></h2>
+                <hr>
+                <p class="card-text offer-card-text"><strong>Usuario:</strong> {{ offer.user }}</p>
+                <p class="card-text offer-card-text"><strong>Precio:</strong> {{ offer.price_per_hour }} €/h</p>
+                <p class="card-text offer-card-text"><strong>Tipo de Oferta:</strong> 
+                    {% if offer.offer_type == 'CO' %}
+                        Compañía
+                    {% elif offer.offer_type == 'CU' %}
+                        Cuidado
+                    {% elif offer.offer_type == 'TR' %}
+                        Transporte
+                    {% elif offer.offer_type == 'DO' %}
+                        Compra a Domicilio
+                    {% elif offer.offer_type == 'OT' %}
+                        Otros
+                    {% endif %}
+                </p>
+                <p class="card-text offer-card-text"><strong>Tipo de Cliente:</strong>
+                    {% if offer.client == 'DF' %}
+                        Discapacidad Física
+                    {% elif offer.client == 'DM' %}
+                        Discapacidad Mental
+                    {% elif offer.client == 'NI' %}
+                        Niños
+                    {% elif offer.client == 'AN' %}
+                        Ancianos
+                    {% elif offer.client == 'OT' %}
+                        Otros
+                    {% endif %}
+                </p>
+                <p class="card-text offer-card-text"><strong>Ciudad:</strong> {{ offer.city }}</p>
+                <hr>
+                <p class="card-text offer-card-text" style="margin-bottom: 1px;"><strong>Descripción:</strong></p>
+                <div class="offer-card-description">
+                    <p class="card-text offer-card-text" style="margin-top: 0px; margin-left: 5px; margin-right: 5px;">{{ offer.description }}</p>
+                </div>
+                    <form method="post" action="{% url 'offer:send_chat_request' cuidador_id=offer.user.cuidador.id offer_id=offer.id %}">
+                        <div style="display: flex;align-items: center;justify-content: center;">
+                            <button type="submit" style="background-color: #1B4965; border-radius: 5px; width: 373px; height: 66px;">
+                                Enviar Solicitud de Chat
+                            </button>
+                        </div>
+                        {% csrf_token %}       
+                    </form>
+            </div>
+        </div>
+    </div>
+ 
+</body>
+</html>
+{% endblock %}
