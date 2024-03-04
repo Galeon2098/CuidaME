@@ -35,6 +35,13 @@ def register_cuidador(request):
         user_form = CuidadorRegistrationForm()
     return render(request, 'main/register_cuidador.html', {'user_form': user_form})
 
+def about_us(request):
+    return render(request, 'main/aboutUs.html')
+
+@login_required
+def edit_ad(request):
+    return render(request, 'main/edit_ad.html')
+
 @login_required
 def my_profile_detail(request):
     user = request.user
@@ -90,4 +97,3 @@ def reject_chat_request(request, chat_request_id):
     chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
     chat_request.delete()
     return redirect('chat_requests_for_caregiver')
-
