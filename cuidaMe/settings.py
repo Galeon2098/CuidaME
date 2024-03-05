@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': 'cuidaME',
         'USER': 'cuidaMEUser',
         'PASSWORD': 'nYqs$D6TbFrhZz%WRa4dns',
-        'HOST': '/cloudsql/ispp-09-cuidame:europe-west1:cuidame-instance',
+        'HOST': 'ispp-09-cuidame:europe-west1:cuidame-instance',
         'PORT': '5432',
     'OPTIONS': {
             'client_encoding': 'UTF8',
