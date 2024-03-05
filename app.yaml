@@ -2,7 +2,7 @@ runtime: python310
 
 env_variables:
   # This setting is used in settings.py to configure your ALLOWED_HOSTS
-  APPENGINE_URL: CuidaMe.oa.r.appspot.com
+  APPENGINE_URL: CuidaMe.ew.r.appspot.com
 
 handlers:
 # This configures Google App Engine to serve the files in the app's static
