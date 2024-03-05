@@ -1,4 +1,6 @@
 runtime: python310
+threadsafe: yes
+api_version: 1
 
 env_variables:
   # This setting is used in settings.py to configure your ALLOWED_HOSTS
@@ -14,4 +16,4 @@ handlers:
 # required when static routes are defined, but can be omitted (along with
 # the entire handlers section) when there are no static files defined.
 - url: /.*
-  script: auto
+  script: main.app
