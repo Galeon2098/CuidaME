@@ -1,4 +1,4 @@
-runtime: python37
+runtime: python310
 
 env_variables:
   # This setting is used in settings.py to configure your ALLOWED_HOSTS
