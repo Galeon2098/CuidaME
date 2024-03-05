@@ -1,6 +1,4 @@
 runtime: python39
-threadsafe: yes
-api_version: 1
 
 env_variables:
   # This setting is used in settings.py to configure your ALLOWED_HOSTS
