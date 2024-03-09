@@ -8,7 +8,6 @@ from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
 import datetime
 from main.models import Cliente, Cuidador
-from .models import Offer
 from .forms import OfferForm
 import datetime
 from django.contrib import messages
