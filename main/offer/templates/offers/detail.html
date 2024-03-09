@@ -1,54 +1,62 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'css/offerDetails.css' %}">
+  <link rel="stylesheet" href="{% static 'css/offerDetails.css' %}">
 {% endblock styles %}
 {% block scripts %}
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 {% endblock scripts %}
 
 {% block header %}
-    <style>
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: #62B6CB;
-            border-radius: 55px;
-            width: 832px;
-            height: 405px;
-            margin: 0 auto;
-        }
+  <style>
+    /* Responsive styles for form container */
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      background-color: #62B6CB;
+      border-radius: 15px;
+      padding: 5%;
+      width: 100%; /* Responsive width */
+      max-width: 600px; /* Adjust as needed */
+      text-align: center;
+    }
 
-        .large-input {
-            background-color: #FFFFFF;
-            border: 1px solid #8492A6;
-            border-radius: 5px;
-            width: 630px;
-            height: 140px;
-        }
-        #rating {
-            width: 40%;
-            padding: 12px 20px;
-            margin-left: 180px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
+    /* Responsive styles for large input */
+    .large-input {
+      background-color: #FFFFFF;
+      border: 1px solid #8492A6;
+      border-radius: 5px;
+      width: 80%; /* Responsive width */
+      padding: 10px;
+      margin-bottom: 10px;
+    }
 
-        .btn-primary {
-            background-color: #1B4965;
-            color: #FFFFFF;
-            border-radius: 5px;
-            width: 300px;
-            height: 48px;
-            margin-left: 160px;
+    /* Responsive styles for rating and button */
+    #rating,
+    .btn-primary {
+      width: 100%; /* Responsive width */
+      margin-bottom: 10px;
+    }
 
-        }
-    </style>
+    /* Styles for overlay */
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Dark background with opacity */
+      justify-content: center;
+      align-items: center;
+      z-index: 1000; /* Ensures the layer is above other elements */
+    }
+
+  </style>
 {% endblock header %}
+
 {% block content %}
 {% load static %}
 
@@ -67,19 +75,15 @@
 
 <body>
 
-    <div style="margin-left:5%; margin-right:5%; margin-bottom:5%;">
-        <div>
-           
-        </div>
-        <br>
-        <div class="card offer-card" style="max-width: 500px;">
+    <div style="display: flex; align-items: center; justify-content: center; margin:3%;">
+        <div class="card offer-card" style="max-width: 600px;">
             <div class="card-body">
                 {% for message in messages %}
-        <div class="alert alert-warning" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-                <h2 class="card-title offer-card-title">{{ offer.title }}</a></h2>
+                <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                <h1 class="card-title offer-card-title" style="color:#62B6CB; text-shadow: 2px 2px 2px #000000; text-align:center; font-size:230%;">{{ offer.title }}</a></h1>
                 <hr>
                 <p class="card-text offer-card-text"><strong>Usuario:</strong> {{ offer.user }}</p>
                 <p class="card-text offer-card-text"><strong>Precio:</strong> {{ offer.price_per_hour }} €/h</p>
@@ -112,49 +116,75 @@
                 <p class="card-text offer-card-text"><strong>Ciudad:</strong> {{ offer.city }}</p>
                 <hr>
                 <p class="card-text offer-card-text" style="margin-bottom: 1px;"><strong>Descripción:</strong></p>
-                <div class="offer-card-description">
+                <div class="offer-card-description" style="margin-bottom:5%;">
                     <p class="card-text offer-card-text" style="margin-top: 0px; margin-left: 5px; margin-right: 5px;">{{ offer.description }}</p>
                 </div>
-                <h2>Valoraciones del usuario</h2>
-    {% for review in offer_reviews %}
-        <p>{{ review.valoration }} - {{ review.description }}</p>
-    {% empty %}
-        <p>No hay valoraciones para esta oferta.</p>
-    {% endfor %}
-    {% if offer.average_rating %}
-    <p>Media de las valoraciones de la oferta: {{ offer.average_rating }}</p>
-    {% endif %}
+                <hr>
+                <h2 style="color:#62B6CB; text-shadow: 2px 2px 2px #000000;">Valoraciones del usuario</h2>
+                {% for review in offer_reviews %}
+                    <p>{{ review.valoration }} - {{ review.description }}</p>
+                {% empty %}
+                    <p>No hay valoraciones para esta oferta.</p>
+                {% endfor %}
+                {% if offer.average_rating %}
+                <p>Media de las valoraciones de la oferta: {{ offer.average_rating }}</p>
+                {% endif %}
 
 
-
-    <div class="form-container">
-        <form method="post" action="{% url 'offer:review' id=offer.id %}">
-            {% csrf_token %}
-            <input type="text" id="commentary" name="commentary" placeholder="Escribe un comentario" class="large-input"><br><br>
-            <select id="rating" name="rating">
-                <option value="" selected disabled>Selecciona una puntuación</option>
-                <option value="1">⭐</option>
-                <option value="2">⭐⭐</option>
-                <option value="3">⭐⭐⭐</option>
-                <option value="4">⭐⭐⭐⭐</option>
-                <option value="5">⭐⭐⭐⭐⭐</option>
-            </select>
-            <br><br>
-            <button type="submit" class="btn btn-primary">Añadir comentario</button>
-        </form>
-    </div>
-
-                    <form method="post" action="{% url 'offer:send_chat_request' cuidador_id=offer.user.cuidador.id offer_id=offer.id %}">
-                        <div style="display: flex;align-items: center;justify-content: center;">
-                            <button type="submit" style="background-color: #1B4965; border-radius: 5px; width: 373px; height: 66px;">
-                                Enviar Solicitud de Chat
-                            </button>
+                <div id="overlay">
+                    <div class="form-container">
+                      <form method="post" action="{% url 'offer:review' id=offer.id %}">
+                        {% csrf_token %}
+                        <textarea type="text" class="form-control" id="commentary" name="commentary" placeholder="Escribe un comentario" rows="3"></textarea>
+                        <div style="margin-top:3%;">
+                          <select class="form-select form-control" id="rating" name="rating">
+                            <option value="" selected disabled>Selecciona una puntuación</option>
+                            <option value="1">⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="4">⭐⭐⭐⭐</option>
+                            <option value="5">⭐⭐⭐⭐⭐</option>
+                          </select>
                         </div>
+                        <button type="submit" class="btn btn-primary">Añadir valoración</button>
+                        
+                      </form>
+                      <button class="btn btn-danger" onclick="cerrarOverlay()" style="background-color: #f8705e; color:white;">Cancelar</button>
+                    </div>
+                </div>
+                  
+                  
+
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <button type="submit" onclick="mostrarFormulario()" class="btn btn-primary" >
+                        Valorar
+                    </button>
+                </div>
+                    
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <form method="post" action="{% url 'offer:send_chat_request' cuidador_id=offer.user.cuidador.id offer_id=offer.id %}">
+                        <button type="submit" class="btn btn-primary">Enviar Solicitud de Chat</button>
                         {% csrf_token %}       
                     </form>
+                </div>
             </div>
         </div>
+        
     </div>
+
+
+
+    <script>
+
+        function mostrarFormulario() {
+            var overlay = document.getElementById('overlay');
+            overlay.style.display = 'flex';
+        }
+        function cerrarOverlay() {
+            var overlay = document.getElementById('overlay');
+            overlay.style.display = 'none';
+        }
+    </script>
  
 </body>
 </html>

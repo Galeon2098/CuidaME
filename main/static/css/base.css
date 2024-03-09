@@ -102,7 +102,7 @@
 
 .offer-card-title {
   font-weight: bolder;
-  font-size: 150%;
+  font-size: 300%;
   color: #62B6CB;
   -webkit-text-stroke: 1px #1B4965; /* Para navegadores basados en WebKit como Chrome y Safari */
   text-stroke: 1px #1B4965; /* Para navegadores que admiten la propiedad text-stroke */
