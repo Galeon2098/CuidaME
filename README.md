@@ -12,6 +12,9 @@ Para instalar el entorno:
 4. Ejecutar projecto:
  python manage.py runserver (debes estar en la carpeta del manage.py)
 <br><br><br>
+URL de nuestra Landing Page:
+https://gabrielvidar01.wixsite.com/cuidame-1
+<br><br><br>
 URL de despliegue S1:
 https://ispp-09-cuidame.oa.r.appspot.com
 <br><br><br>
