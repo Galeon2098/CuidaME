@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
 class Offer(models.Model):
 
     TYPE_CHOICES = (
@@ -31,7 +32,7 @@ class Offer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    User.add_to_class('Total_average_rating', models.FloatField(default=0))
+    Cuidador.add_to_class('Total_average_rating', models.FloatField(default=0))
 
     def __str__(self):
         return self.title
@@ -46,8 +47,9 @@ class Offer(models.Model):
         return sum(valorations) / len(valorations) if valorations else 0
 
     def save(self, *args, **kwargs):
-        self.user.Total_average_rating = self.calculate_total_average_rating()
-        self.user.save()
+        if hasattr(self.user, 'cuidador') and self.user.cuidador:
+            self.user.cuidador.Total_average_rating = self.calculate_total_average_rating()
+            self.user.cuidador.save()
         super().save(*args, **kwargs)
 
 
@@ -59,4 +61,4 @@ class Review(models.Model):
 
     def __str__(self):
         return str(self.user.username)
-    
+
