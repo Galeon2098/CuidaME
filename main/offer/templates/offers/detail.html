@@ -143,8 +143,8 @@
             <button type="submit" class="btn btn-primary">Añadir comentario</button>
         </form>
     </div>
-
-                    <form method="post" action="{% url 'offer:send_chat_request' cuidador_id=offer.user.cuidador.id offer_id=offer.id %}">
+                {% if user.cliente %}
+                    <form method="post" action="{% url 'chat:send_chat_request' cuidador_id=offer.user.cuidador.id offer_id=offer.id %}">
                         <div style="display: flex;align-items: center;justify-content: center;">
                             <button type="submit" style="background-color: #1B4965; border-radius: 5px; width: 373px; height: 66px;">
                                 Enviar Solicitud de Chat
@@ -152,6 +152,7 @@
                         </div>
                         {% csrf_token %}       
                     </form>
+                {% endif %}
             </div>
         </div>
     </div>
