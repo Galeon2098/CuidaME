@@ -122,7 +122,24 @@
                 <hr>
                 <h2 style="color:#62B6CB; text-shadow: 2px 2px 2px #000000;">Valoraciones del usuario</h2>
                 {% for review in offer_reviews %}
-                    <p>{{ review.valoration }} - {{ review.description }}</p>
+                        {% if review.valoration == 1 %}
+                        <p>⭐  {{ review.description }}</p>
+                        <hr>
+                    {% elif review.valoration == 2 %}
+                        <p>⭐⭐  {{ review.description }}</p>
+                        <hr>
+                    {% elif review.valoration == 3 %}
+                        <p>⭐⭐⭐  {{ review.description }}</p>
+                        <hr>
+                    {% elif review.valoration == 4 %}
+                        <p>⭐⭐⭐⭐  {{ review.description }}</p>
+                        <hr>
+                    {% elif review.valoration == 5 %}
+                        <p>⭐⭐⭐⭐⭐  {{ review.description }}</p>
+                        <hr>
+                    {% endif %}
+                    
+
                 {% empty %}
                     <p>No hay valoraciones para esta oferta.</p>
                 {% endfor %}
