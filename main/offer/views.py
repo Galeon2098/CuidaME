@@ -48,7 +48,7 @@ def listOffers(request):
 def offerDetail(request, id):
     offer = get_object_or_404(Offer, id=id, available=True)
     form = ReviewForm()
-    offer_reviews = Review.objects.filter(offer=offer)
+    offer_reviews = Review.objects.filter(offer__user = offer.user)
     return render(request, 'offers/detail.html', {'offer': offer, 'form': form, 'offer_reviews': offer_reviews})
 
 #SEARCH  BAR OFFERS
