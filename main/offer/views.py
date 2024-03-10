@@ -44,7 +44,9 @@ def listOffers(request):
 #OFFER DETAIL
 def offerDetail(request, id):
     offer = get_object_or_404(Offer, id=id, available=True)
-    return render(request, 'offers/detail.html', {'offer': offer})
+    form = ReviewForm()
+    offer_reviews = Review.objects.filter(offer__user = offer.user)
+    return render(request, 'offers/detail.html', {'offer': offer, 'form': form, 'offer_reviews': offer_reviews})
 
 #SEARCH  BAR OFFERS
 def searchOffers(request):
@@ -148,12 +150,4 @@ def rate_offer(request, id):
 
 
     return redirect('offer:detail', id=id)
-
-
-def offer_detail(request, offer_id):
-    offer = get_object_or_404(Offer, pk=offer_id)
-    form = ReviewForm()
-    offer_reviews = Review.objects.filter(offer=offer)
-
-    return render(request, 'offers/detail.html', {'offer': offer, 'form': form, 'offer_reviews': offer_reviews})
 
