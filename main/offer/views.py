@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseForbidden
 
-from .models import ChatRequest
+from main.chat.models import ChatRequest
 from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
 import datetime
