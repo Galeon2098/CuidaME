@@ -35,7 +35,6 @@ def register_cliente(request):
 
 def register_cuidador(request):
     if request.method == 'POST':
-        #original_form = UserCreationForm(request.POST);
         user_form = CuidadorRegistrationForm(request.POST)
         if user_form.is_valid():
             # Guarda el formulario y sus datos
