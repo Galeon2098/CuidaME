@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Chat Rooms Abiertos</h2>
+            <hr>
+            {% if chat_requests %}
+                <ul>
+                    {% for chat_request in chat_requests %}
+                        <li>
+                            {% if user.cuidador %}
+                                <b>{{ chat_request.sender.username }}</b>:
+                            {% elif user.cliente %}
+                                <b>{{ chat_request.receiver.username }}</b>:
+                            {% endif %}
+                            <a href="{% url 'chat:chat_room' chat_request.id %}">{{ chat_request.offer.title }}</a>
+                            {% if user.cuidador %}
+                                <a class="btn btn-danger" href="{% url 'chat:reject_chat_request' chat_request.id %}" role="button" style="background-color: red;color: white;">
+                                    Denegar
+                                </a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hay chat rooms abiertos en este momento.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

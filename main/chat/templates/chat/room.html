@@ -11,7 +11,7 @@
         <input style="height: 50px;" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
         <button style="height: 50px;" class="btn btn-outline-success" type="submit">Buscar</button>
         {% if user.cuidador %}
-        <a href="{% url 'chat_requests_for_caregiver' %}"
+        <a href="{% url 'chat:chat_requests_for_caregiver' %}"
           style="height:70px; width: 70px; display: flex; align-items: center; justify-content: center;">
           <img src="{% static 'Images/sobre.png' %}" style="width: 80%; height: 80%; margin-left: 10px;">
         </a>
