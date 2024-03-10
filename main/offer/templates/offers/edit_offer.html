@@ -23,9 +23,8 @@
         <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">
 
             <img src="{% static 'Images/carer.png' %}" alt="Caregiver" class="img-fluid" style="width: 100%; max-width: 50%; height: auto; margin-bottom: 100px;">
-            <div class="col-md-6" style="background-color: #62B6CB; color: #1B4965; padding: 20px; border-radius: 10%; font-size: 18px;">
+            <div class="col-md-6" style="background-color: #62B6CB; color: #1B4965; padding: 5%; border-radius: 10%; font-size: 100%;">
                 <div class="container-fluid" style="display: flex; height: 30%;">
-
                 </div>
 
                 <div class="container" style="display: flex; justify-content: center; position: relative;">
@@ -47,7 +46,10 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="{{ form.title.id }}" style="font-size: 120%;"><b>Título:</b></label>
-                        &nbsp; {{ form.title }}
+                        <textarea name="{{ form.title.name }}" class="form-control" rows="1" style="font-size:100%;">{{ form.title.value }}</textarea>
+                        {% if form.title.errors %}
+                        <p>{{"Debe tener un título de máximo de 75 caracteres"}}</p>
+                    {% endif %}
                     </div>
 
                     <div class="form-group">
@@ -62,17 +64,26 @@
 
                     <div class="form-group">
                         <label for="{{ form.description.id }}" style="font-size: 120%;"><b>Descripción:</b></label>
-                        <textarea name="{{ form.description.name }}" class="form-control" rows="3" style="font-size:100%;">{{ form.description.value }}</textarea>
+                        <textarea name="{{ form.description.name }}" class="form-control" rows="3" style="font-size:100%;", value="{{offer.description}}">{{ form.description.value }}</textarea>
+                        {% if form.description.errors %}
+                        <p>{{ "La oferta debe tener una descripción" }}</p>
+                    {% endif %}
                     </div>
                     
                     <div class="form-group">
                         <label for="{{ form.price_per_hour.id }}" style="font-size: 120%;"><b>Precio por hora (€):</b></label>
-                        &nbsp; {{ form.price_per_hour }}
+                        <textarea name="{{ form.price_per_hour.name }}" class="form-control" rows="1" style="font-size:100%;">{{ form.price_per_hour.value }}</textarea>
+                        {% if form.price_per_hour.errors %}
+                            <p>{{"El precio debe ser superior a 1.00 e inferior a 100.00" }}</p>
+                        {% endif %}
                     </div>
 
                     <div class="form-group">
                         <label for="{{ form.city.id }}" style="font-size: 120%;"><b>Ciudad:</b></label>
-                        &nbsp; {{ form.city }}
+                        <textarea name="{{ form.city.name }}" class="form-control" rows="1" style="font-size:100%;">{{ form.city.value }}</textarea>
+                        {% if form.city.errors %}
+                        <p>{{ "La oferta debe tener una ciudad" }}</p>
+                    {% endif %}
                     </div>
 
                     <div class="form-group d-flex justify-content-center">

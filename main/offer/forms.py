@@ -28,6 +28,9 @@ class OfferForm(forms.ModelForm):
     class Meta:
         model = Offer
         fields = ['title', 'offer_type', 'client', 'description', 'price_per_hour', 'city']
+        widgets = {
+            'price_per_hour': forms.NumberInput(attrs={'step': '0.01'})
+        }
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
