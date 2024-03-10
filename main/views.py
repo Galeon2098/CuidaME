@@ -26,17 +26,24 @@ def register_cliente(request):
             # Guarda el formulario y sus datos
             user = user_form.save()
             return render(request, 'registration/register_done.html', {'new_user': user})
+        else:
+            # Si el formulario no es válido, mostrar el formulario con los errores
+            return render(request, 'registration/register_cliente.html', {'form': user_form})
     else:
         user_form = ClienteRegistrationForm()
     return render(request, 'registration/register_cliente.html', {'user_form': user_form})
 
 def register_cuidador(request):
     if request.method == 'POST':
+        #original_form = UserCreationForm(request.POST);
         user_form = CuidadorRegistrationForm(request.POST)
         if user_form.is_valid():
             # Guarda el formulario y sus datos
             user = user_form.save()
             return render(request, 'registration/register_done.html', {'new_user': user})
+        else:
+            # Si el formulario no es válido, mostrar el formulario con los errores
+            return render(request, 'registration/register_cuidador.html', {'form': user_form})
     else:
         user_form = CuidadorRegistrationForm()
     return render(request, 'registration/register_cuidador.html', {'user_form': user_form})
