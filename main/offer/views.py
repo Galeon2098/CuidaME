@@ -4,8 +4,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseForbidden
-
-from main.chat.models import ChatRequest
 from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
 import datetime
