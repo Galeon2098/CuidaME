@@ -179,7 +179,7 @@
                 </div>
                     
                 <div style="display: flex; align-items: center; justify-content: center;">
-                    <form method="post" action="{% url 'offer:send_chat_request' cuidador_id=offer.user.cuidador.id offer_id=offer.id %}">
+                    <form method="post" action="{% url 'chat:send_chat_request' cuidador_id=offer.user.cuidador.id offer_id=offer.id %}">
                         <button type="submit" class="btn btn-primary">Enviar Solicitud de Chat</button>
                         {% csrf_token %}       
                     </form>
