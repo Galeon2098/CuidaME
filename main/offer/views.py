@@ -4,13 +4,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseForbidden
+
+from .models import ChatRequest
 from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
 import datetime
-from django.db.models import Avg
 from main.models import Cliente, Cuidador
-from .models import ChatRequest, Offer
-from .forms import OfferForm
 import datetime
 from django.contrib import messages
 
