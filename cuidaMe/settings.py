@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import json
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
 
 # Load environment variables from .env file
 load_dotenv()
@@ -24,9 +26,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-dwje-%dk68nu%%uh9vctrh=na^do-4r=o0g$yt!o-&ltn637ad'
 
+with open(os.path.join(BASE_DIR, 'secret.json')) as secret_file:
+    secrets= json.load(secret_file)
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {0} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = get_secret("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = ['*','.ew.r.appspot.com', 'localhost']   #'127.0.0.1'
@@ -88,8 +101,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'cuidaME',
         'USER': 'cuidaMEUser',
-        'PASSWORD': 'nYqs$D6TbFrhZz%WRa4dns',
-        'HOST': '/cloudsql/ispp-09-cuidame:europe-west1:cuidame-instance',
+        'PASSWORD': get_secret("POSTGRES_PASSWORD"),
+        'HOST': '35.187.82.200',
         'PORT': '5432',
     'OPTIONS': {
             'client_encoding': 'UTF8',

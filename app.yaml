@@ -5,7 +5,7 @@ env_variables:
     # Tus variables de entorno aquí
   APPENGINE_URL: CuidaMe.ew.r.appspot.com
   DJANGO_SETTINGS_MODULE: "cuidaMe.settings"
-  DATABASE_URL: "postgres://cuidaMEUser:nYqs$D6TbFrhZz%WRa4dns@/cuidaME?host=/cloudsql/ispp-09-cuidame:europe-west1:cuidame-instance"
+  
 
     
 handlers:
