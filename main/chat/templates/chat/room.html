@@ -56,6 +56,19 @@
       <div class="col-md-9">
         <div class="chat-body" id="chat">
           <!-- Aquí se mostrarán los mensajes del chat -->
+          {% for mensaje in messages %}
+              <div class="message {% if mensaje.user.id == user.id %}me{% else %}other{% endif %}">
+                {% if mensaje.user.id != user.id %}
+                  <strong>{{ mensaje.user.username }}</strong>
+                {% endif %}
+                {% if mensaje.user.id == user.id %}
+                  <strong>Me</strong>
+                {% endif %}
+                  
+                  <span class="date">{{ mensaje.timestamp }}</span><br>
+                  {{ mensaje.message }}
+              </div>
+          {% endfor %}
         </div>
       </div>
       <div class="chat-footer" id="chat-input" style="position: sticky; bottom: 0; z-index: 1; width: calc(100% - 40px);">
@@ -79,6 +92,22 @@
 {% endblock %}
 
 {% block domready %}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 const chatId = JSON.parse(
 document.getElementById('chat-id').textContent
 );
@@ -90,20 +119,48 @@ const url = 'ws://' + window.location.host +
 const chatSocket = new WebSocket(url);
 
 chatSocket.onmessage = function(event) {
-const data = JSON.parse(event.data);
-const chat = document.getElementById('chat');
+  const data = JSON.parse(event.data);
+  const chat = document.getElementById('chat');
+  const authUsername = "{{ user.username }}";
 
-const dateOptions = {hour: 'numeric', minute: 'numeric', hour12: true};
-const datetime = new Date(data.datetime).toLocaleString('en', dateOptions);
-const isMe = data.user === requestUser;
-const source = isMe ? 'me' : 'other';
-const name = isMe ? 'Me' : data.user;
+  console.log({data})
 
-chat.innerHTML += '<div class="message ' + source + '">' +
-  '<strong>' + name + '</strong> ' +
-  '<span class="date">' + datetime + '</span><br>' +
-  data.message + '</div>';
-chat.scrollTop = chat.scrollHeight;
+  if (data.user === authUsername) {
+    // Guardar el mensaje en la base de datos usando fetch
+    const csrftoken = getCookie('csrftoken');
+
+
+    // Guardar el mensaje en la base de datos usando fetch
+    fetch('/chat/send_message/' + chatId, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken  // Incluir el token CSRF en los encabezados
+        },
+        body: JSON.stringify({message: data.message})
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        console.log('Message saved successfully');
+    })
+    .catch(error => {
+        console.error('Error saving message:', error);
+    });
+  }
+
+  const dateOptions = {hour: 'numeric', minute: 'numeric', hour12: true};
+  const datetime = new Date(data.datetime).toLocaleString('en', dateOptions);
+  const isMe = data.user === requestUser;
+  const source = isMe ? 'me' : 'other';
+  const name = isMe ? 'Me' : data.user;
+
+  chat.innerHTML += '<div class="message ' + source + '">' +
+    '<strong>' + name + '</strong> ' +
+    '<span class="date">' + datetime + '</span><br>' +
+    data.message + '</div>';
+  chat.scrollTop = chat.scrollHeight;
 };
 
 chatSocket.onclose = function(event) {

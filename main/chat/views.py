@@ -1,8 +1,9 @@
+import json
 from django.shortcuts import redirect, render, get_object_or_404
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from main.chat.models import ChatRequest
+from main.chat.models import ChatMessage, ChatRequest
 from main.models import Cliente, Cuidador
 from main.offer.models import Offer
 from django.contrib.auth.decorators import user_passes_test
@@ -10,9 +11,10 @@ from django.contrib.auth.decorators import user_passes_test
 @login_required
 def chat_room(request, chat_id):
     chat_request = get_object_or_404(ChatRequest, id=chat_id)
+    messages = ChatMessage.objects.filter(chat_request=chat_request)
     if chat_request.accepted:
         if request.user == chat_request.sender or request.user == chat_request.receiver:
-            return render(request, 'chat/room.html', {'chat_request': chat_request})
+            return render(request, 'chat/room.html', {'chat_request': chat_request, 'messages': messages})
         else:
             return HttpResponseForbidden()
     else:
@@ -63,3 +65,21 @@ def chat_rooms(request):
         return render(request, 'chat/chat_rooms.html', {'chat_requests': chat_requests})
     else:
         return render(request, 'chat/chat_rooms.html', {})
+
+
+def send_message(request, chat_request_id):
+    chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            content = data.get('message')
+
+            if content:
+                message = ChatMessage.objects.create(user=request.user, chat_request=chat_request, message=content)
+                return HttpResponse('Message sent successfully')
+            else:
+                return HttpResponseBadRequest('Message cannot be empty')
+        except json.JSONDecodeError:
+            return HttpResponseBadRequest('Invalid JSON format')
+    else:
+        return HttpResponseNotAllowed(['POST'])
