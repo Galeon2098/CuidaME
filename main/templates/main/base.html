@@ -21,8 +21,16 @@
       <a class="btn" href="{% url 'about_us' %}" role="button">Sobre Nosotros</a>
       <a class="btn" href="{% url 'pricing_plan' %}" role="button">Planes de Precio</a>
         {% if request.user.is_authenticated %}
-          <a class="btn" href="{% url 'my_profile_detail' %}" role="button">My profile</a>
           
+          <a class="btn" href="{% url 'my_profile_detail' %}" role="button">My profile</a>
+          {% if user.is_superuser %}
+            <a class="btn" href="{% url 'cliente_list' %}" role="button">Lista de Clientes</a>
+            <a class="btn" href="{% url 'cuidador_list' %}" role="button">Lista de Cuidadores</a>
+            <a class="btn" href="{% url 'user_list' %}" role="button">Lista de usuarios</a>
+            <a class="btn" href="{% url 'offer:administrar_ofertas' %}" role="button">Administrar Ofertas</a>
+
+
+          {% endif %}
           {% if request.user.cuidador %}
           <a class="btn" href="/offer/my_offers" role="button">My offers</a>
           <a class="btn" href="/offer/list" role="button">Offers list</a>
@@ -31,6 +39,7 @@
           {% if request.user.cliente %}
           <a class="btn" href="/offer/list" role="button">Offers list</a>
           {% endif %}
+          
           
           <a class="btn " href="{% url 'logout' %}" role="button">Log Out</a>
         {% else %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Detalles del Cuidador{% endblock %}
+{% load static %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Cuidador</title>
+</head>
+<body>
+    <h1>Detalles del Cuidador</h1>
+    <p>Nombre de usuario: {{ cuidador.user.username }}</p>
+    <p>DNI: {{ cuidador.dni }}</p>
+    <p>Número de Seguridad Social: {{ cuidador.numero_seguridad_social }}</p>
+    <p>Fecha de nacimiento: {{ cuidador.fecha_nacimiento }}</p>
+    <p>Formación: {{ cuidador.formacion }}</p>
+    <p>Experiencia: {{ cuidador.experiencia }}</p>
+    <p>Tipo de público al que se dirige: {{ cuidador.tipo_publico_dirigido }}</p>
+    <a href="{% url 'editar_cuidador' cuidador.id %}">Editar</a>
+    <a href="{% url 'eliminar_cuidador' cuidador.id %}">Eliminar</a>
+</body>
+</html>
+{% endblock %}

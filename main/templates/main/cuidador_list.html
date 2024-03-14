@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Users List{% endblock %}
+{% load static %}
+
+{% block content %}<html lang="en">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Cuidadores</title>
+</head>
+<body>
+    <h1>Lista de Cuidadores</h1>
+    <ul>
+        {% for cuidador in cuidadores %}
+            <li>{{ cuidador.user.username }}</li>
+            <a href="{% url 'cuidador_detail' cuidador.id %}" class="btn btn-primary btn-sm">Detalles</a>
+
+        {% endfor %}
+    </ul>
+</body>
+</html>
+{% endblock %}

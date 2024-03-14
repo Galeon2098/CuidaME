@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Delete User{% endblock %}
+{% load static %}
+
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete User</title>
+</head>
+<body>
+    <h1>Delete User</h1>
+    <p>Are you sure you want to delete user "{{ user.username }}"?</p>
+    <form action="{% url 'delete_user' user.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Delete">
+    </form>
+</body>
+</html>
+{% endblock %}

@@ -13,6 +13,9 @@ from .models import ChatRequest, Offer
 from .forms import OfferForm
 import datetime
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required,user_passes_test
+
+
 
 @login_required
 def publishOffer(request):
@@ -163,3 +166,34 @@ def send_chat_request(request, cuidador_id, offer_id):
         ChatRequest.objects.create(sender=cliente.user, receiver=cuidador.user, offer=oferta)
     return redirect('offer:list')
 
+
+@user_passes_test(lambda u: u.is_superuser)
+@staff_member_required
+def administrar_ofertas(request):
+    ofertas = Offer.objects.all()
+    
+    return render(request, 'offers/administrar_ofertas.html', {'ofertas': ofertas})
+@staff_member_required
+@user_passes_test(lambda u: u.is_superuser)
+def editar_oferta_admin(request, id):
+    oferta = get_object_or_404(Offer, pk=id)
+    
+    if request.method == 'POST':
+        form = OfferForm(request.POST, instance=oferta)
+        if form.is_valid():
+            form.save()
+            return redirect('offer:administrar_ofertas')
+    else:
+        form = OfferForm(instance=oferta)
+    
+    return render(request, 'offers/editar_oferta_admin.html', {'form': form, 'oferta': oferta})
+@staff_member_required
+@user_passes_test(lambda u: u.is_superuser)
+def eliminar_oferta_admin(request, id):
+    oferta = get_object_or_404(Offer, pk=id)
+    
+    if request.method == 'POST':
+        oferta.delete()
+        return redirect('offer:administrar_ofertas')
+    
+    return render(request, 'offers/eliminar_oferta_admin.html', {'oferta': oferta})
