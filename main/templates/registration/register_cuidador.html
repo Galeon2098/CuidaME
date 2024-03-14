@@ -23,6 +23,26 @@
                     </a>
                       <h2 class="text-center mt-3" style="margin-top:7%;"><b>Crear cuenta como cuidador</b></h2>
                       <form style="font-size: 120%; font-family: Lato; font-weight: bolder; margin-left: 8%; margin-top: 5%;" method="post">
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            Por favor corrija los siguientes errores:
+                            <ul>
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        {% for field in form %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}"><b>{{ field.label }}</b></label>
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                    
+                    {% else %}
                         <div class="form-group">
                             <label for="{{ user_form.username.id_for_label }}"><b>Usuario:</b></label>
                             {{ user_form.username }}
@@ -80,14 +100,14 @@
                         <div class="form-group">
                             <label for="{{ user_form.password2.id_for_label }}"><b>Repetir contraseña:</b></label>
                             {{ user_form.password2 }}
-                        </div>
+                        </div>        
+                    {% endif %}     
                     
-                        {% csrf_token %}                   
-                        <p style="display: flex; justify-content: center;">
-                            <input style="color: #FFFFFF; font-family: Lato; font-weight: bold; text-align: center; background-color: #1B4965; border-radius: 5%; width: 70%;" type="submit" value="Crear cuenta">
-                        </p>
+                    {% csrf_token %} 
+                    <p style="display: flex; justify-content: center;">
+                        <input style="color: #FFFFFF; font-family: Lato; font-weight: bold; text-align: center; background-color: #1B4965; border-radius: 5%; width: 70%;" type="submit" value="Crear cuenta">
+                    </p>
                     </form>
-                    
                 </div>         
             </div>
         </div>
