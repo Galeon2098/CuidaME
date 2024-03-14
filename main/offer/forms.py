@@ -23,11 +23,10 @@ class OfferForm(forms.ModelForm):
     client = forms.ChoiceField(label='Tipo de cliente', choices=CLIENT_CHOICES, initial='OT')
     description = forms.CharField(label='Descripción', required=True, widget=forms.Textarea(attrs={'rows': 10, 'cols': 70}))
     price_per_hour = forms.DecimalField(label='Precio por hora', max_digits=10, decimal_places=2)
-    city = forms.CharField(label='Ciudad')                            
-    
+    poblacion_choices = forms.ChoiceField(label='Población', choices=Offer.POB_CHOICES)
     class Meta:
         model = Offer
-        fields = ['title', 'offer_type', 'client', 'description', 'price_per_hour', 'city']
+        fields = ['title', 'offer_type', 'client', 'description', 'price_per_hour', 'poblacion']
         widgets = {
             'price_per_hour': forms.NumberInput(attrs={'step': '0.01'})
         }

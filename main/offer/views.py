@@ -13,14 +13,13 @@ from django.contrib import messages
 
 @login_required
 def publishOffer(request):
-
     cuidador = Cuidador.objects.filter(user=request.user).exists()
 
     if not cuidador:
         return render(request, 'main/error_page.html')
 
     if Offer.objects.filter(user=request.user).count() >= 5:
-      return render(request, 'main/error_page.html')
+        return render(request, 'main/error_page.html')
 
     if request.method == 'POST':
         form = OfferForm(request.POST)
@@ -35,8 +34,7 @@ def publishOffer(request):
             return redirect('/offer/my_offers')
     else:
         form = OfferForm()
-    return render(request, 'offers/publish.html', {'form': form})
-
+    return render(request, 'offers/publish.html', {'form': form, 'POB_CHOICES': Offer.POB_CHOICES})
 #LIST OFFERS
 def listOffers(request):
     offers = Offer.objects.filter(available=True)
@@ -94,7 +92,7 @@ def edit_offer(request, id):
             form.save()
             return redirect('offer:my_offers')
     else:
-        form = OfferForm(instance=offer, user=request.user)  # Pasa el usuario como argumento
+        form = OfferForm(instance=offer, user=request.user, poblacion_choices=Offer.POB_CHOICES)  # Pasa las opciones de población como argumento
 
     return render(request, 'offers/edit_offer.html', {'form': form, 'offer': offer})
 
