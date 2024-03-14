@@ -1,0 +1,48 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+{% load static %}
+<body class="home-page"> <!-- Agrega la clase 'home-page' al cuerpo -->
+    <style>
+        .custom-button {
+            position: absolute; 
+            top: 34%; 
+            left: 21.5%; 
+            transform: translate(-50%, -50%); 
+            padding: 30px 170px; 
+            background-color: #1B4965; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 10px; 
+            z-index: 1;
+        }
+
+        .custom-button:hover {
+            text-decoration: none;
+        }
+
+        .custom-button-text {
+            font-size: 24px; 
+            line-height: 1; 
+        }
+
+        .button-container {
+            position: relative;
+        }
+
+        .button-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto; 
+        }
+    </style>
+
+    <div class="button-container">
+        <img src="{% static 'Images/portadaPrincipal.png' %}" alt="Portada Principal">
+        <a href="{% url 'home' %}" class="custom-button">
+            <span class="custom-button-text">Start with us!!</span>
+        </a>
+    </div>
+</body>
+{% endblock %}

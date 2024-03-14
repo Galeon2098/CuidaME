@@ -12,6 +12,11 @@
     flex-direction: column;
   }
 
+  .home-page {
+    --primary-bg-color: #1B4965;
+}
+
+
   header {
     min-height: 50px;
   }
@@ -115,3 +120,4 @@
   border-radius: 3px;
 
 }
+
