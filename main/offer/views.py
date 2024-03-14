@@ -31,10 +31,11 @@ def publishOffer(request):
             new_offer.updated = datetime.datetime.now()
             new_offer.save()
             offers = Offer.objects.filter(user=request.user)
-            return redirect('/offer/my_offers')
+            return redirect('offer:my_offers')
     else:
         form = OfferForm()
     return render(request, 'offers/publish.html', {'form': form, 'POB_CHOICES': Offer.POB_CHOICES})
+
 #LIST OFFERS
 def listOffers(request):
     offers = Offer.objects.filter(available=True)
@@ -92,7 +93,7 @@ def edit_offer(request, id):
             form.save()
             return redirect('offer:my_offers')
     else:
-        form = OfferForm(instance=offer, user=request.user, poblacion_choices=Offer.POB_CHOICES)  # Pasa las opciones de población como argumento
+        form = OfferForm(instance=offer, user=request.user)  
 
     return render(request, 'offers/edit_offer.html', {'form': form, 'offer': offer})
 
