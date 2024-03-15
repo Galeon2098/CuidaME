@@ -8,7 +8,6 @@ from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
 import datetime
 from main.models import Cliente, Cuidador
-from django.views.decorators.http import require_http_methods
 @login_required
 def publishOffer(request):
     cuidador = Cuidador.objects.filter(user=request.user).exists()
