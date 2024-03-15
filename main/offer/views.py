@@ -33,7 +33,6 @@ def publishOffer(request):
     else:
         form = OfferForm()
     return render(request, 'offers/publish.html', {'form': form})
-
 #LIST OFFERS
 def listOffers(request):
     offers = Offer.objects.filter(available=True)
@@ -44,7 +43,6 @@ def offerDetail(request, id):
     form = ReviewForm()
     offer_reviews = Review.objects.filter(offer__user = offer.user)
     return render(request, 'offers/detail.html', {'offer': offer, 'form': form, 'offer_reviews': offer_reviews})
-
 #SEARCH  BAR OFFERS
 def searchOffers(request):
     search_query = request.POST.get('search_query', '')
@@ -55,7 +53,6 @@ def searchOffers(request):
         offers = offers.filter(Q(title__icontains=search_query) | Q(city__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
 
     return render(request, 'offers/search_results.html', {'offers': offers, 'search_query': search_query})
-
 #FILTER OFFERS
 def filterOffers(request):
     min_price_filter = request.POST.get('min_price_filter')
@@ -76,8 +73,6 @@ def filterOffers(request):
 
     return render(request, 'offers/list.html', {'offers': offers, 'min_price_filter' : min_price_filter, 'max_price_filter': max_price_filter,
                                                 'cliente_type_filter':cliente_type_filter, 'offer_type_filter':offer_type_filter } )
-
-
 @login_required
 def edit_offer(request, id):
     offer = get_object_or_404(Offer, pk=id)
@@ -94,7 +89,6 @@ def edit_offer(request, id):
         form = OfferForm(instance=offer, user=request.user)  # Pasa el usuario como argumento
 
     return render(request, 'offers/edit_offer.html', {'form': form, 'offer': offer})
-
 @login_required
 def delete_offer(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
@@ -108,14 +102,11 @@ def delete_offer(request, offer_id):
         return redirect('offer:my_offers')
 
     return render(request, 'offers/delete_confirmation.html', {'offer': offer})
-
-
 @login_required
 def myOffers(request):
     offers = Offer.objects.filter(user=request.user)
     show_publish_button = Offer.objects.filter(user_id=request.user).count() < 5
     return render(request, 'offers/myOffers.html', {'offers': offers, 'show_publish_button': show_publish_button})
-
 @login_required
 def rate_offer(request, id):
     offer = get_object_or_404(Offer, pk=id)
@@ -123,15 +114,12 @@ def rate_offer(request, id):
     if request.user == offer.user:
         messages.error(request, "No puedes valorar tu propia oferta.")
         return redirect('offer:detail', id=id)
-
     if Review.objects.filter(user=request.user, offer=offer).exists():
         messages.error(request, "Ya has valorado esta oferta.")
         return redirect('offer:detail', id=id)
-
     if hasattr(request.user, 'cuidador') and request.user.cuidador:
         messages.error(request, "No puedes valorar una oferta si eres cuidador.")
         return redirect('offer:detail', id=id)
-
     if request.method == 'POST':
         valoration = request.POST.get('rating')
         if valoration is not None:
@@ -144,18 +132,13 @@ def rate_offer(request, id):
         else:
             messages.error(request, "Tienes que seleccionar una valoración.")
             return redirect('offer:detail', id=id)
-
-
     return redirect('offer:detail', id=id)
-
-
 def offer_detail(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
     form = ReviewForm()
     offer_reviews = Review.objects.filter(offer=offer)
 
     return render(request, 'offers/detail.html', {'offer': offer, 'form': form, 'offer_reviews': offer_reviews})
-
 @login_required
 def send_chat_request(request, cuidador_id, offer_id):
     cliente = get_object_or_404(Cliente, user=request.user)
@@ -167,8 +150,6 @@ def send_chat_request(request, cuidador_id, offer_id):
         # Si no existe, crea una nueva solicitud con la oferta asociada
         ChatRequest.objects.create(sender=cliente.user, receiver=cuidador.user, offer=oferta)
     return redirect('offer:list')
-
-
 @user_passes_test(lambda u: u.is_superuser)
 @staff_member_required
 def administrar_ofertas(request):
@@ -185,7 +166,6 @@ def editar_oferta_admin(request, offer_id):
             return redirect('offer:administrar_ofertas')
     else:
         form = OfferForm(instance=oferta)
-    
     return render(request, 'offers/editar_oferta_admin.html', {'form': form, 'oferta': oferta})
 @staff_member_required
 @user_passes_test(lambda u: u.is_superuser)
