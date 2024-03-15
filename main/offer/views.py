@@ -11,6 +11,7 @@ from main.models import Cliente, Cuidador
 import datetime
 from django.contrib import messages
 
+MY_OFFERS_URL = 'offer:my_offers'
 @login_required
 def publishOffer(request):
     cuidador = Cuidador.objects.filter(user=request.user).exists()
@@ -31,7 +32,7 @@ def publishOffer(request):
             new_offer.updated = datetime.datetime.now()
             new_offer.save()
             offers = Offer.objects.filter(user=request.user)
-            return redirect('offer:my_offers')
+            return redirect('MY_OFFERS_URL')
     else:
         form = OfferForm()
     return render(request, 'offers/publish.html', {'form': form, 'POB_CHOICES': Offer.POB_CHOICES})
@@ -91,7 +92,7 @@ def edit_offer(request, id):
         form = OfferForm(request.POST, instance=offer)
         if form.is_valid():
             form.save()
-            return redirect('offer:my_offers')
+            return redirect('MY_OFFERS_URL')
     else:
         form = OfferForm(instance=offer, user=request.user)  
 
@@ -107,7 +108,7 @@ def delete_offer(request, offer_id):
     if request.method == 'POST':
         offer.delete()
         messages.success(request, 'La oferta ha sido eliminada exitosamente.')
-        return redirect('offer:my_offers')
+        return redirect('MY_OFFERS_URL')
 
     return render(request, 'offers/delete_confirmation.html', {'offer': offer})
 
