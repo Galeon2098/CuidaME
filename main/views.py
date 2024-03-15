@@ -60,13 +60,7 @@ def my_profile_detail(request):
 def edit_profile(request):
     if request.user.is_superuser:
         profile = request.user
-        if request.method == 'POST':
-            form = SuperuserProfileForm(request.POST, instance=profile)
-            if form.is_valid():
-                form.save()
-                return redirect('my_profile_detail')
-        else:
-            form = SuperuserProfileForm(instance=profile)
+        form_class = SuperuserProfileForm
     else:
         try:
             profile = request.user.cliente
@@ -75,18 +69,19 @@ def edit_profile(request):
             profile = request.user.cuidador
             form_class = CuidadorProfileForm
 
-        if profile.user != request.user:
-            return render(request, 'main/error_page.html')
+    if profile.user != request.user:
+        return render(request, 'main/error_page.html')
 
-        if request.method == 'POST':
-            form = form_class(request.POST, instance=profile)
-            if form.is_valid():
-                form.save()
-                return redirect('my_profile_detail')
-        else:
-            form = form_class(instance=profile)
+    if request.method == 'POST':
+        form = form_class(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('my_profile_detail')
+    else:
+        form = form_class(instance=profile)
 
     return render(request, 'main/edit_profile.html', {'form': form})
+
 @login_required
 def profile_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)

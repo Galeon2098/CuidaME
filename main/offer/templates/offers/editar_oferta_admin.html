@@ -30,9 +30,9 @@
 
                 <div class="container" style="display: flex; justify-content: center; position: relative;">
                     {% if user.profile.photo %}
-                        <img src="{{ user.profile.photo.url }}" class="img-fluid" style="width: 35%; height: auto; border-radius: 100%; margin-top: -30%;">
+                    <img src="{{ user.profile.photo.url }}" alt="User Profile foto" class="img-fluid" style="width: 35%; height: auto; border-radius: 100%; margin-top: -30%;">
                     {% else %}
-                        <img src="{% static 'Images/profile_foto(2).png' %}" class="img-fluid" style="width: 35%; height: auto; border-radius: 100%; margin-top: -30%;">
+                    <img src="{% static 'Images/profile_foto(2).png' %}" alt="Profile foto" class="img-fluid" style="width: 35%; height: auto; border-radius: 100%; margin-top: -30%;">
                     {% endif %}
                 </div>
 
