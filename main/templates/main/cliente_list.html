@@ -1,16 +1,44 @@
-{% extends "base.html" %}
-{% block title %}Lista de Clientes{% endblock %}
-
+{% extends "main/base.html" %}
 {% block content %}
-  <div class="container">
-    <h1>Lista de Clientes</h1>
-    <ul class="list-group">
-      {% for cliente in clientes %}
-        <li class="list-group-item">
-          {{ cliente.user.username }}
-          <a href="{% url 'cliente_detail' cliente.id %}" class="btn btn-primary btn-sm">Detalles</a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CuidaME - Lista de Clientes</title>
+  <link rel="stylesheet" href="{% static "css/base.css" %}">
+</head>
+<body>
+    <div>
+
+    </div>
+    <br>
+    <table class="table clients"> <!-- Añade la clase "table" para aplicar estilos de Bootstrap -->
+        <thead class="thead-dark"> <!-- Aplica un estilo oscuro al encabezado -->
+        <tr>
+            <th>Nombre de usuario</th>
+            <th>Apellidos</th>
+            <th>Tipo de dependencia</th>
+            <th>Opciones</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.user.username }}</td>
+                    <td>{{ cliente.apellidos }}</td>
+                    <td>{{ cliente.tipo_dependencia }}</td>
+                    <td><a href="{% url 'editar_cliente' cliente.id %}" class="btn btn-primary">Editar</a>   
+                        <a href="{% url 'eliminar_cliente' cliente.id %}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+</body>
+</html>
 {% endblock %}

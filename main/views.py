@@ -11,7 +11,7 @@ from django.conf import settings
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Cliente, Cuidador
-from cuidaMe.forms import ClienteProfileForm, CuidadorProfileForm
+from cuidaMe.forms import ClienteProfileForm, CuidadorProfileForm,SuperuserProfileForm
 
 
 from main.offer.models import ChatRequest
@@ -58,26 +58,38 @@ def my_profile_detail(request):
 
 @login_required
 def edit_profile(request):
-    try:
-        profile = request.user.cliente
-        form_class = ClienteProfileForm
-    except Cliente.DoesNotExist:
-        profile = request.user.cuidador
-        form_class = CuidadorProfileForm
+    # Verifica si el usuario es un superusuario
+    if request.user.is_superuser:
+        # Permitir que el superusuario edite su propio perfil
+        profile = request.user
 
-    if profile.user != request.user:
-        return render(request, 'main/error_page.html')
-
-    if request.method == 'POST':
-        form = form_class(request.POST, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('my_profile_detail')
+        if request.method == 'POST':
+            form = SuperuserProfileForm(request.POST, instance=profile)
+            if form.is_valid():
+                form.save()
+                return redirect('my_profile_detail')
+        else:
+            form = SuperuserProfileForm(instance=profile)
     else:
-        form = form_class(instance=profile)
+        try:
+            profile = request.user.cliente
+            form_class = ClienteProfileForm
+        except Cliente.DoesNotExist:
+            profile = request.user.cuidador
+            form_class = CuidadorProfileForm
+
+        if profile.user != request.user:
+            return render(request, 'main/error_page.html')
+
+        if request.method == 'POST':
+            form = form_class(request.POST, instance=profile)
+            if form.is_valid():
+                form.save()
+                return redirect('my_profile_detail')
+        else:
+            form = form_class(instance=profile)
 
     return render(request, 'main/edit_profile.html', {'form': form})
-
 @login_required
 def profile_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)

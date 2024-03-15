@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
 {% block title %}Detalles del Cliente{% endblock %}
 {% load static %}
 
@@ -15,7 +15,6 @@
     <p>Apellidos: {{ cliente.apellidos }}</p>
     <p>Tipo de Dependencia: {{ cliente.tipo_dependencia }}</p>
     <p>Fecha de nacimiento: {{ cliente.fecha_nacimiento }}</p>
-    <p>Chat Requests Sent: {{ cliente.chat_requests_sent }}</p>
     <a href="{% url 'editar_cliente' cliente.id %}">Editar</a>
     <a href="{% url 'eliminar_cliente' cliente.id %}">Eliminar</a>
 </body>

@@ -1,23 +1,43 @@
-{% extends "base.html" %}
-{% block title %}Users List{% endblock %}
+{% extends "main/base.html" %}
+{% block content %}
 {% load static %}
 
-{% block content %}<html lang="en">
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Cuidadores</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CuidaME - Lista de Cuidadores</title>
+  <link rel="stylesheet" href="{% static "css/base.css" %}">
 </head>
 <body>
-    <h1>Lista de Cuidadores</h1>
-    <ul>
-        {% for cuidador in cuidadores %}
-            <li>{{ cuidador.user.username }}</li>
-            <a href="{% url 'cuidador_detail' cuidador.id %}" class="btn btn-primary btn-sm">Detalles</a>
+    <div>
 
-        {% endfor %}
-    </ul>
+    </div>
+    <br>
+    <table class="table caregivers"> <!-- Añade la clase "table" para aplicar estilos de Bootstrap -->
+        <thead class="thead-dark"> <!-- Aplica un estilo oscuro al encabezado -->
+        <tr>
+            <th>Nombre de usuario</th>
+            <th>DNI</th>
+            <th>Fecha de nacimiento</th>
+            <th>Opciones</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for cuidador in cuidadores %}
+                <tr>
+                    <td>{{ cuidador.user.username }}</td>
+                    <td>{{ cuidador.dni }}</td>
+                    <td>{{ cuidador.fecha_nacimiento }}</td>
+                    <td><a href="{% url 'editar_cuidador' cuidador.id %}" class="btn btn-primary">Editar</a>   
+                        <a href="{% url 'eliminar_cuidador' cuidador.id %}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
 </body>
 </html>
 {% endblock %}
