@@ -173,7 +173,6 @@ def send_chat_request(request, cuidador_id, offer_id):
 @staff_member_required
 def administrar_ofertas(request):
     ofertas = Offer.objects.all()
-    
     return render(request, 'offers/administrar_ofertas.html', {'ofertas': ofertas})
 @staff_member_required
 @user_passes_test(lambda u: u.is_superuser)
