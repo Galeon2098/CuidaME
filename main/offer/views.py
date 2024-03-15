@@ -10,15 +10,11 @@ import datetime
 from main.models import Cliente, Cuidador
 @login_required
 def publishOffer(request):
-
     cuidador = Cuidador.objects.filter(user=request.user).exists()
-
     if not cuidador:
         return render(request, 'main/error_page.html')
-
     if Offer.objects.filter(user=request.user).count() >= 5:
       return render(request, 'main/error_page.html')
-
     if request.method == 'POST':
         form = OfferForm(request.POST)
         if form.is_valid():
@@ -46,12 +42,9 @@ def offerDetail(request, id):
 #SEARCH  BAR OFFERS
 def searchOffers(request):
     search_query = request.POST.get('search_query', '')
-
     offers = Offer.objects.all()
-
     if search_query:
         offers = offers.filter(Q(title__icontains=search_query) | Q(city__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
-
     return render(request, 'offers/search_results.html', {'offers': offers, 'search_query': search_query})
 #FILTER OFFERS
 def filterOffers(request):
@@ -60,7 +53,6 @@ def filterOffers(request):
     cliente_type_filter = request.POST.get('cliente_type_filter')
     offer_type_filter = request.POST.get('offer_type_filter')
     offers = Offer.objects.all()
-
     if(min_price_filter):
         offers = offers.filter(price_per_hour__gte=min_price_filter)
     if(max_price_filter):
@@ -69,17 +61,13 @@ def filterOffers(request):
         offers = offers.filter(client__icontains=cliente_type_filter)
     if(offer_type_filter):
         offers = offers.filter(offer_type__icontains=offer_type_filter)
-
-
     return render(request, 'offers/list.html', {'offers': offers, 'min_price_filter' : min_price_filter, 'max_price_filter': max_price_filter,
                                                 'cliente_type_filter':cliente_type_filter, 'offer_type_filter':offer_type_filter } )
 @login_required
 def edit_offer(request, id):
     offer = get_object_or_404(Offer, pk=id)
-
     if request.user != offer.user:
         return HttpResponseForbidden("No tienes permiso para editar esta oferta.")
-
     if request.method == 'POST':
         form = OfferForm(request.POST, instance=offer)
         if form.is_valid():
@@ -87,20 +75,16 @@ def edit_offer(request, id):
             return redirect('offer:my_offers')
     else:
         form = OfferForm(instance=offer, user=request.user)  # Pasa el usuario como argumento
-
     return render(request, 'offers/edit_offer.html', {'form': form, 'offer': offer})
 @login_required
 def delete_offer(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
-
     if request.user != offer.user:
         return HttpResponseForbidden("No tienes permiso para eliminar esta oferta.")
-
     if request.method == 'POST':
         offer.delete()
         messages.success(request, 'La oferta ha sido eliminada exitosamente.')
         return redirect('offer:my_offers')
-
     return render(request, 'offers/delete_confirmation.html', {'offer': offer})
 @login_required
 def myOffers(request):
@@ -110,7 +94,6 @@ def myOffers(request):
 @login_required
 def rate_offer(request, id):
     offer = get_object_or_404(Offer, pk=id)
-
     if request.user == offer.user:
         messages.error(request, "No puedes valorar tu propia oferta.")
         return redirect('offer:detail', id=id)
@@ -137,7 +120,6 @@ def offer_detail(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
     form = ReviewForm()
     offer_reviews = Review.objects.filter(offer=offer)
-
     return render(request, 'offers/detail.html', {'offer': offer, 'form': form, 'offer_reviews': offer_reviews})
 @login_required
 def send_chat_request(request, cuidador_id, offer_id):
@@ -174,5 +156,4 @@ def eliminar_oferta_admin(request, offer_id):
     if request.method == 'POST':
         oferta.delete()
         return redirect('offer:administrar_ofertas')
-    
     return render(request, 'offers/eliminar_oferta_admin.html', {'oferta': oferta})
