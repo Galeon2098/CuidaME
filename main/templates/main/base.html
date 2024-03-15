@@ -1,4 +1,6 @@
 {% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,6 +39,10 @@
           
           <a class="btn " href="{% url 'home' %}" role="button">Inicio</a>
           <a class="btn" href="/login" role="button">Iniciar sesión</a>
+          <button><a href="{% provider_login_url 'facebook' %}">Iniciar sesión con Facebook</a></button>
+          <button><a href="{% provider_login_url 'google' %}">Iniciar sesión con Google</a></button>
+
+
         {% endif %}
       </nav>
     </section>

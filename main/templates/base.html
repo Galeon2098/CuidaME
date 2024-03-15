@@ -1,4 +1,6 @@
 {% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +33,6 @@
           <a class="btn " href="/" role="button">Sign up</a>
           <a class="btn" href="{% url 'login' %}" role="button">Sign in</a>
           <a class="btn " href="/" role="button">My ads</a>
-
         {% endif %}
       </nav>
     </section>
