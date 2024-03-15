@@ -8,6 +8,7 @@ from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
 import datetime
 from main.models import Cliente, Cuidador
+from django.views.decorators.http import require_http_methods
 @login_required
 def publishOffer(request):
     cuidador = Cuidador.objects.filter(user=request.user).exists()
@@ -134,11 +135,13 @@ def send_chat_request(request, cuidador_id, offer_id):
     return redirect('offer:list')
 @user_passes_test(lambda u: u.is_superuser)
 @staff_member_required
+@require_http_methods(["GET"])
 def administrar_ofertas(request):
     ofertas = Offer.objects.all()
     return render(request, 'offers/administrar_ofertas.html', {'ofertas': ofertas})
 @staff_member_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET","POST"])
 def editar_oferta_admin(request, offer_id):
     oferta = get_object_or_404(Offer, pk=offer_id)
     if request.method == 'POST':
@@ -151,6 +154,7 @@ def editar_oferta_admin(request, offer_id):
     return render(request, 'offers/editar_oferta_admin.html', {'form': form, 'oferta': oferta})
 @staff_member_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET","POST"])
 def eliminar_oferta_admin(request, offer_id):
     oferta = get_object_or_404(Offer, pk=offer_id)
     if request.method == 'POST':
