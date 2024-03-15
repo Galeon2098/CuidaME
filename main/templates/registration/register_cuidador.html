@@ -73,6 +73,10 @@
                             {{ user_form.tipo_publico_dirigido }}
                         </div>
                         <div class="form-group">
+                            <label for="{{ user_form.poblacion.id_for_label }}"><b>Población:</b></label>
+                            {{ user_form.poblacion }}
+                        </div>
+                        <div class="form-group">
                             <label for="{{ user_form.password.id_for_label }}"><b>Contraseña:</b></label>
                             {{ user_form.password }}
                         </div>

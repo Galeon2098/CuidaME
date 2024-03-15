@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from main.models import Cliente, Cuidador
+from main.offer.choices import POB_CHOICES
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Usuario')
@@ -9,6 +10,8 @@ class LoginForm(forms.Form):
 class ClienteRegistrationForm(forms.ModelForm):
     # Añade campos adicionales de Cliente
     tipo_dependencia = forms.ChoiceField(label='Tipo de Dependencia', choices=Cliente.OPCIONES_DEPENDENCIA)
+    poblacion = forms.ChoiceField(label='Población', choices=POB_CHOICES)  
+
 
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
@@ -33,7 +36,6 @@ class ClienteRegistrationForm(forms.ModelForm):
             return user, Cliente
 
 class CuidadorRegistrationForm(forms.ModelForm):
-    # Añade campos adicionales de Cuidador
     dni = forms.CharField(label='DNI', max_length=20)
     numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=20)
     fecha_nacimiento = forms.DateField(
@@ -42,6 +44,8 @@ class CuidadorRegistrationForm(forms.ModelForm):
     formacion = forms.CharField(label="Formación")
     experiencia = forms.CharField(label="Experiencia")
     tipo_publico_dirigido = forms.CharField(label="Tipo de público al que te diriges", max_length=100)
+    poblacion = forms.ChoiceField(label='Población', choices=POB_CHOICES)  
+
 
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
@@ -74,9 +78,9 @@ class CuidadorRegistrationForm(forms.ModelForm):
 class ClienteProfileForm(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = ['apellidos', 'tipo_dependencia']
+        fields = ['apellidos', 'tipo_dependencia','poblacion']
 
 class CuidadorProfileForm(forms.ModelForm):
     class Meta:
         model = Cuidador
-        fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido']
+        fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido','poblacion']

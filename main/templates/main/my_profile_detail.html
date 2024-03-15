@@ -39,6 +39,7 @@
                     <h3 style="text-align: center;">Detalles del Cliente</h3>
                     <p><strong>Apellidos:</strong> {{ user.cliente.apellidos }}</p>
                     <p><strong>Tipo de Dependencia:</strong> {{ user.cliente.tipo_dependencia }}</p>
+                    <p><strong>Población:</strong> {{ user.cliente.poblacion }}</p>
                     {% endif %}
 
                     {% if user.cuidador %}
@@ -49,6 +50,7 @@
                     <p><strong>Formación:</strong> {{ user.cuidador.formacion }}</p>
                     <p><strong>Experiencia:</strong> {{ user.cuidador.experiencia }}</p>
                     <p><strong>Tipo de Público Dirigido:</strong> {{ user.cuidador.tipo_publico_dirigido }}</p>
+                    <p><strong>Población:</strong> {{ user.cuidador.poblacion }}</p>
                     {% endif %}
                     <div style="text-align: center;">
                         <a href="{% url 'edit_profile' %}"><button
