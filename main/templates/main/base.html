@@ -24,7 +24,6 @@
           <a class="btn" href="{% url 'my_profile_detail' %}" role="button">My profile</a>
           <a class="btn" href="/chat/chat_rooms" role="button">My chat rooms</a>
           
-          <a class="btn" href="{% url 'my_profile_detail' %}" role="button">My profile</a>
           {% if user.is_superuser %}
             <a class="btn" href="{% url 'cliente_list' %}" role="button">Lista de Clientes</a>
             <a class="btn" href="{% url 'cuidador_list' %}" role="button">Lista de Cuidadores</a>

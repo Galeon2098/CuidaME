@@ -141,7 +141,7 @@ def administrar_ofertas(request):
     return render(request, 'offers/administrar_ofertas.html', {'ofertas': ofertas})
 @staff_member_required
 @user_passes_test(lambda u: u.is_superuser)
-@require_http_methods(["GET", "POST"])
+@require_http_methods([ "POST"])
 def editar_oferta_admin(request, offer_id):
     oferta = get_object_or_404(Offer, pk=offer_id)
     if request.method == 'POST':
