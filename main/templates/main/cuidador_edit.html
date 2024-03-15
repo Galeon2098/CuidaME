@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends "main/base.html" %}
 {% block title %}Editar Cuidador{% endblock %}
 {% load static %}
@@ -15,7 +16,7 @@
 
                 <div class="container" style="display: flex; height: 20px;">
                     <a href="/mi_perfil">
-                        <img src="{% static 'Images/back.png' %}" style="width: 60%; height: auto; margin-top: -50%;">
+                        <img src="{% static 'Images/back.png' %}" alt="Volver" style="width: 60%; height: auto; margin-top: -50%;">
                     </a>
                 </div>
                 <form action="{% url 'editar_cuidador' cuidador.id %}" method="post" style="font-size: 20px; font-weight: bolder; margin-top: 10%;">

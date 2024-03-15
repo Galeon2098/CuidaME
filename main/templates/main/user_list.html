@@ -1,8 +1,10 @@
+<!DOCTYPE html>
 {% extends "main/base.html" %}
 {% block title %}Users List{% endblock %}
 {% load static %}
 
-{% block content %}<html lang="en">
+{% block content %}
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +12,7 @@
 </head>
 <body>
     <h1>User List</h1>
+    <p>This table displays a list of users.</p>
     <table>
         <thead>
             <tr>
@@ -32,6 +35,4 @@
     </table>
 </body>
 </html>
-
 {% endblock %}
-

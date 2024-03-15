@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends "main/base.html" %}
 {% block title %}Edit cliente{% endblock %}
 {% load static %}
@@ -5,7 +6,7 @@
 <main class="container pt-5 pb-3">
     <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">
         <div class="col-md-6">
-            <img src="{% static 'Images/anciano.png' %}" alt="anciano" class="img-fluid"
+            <img src="{% static 'Images/anciano.png' %}" alt="Imagen de anciano" class="img-fluid"
                 style="width: 100%; max-width: 660px; height: auto;">
         </div>
         <div class="col-md-6"
@@ -15,7 +16,7 @@
 
                 <div class="container" style="display: flex; height: 20px;">
                     <a href="/mi_perfil">
-                        <img src="{% static 'Images/back.png' %}" style="width: 60%; height: auto; margin-top: -50%;">
+                        <img src="{% static 'Images/back.png' %}" alt="Botón de retroceso" style="width: 60%; height: auto; margin-top: -50%;">
                     </a>
                 </div>
                 <form action="{% url 'editar_cliente' cliente.id %}" method="post" style="font-size: 20px; font-weight: bolder; margin-top: 10%;">
