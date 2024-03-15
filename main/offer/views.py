@@ -135,7 +135,7 @@ def send_chat_request(request, cuidador_id, offer_id):
     return redirect('offer:list')
 @user_passes_test(lambda u: u.is_superuser)
 @staff_member_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET"])
 def administrar_ofertas(request):
     ofertas = Offer.objects.all()
     return render(request, 'offers/administrar_ofertas.html', {'ofertas': ofertas})
