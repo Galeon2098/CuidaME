@@ -3,7 +3,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from main.offer.choices import POB_CHOICES
 
-
 class Cliente(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     apellidos = models.CharField(max_length=100)
