@@ -160,6 +160,7 @@ def payment_cancelled(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["POST"])
 def user_list(request):
     users = User.objects.all()
     return render(request, 'main/user_list.html', {'users': users})
@@ -167,6 +168,7 @@ def user_list(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["POST"])
 def delete_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
     if request.method == 'POST':
@@ -176,18 +178,21 @@ def delete_user(request, user_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET"])
 def cliente_list(request):
     clientes = Cliente.objects.all()
     return render(request, 'main/cliente_list.html', {'clientes': clientes})
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET"])
 def cuidador_list(request):
     cuidadores = Cuidador.objects.all()
     return render(request, 'main/cuidador_list.html', {'cuidadores': cuidadores})
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET"])
 def cliente_detail(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     if request.method == 'POST':
@@ -201,6 +206,7 @@ def cliente_detail(request, cliente_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET"])
 def cuidador_detail(request, cuidador_id):
     cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
     if request.method == 'POST':
@@ -214,6 +220,7 @@ def cuidador_detail(request, cuidador_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET", "POST"])
 def cliente_edit(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     if request.method == 'POST':
@@ -227,6 +234,7 @@ def cliente_edit(request, cliente_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET", "POST"])
 def cuidador_edit(request, cuidador_id):
     cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
     if request.method == 'POST':
@@ -240,6 +248,7 @@ def cuidador_edit(request, cuidador_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["POST"])
 def cliente_delete(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     if request.method == 'POST':
@@ -249,6 +258,7 @@ def cliente_delete(request, cliente_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["POST"])
 def cuidador_delete(request, cuidador_id):
     cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
     if request.method == 'POST':
