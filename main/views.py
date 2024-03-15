@@ -70,6 +70,7 @@ def edit_profile(request):
             form_class = CuidadorProfileForm
 
     if profile!= request.user:
+        form = form_class(instance=profile)
         return render(request, 'main/error_page.html')
 
     if request.method == 'POST':
@@ -143,8 +144,7 @@ def payment_cancelled(request):
     user_payment = UserPayment.objects.create(
         user_id=user_id,
         payment_bool=False,
-        stripe_checkout_id=''
-    )
+        stripe_checkout_id='')
     user_payment.save()
     return render(request, 'main/payment_cancelled.html')
 
@@ -197,7 +197,6 @@ def cliente_edit(request, cliente_id):
 @user_passes_test(lambda u: u.is_superuser)
 def cuidador_edit(request, cuidador_id):
     cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
-    
     if request.method == 'POST':
         form = CuidadorProfileForm(request.POST, instance=cuidador)
         if form.is_valid():
