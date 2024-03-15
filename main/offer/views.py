@@ -144,6 +144,7 @@ def administrar_ofertas(request):
 @require_http_methods(["GET","POST"])
 def editar_oferta_admin(request, offer_id):
     oferta = get_object_or_404(Offer, pk=offer_id)
+    
     if request.method == 'POST':
         form = OfferForm(request.POST, instance=oferta)
         if form.is_valid():
@@ -151,13 +152,16 @@ def editar_oferta_admin(request, offer_id):
             return redirect('offer:administrar_ofertas')
     else:
         form = OfferForm(instance=oferta)
+    
     return render(request, 'offers/editar_oferta_admin.html', {'form': form, 'oferta': oferta})
 @staff_member_required
 @user_passes_test(lambda u: u.is_superuser)
-@require_http_methods(["GET","POST"])
 def eliminar_oferta_admin(request, offer_id):
     oferta = get_object_or_404(Offer, pk=offer_id)
+    
     if request.method == 'POST':
         oferta.delete()
         return redirect('offer:administrar_ofertas')
-    return render(request, 'offers/eliminar_oferta_admin.html', {'oferta': oferta})
+    
+    elif request.method == 'GET':
+        return render(request, 'offers/eliminar_oferta_admin.html', {'oferta': oferta})

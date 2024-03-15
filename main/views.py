@@ -182,7 +182,6 @@ def cuidador_list(request):
     return render(request, 'main/cuidador_list.html', {'cuidadores': cuidadores})
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-@require_http_methods(["GET","POST"])
 def cliente_edit(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     if request.method == 'POST':
@@ -196,9 +195,9 @@ def cliente_edit(request, cliente_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-@require_http_methods(["GET","POST"])
 def cuidador_edit(request, cuidador_id):
     cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
+    
     if request.method == 'POST':
         form = CuidadorProfileForm(request.POST, instance=cuidador)
         if form.is_valid():
@@ -206,24 +205,27 @@ def cuidador_edit(request, cuidador_id):
             return redirect('cuidador_list')
     else:
         form = CuidadorProfileForm(instance=cuidador)
+    
     return render(request, 'main/cuidador_edit.html', {'cuidador': cuidador, 'form': form})
-
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-@require_http_methods(["GET","POST"])
 def cliente_delete(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
+    
     if request.method == 'POST':
         cliente.delete()
         return redirect('cliente_list')
-    return render(request, 'main/cliente_confirm_delete.html', {'cliente': cliente})
-
+    
+    elif request.method == 'GET':
+        return render(request, 'main/cliente_confirm_delete.html', {'cliente': cliente})
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-@require_http_methods(["GET","POST"])
 def cuidador_delete(request, cuidador_id):
     cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
+    
     if request.method == 'POST':
         cuidador.delete()
         return redirect('cuidador_list')
-    return render(request, 'main/cuidador_confirm_delete.html', {'cuidador': cuidador})
+    
+    elif request.method == 'GET':
+        return render(request, 'main/cuidador_confirm_delete.html', {'cuidador': cuidador})
