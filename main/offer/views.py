@@ -1,7 +1,8 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required,staff_member_required,user_passes_test
+from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseForbidden
 from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
