@@ -1,4 +1,3 @@
-
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -7,10 +6,7 @@ from django.http import HttpResponseForbidden
 from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
 import datetime
-from django.db.models import Avg
 from main.models import Cliente, Cuidador
-from .models import ChatRequest, Offer
-from .forms import OfferForm
 import datetime
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required,user_passes_test
@@ -24,10 +20,10 @@ def publishOffer(request):
 
     if not cuidador:
         return render(request, 'main/error_page.html')
-    
+
     if Offer.objects.filter(user=request.user).count() >= 5:
       return render(request, 'main/error_page.html')
-    
+
     if request.method == 'POST':
         form = OfferForm(request.POST)
         if form.is_valid():
@@ -50,7 +46,9 @@ def listOffers(request):
 #OFFER DETAIL
 def offerDetail(request, id):
     offer = get_object_or_404(Offer, id=id, available=True)
-    return render(request, 'offers/detail.html', {'offer': offer})
+    form = ReviewForm()
+    offer_reviews = Review.objects.filter(offer__user = offer.user)
+    return render(request, 'offers/detail.html', {'offer': offer, 'form': form, 'offer_reviews': offer_reviews})
 
 #SEARCH  BAR OFFERS
 def searchOffers(request):
@@ -60,7 +58,7 @@ def searchOffers(request):
 
     if search_query:
         offers = offers.filter(Q(title__icontains=search_query) | Q(city__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
-    
+
     return render(request, 'offers/search_results.html', {'offers': offers, 'search_query': search_query})
 
 #FILTER OFFERS
@@ -135,12 +133,22 @@ def rate_offer(request, id):
         messages.error(request, "Ya has valorado esta oferta.")
         return redirect('offer:detail', id=id)
 
+    if hasattr(request.user, 'cuidador') and request.user.cuidador:
+        messages.error(request, "No puedes valorar una oferta si eres cuidador.")
+        return redirect('offer:detail', id=id)
+
     if request.method == 'POST':
-        valoration = int(request.POST.get('rating'))
-        description = request.POST.get('commentary')
-        review = Review(user=request.user, offer=offer, valoration=valoration, description=description)
-        review.save()
-        offer.save()
+        valoration = request.POST.get('rating')
+        if valoration is not None:
+            valoration = int(valoration)
+            description = request.POST.get('commentary')
+            review = Review(user=request.user, offer=offer, valoration=valoration, description=description)
+            review.save()
+            offer.save()
+            messages.success(request, "La valoración ha sido guardada exitosamente.")
+        else:
+            messages.error(request, "Tienes que seleccionar una valoración.")
+            return redirect('offer:detail', id=id)
 
 
     return redirect('offer:detail', id=id)

@@ -40,19 +40,19 @@
               <p style="display: flex; justify-content: center;">
                   <input style="color: #FFFFFF; font-family: Lato; font-weight: bold; text-align: center; background-color: #1B4965; border-radius: 5%; width: 70%;" type="submit" value="Iniciar sesión">
               </p>
-          </form>
-          
+          </form>  
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 8%;">
                 {% if form.errors %}
-                  <p style="display: flex; justify-content: center; font-family: Lato; font-weight: bold;">Tu nombre y tu contraseña no coinciden. Inténtelo de nuevo</p>
-                {% else %}
+                <div class="alert alert-danger">
+                  <p style="display: flex; justify-content: center; font-family: Lato; font-weight: bold;">Tu nombre y tu contraseña no existen. Inténtelo de nuevo</p>
+                </div>
+                {% endif %}
                   <hr style="border: 1px solid #1B4965; width: 100%;">
                   <h3 style="text-align: center; font-family: Lato; font-weight: bold;">¿No tienes una cuenta?</h3>
                   <h5 style="text-align: center; font-family: Lato; font-weight: bold;">
                     Únete <a href="{% url "registro_cliente" %}">&nbsp;como cliente&nbsp;</a>
                     o únete <a href="{% url "registro_cuidador" %}">&nbsp;como cuidador</a>
-                  </h5>
-                {% endif %}
+                  </h5> 
             </div>
               
           </div>

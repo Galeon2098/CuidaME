@@ -39,7 +39,7 @@
                     <div class="form-group d-flex justify-content-center">
                         <h3>{{ user.formacion }}</h3>
                     </div>
-    
+
                     <form method="post">
                         {% csrf_token %}
                         <input type="hidden" name="id" value="{{ offer.id }}">
@@ -47,7 +47,7 @@
                             <label for="title"><b>Título</b></label>
                             <input type="text" class="form-control" id="title" name="title" placeholder="Añada un título" value="{{offer.title}}">
                             {% if form.title.errors %}
-                                <p>{{ form.title.errors }}</p>
+                                <p>{{"Debe tener un título de máximo 75 caracteres"}}</p>
                             {% endif %}
                         </div>
     
@@ -75,17 +75,17 @@
     
                         <div class="form-group">
                             <label for="description"><b>Descripción</b></label>
-                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Add here the info related to the service you are offering">{{ offer.description }}</textarea>
+                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Añade aquí la información relacionada con el servicio que ofreces">{{ offer.description }}</textarea>
                             {% if form.description.errors %}
-                                <p>{{ form.description.errors }}</p>
+                                <p>{{ "Debe tener una descripción" }}</p>
                             {% endif %}
                         </div>
     
                         <div class="form-group">
                             <label for="price_per_hour"><b>Precio por hora (€)</b></label>
-                            <input type="number" class="form-control" id="price_per_hour" name="price_per_hour" placeholder="Precio por hora" value="{{offer.price_per_hour}}">
+                            <input type="number" step="0.01" class="form-control" id="price_per_hour" name="price_per_hour" placeholder="Precio por hora" value="{{offer.price_per_hour}}">
                             {% if form.price_per_hour.errors %}
-                                <p>{{ form.price_per_hour.errors }}</p>
+                            <p>{{ "El precio debe ser superior a 1.00 e inferior a 100.00" }}</p>
                             {% endif %}
                         </div>
     
@@ -93,8 +93,9 @@
                             <label for="city"><b>Ciudad</b></label>
                             <input type="text" class="form-control" id="city" name="city" placeholder="Ciudad" value="{{offer.city}}">
                             {% if form.city.errors %}
-                                <p>{{ form.city.errors }}</p>
+                                <p>{{ "La oferta debe tener una ciudad" }}</p>
                             {% endif %}
+                            
                         </div>
     
                         <div class="form-group text-center">

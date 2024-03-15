@@ -21,6 +21,8 @@
       <a class="btn" href="{% url 'about_us' %}" role="button">Sobre Nosotros</a>
       <a class="btn" href="{% url 'pricing_plan' %}" role="button">Planes de Precio</a>
         {% if request.user.is_authenticated %}
+          <a class="btn" href="{% url 'my_profile_detail' %}" role="button">My profile</a>
+          <a class="btn" href="/chat/chat_rooms" role="button">My chat rooms</a>
           
           <a class="btn" href="{% url 'my_profile_detail' %}" role="button">My profile</a>
           {% if user.is_superuser %}
@@ -33,6 +35,7 @@
           {% if request.user.cuidador %}
           <a class="btn" href="/offer/my_offers" role="button">My offers</a>
           <a class="btn" href="/offer/list" role="button">Offers list</a>
+          <a class="btn" href="/chat/requests" role="button">Chat requests</a>
           {% endif %}
 
           {% if request.user.cliente %}
