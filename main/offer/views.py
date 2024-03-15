@@ -155,7 +155,6 @@ def offer_detail(request, offer_id):
 
     return render(request, 'offers/detail.html', {'offer': offer, 'form': form, 'offer_reviews': offer_reviews})
 
-  
 @login_required
 def send_chat_request(request, cuidador_id, offer_id):
     cliente = get_object_or_404(Cliente, user=request.user)
