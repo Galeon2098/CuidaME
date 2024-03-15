@@ -58,11 +58,8 @@ def my_profile_detail(request):
 
 @login_required
 def edit_profile(request):
-    # Verifica si el usuario es un superusuario
     if request.user.is_superuser:
-        # Permitir que el superusuario edite su propio perfil
         profile = request.user
-
         if request.method == 'POST':
             form = SuperuserProfileForm(request.POST, instance=profile)
             if form.is_valid():
