@@ -15,7 +15,6 @@ class CuidadorAdmin(admin.ModelAdmin):
 
 class CustomUserAdmin(BaseUserAdmin):
     def has_add_permission(self, request):
-        return False 
-
+        return False
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)

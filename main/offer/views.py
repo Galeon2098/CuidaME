@@ -175,8 +175,8 @@ def administrar_ofertas(request):
     return render(request, 'offers/administrar_ofertas.html', {'ofertas': ofertas})
 @staff_member_required
 @user_passes_test(lambda u: u.is_superuser)
-def editar_oferta_admin(request, id):
-    oferta = get_object_or_404(Offer, pk=id)
+def editar_oferta_admin(request, offer_id):
+    oferta = get_object_or_404(Offer, pk=offer_id)
     
     if request.method == 'POST':
         form = OfferForm(request.POST, instance=oferta)
@@ -187,10 +187,11 @@ def editar_oferta_admin(request, id):
         form = OfferForm(instance=oferta)
     
     return render(request, 'offers/editar_oferta_admin.html', {'form': form, 'oferta': oferta})
+
 @staff_member_required
 @user_passes_test(lambda u: u.is_superuser)
-def eliminar_oferta_admin(request, id):
-    oferta = get_object_or_404(Offer, pk=id)
+def eliminar_oferta_admin(request, offer_id):
+    oferta = get_object_or_404(Offer, pk=offer_id)
     
     if request.method == 'POST':
         oferta.delete()

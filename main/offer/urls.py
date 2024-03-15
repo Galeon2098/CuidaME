@@ -18,8 +18,7 @@ urlpatterns = [
     path('my_offers', myOffers, name='my_offers'),
     path('send_chat_request/<int:cuidador_id>/<int:offer_id>/', send_chat_request, name='send_chat_request'),
     path('edit_offer/<int:id>', edit_offer, name='edit_offer'),
-    path('administrar_ofertas/', administrar_ofertas, name='administrar_ofertas'), 
-    path('editar_oferta_admin/<int:id>/', editar_oferta_admin, name='editar_oferta_admin'),
-    path('eliminar_oferta_admin/<int:id>/', eliminar_oferta_admin, name='eliminar_oferta_admin'),
-
+    path('administrar_ofertas/', administrar_ofertas, name='administrar_ofertas'),
+    path('editar_oferta_admin/<int:offer_id>/', editar_oferta_admin, name='editar_oferta_admin'),
+    path('eliminar_oferta_admin/<int:offer_id>/', eliminar_oferta_admin, name='eliminar_oferta_admin'),
 ]
