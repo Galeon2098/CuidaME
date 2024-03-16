@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
-from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm
+from django.contrib.auth.decorators import login_required, user_passes_test
+from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm,SuperuserProfileForm
 from main.models import Cliente, UserPayment
 from django.contrib.auth.models import User
 from django.shortcuts import render
 import stripe
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
+from .models import Cliente, Cuidador
 
 # Create your views here.
 def index(request):
@@ -57,15 +58,16 @@ def my_profile_detail(request):
 
 @login_required
 def edit_profile(request):
-    try:
-        profile = request.user.cliente
-        form_class = ClienteProfileForm
-    except Cliente.DoesNotExist:
-        profile = request.user.cuidador
-        form_class = CuidadorProfileForm
-
-    if profile.user != request.user:
-        return render(request, 'main/error_page.html')
+    if request.user.is_superuser:
+        profile = request.user
+        form_class = SuperuserProfileForm
+    else:
+        try:
+            profile = request.user.cliente
+            form_class = ClienteProfileForm
+        except Cliente.DoesNotExist:
+            profile = request.user.cuidador
+            form_class = CuidadorProfileForm
 
     if request.method == 'POST':
         form = form_class(request.POST, instance=profile)
@@ -143,3 +145,82 @@ def payment_cancelled(request):
     user_payment.save()
     return render(request, 'main/payment_cancelled.html')
 
+# Vistas para el backend (requieren autenticación de superusuario)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["POST"])
+def user_list(request):
+    users = User.objects.all()
+    return render(request, 'main/user_list.html', {'users': users})
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["POST"])
+def delete_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        user.delete()
+        return redirect('user_list')
+    return render(request, 'main/user_delete.html', {'user': user})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET"])
+def cliente_list(request):
+    clientes = Cliente.objects.all()
+    return render(request, 'main/cliente_list.html', {'clientes': clientes})
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET"])
+def cuidador_list(request):
+    cuidadores = Cuidador.objects.all()
+    return render(request, 'main/cuidador_list.html', {'cuidadores': cuidadores})
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET","POST"])
+def cliente_edit(request, cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    if request.method == 'POST':
+        form = ClienteProfileForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('cliente_list')
+    else:
+        form = ClienteProfileForm(instance=cliente)
+    return render(request, 'main/cliente_edit.html', {'cliente': cliente, 'form': form})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET","POST"])
+def cuidador_edit(request, cuidador_id):
+    cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
+    if request.method == 'POST':
+        form = CuidadorProfileForm(request.POST, instance=cuidador)
+        if form.is_valid():
+            form.save()
+            return redirect('cuidador_list')
+    else:
+        form = CuidadorProfileForm(instance=cuidador)
+    return render(request, 'main/cuidador_edit.html', {'cuidador': cuidador, 'form': form})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET","POST"])
+def cliente_delete(request, cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    if request.method == 'POST':
+        cliente.delete()
+        return redirect('cliente_list')
+    return render(request, 'main/cliente_confirm_delete.html', {'cliente': cliente})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET","POST"])
+def cuidador_delete(request, cuidador_id):
+    cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
+    if request.method == 'POST':
+        cuidador.delete()
+        return redirect('cuidador_list')
+    return render(request, 'main/cuidador_confirm_delete.html', {'cuidador': cuidador})

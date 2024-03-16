@@ -124,3 +124,21 @@ class CuidadorProfileForm(forms.ModelForm):
     class Meta:
         model = Cuidador
         fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido']
+class SuperuserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
+
+        # Puedes personalizar los widgets y las etiquetas aquí si lo deseas
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'username': 'Nombre de usuario',
+            'email': 'Correo electrónico',
+            'first_name': 'Nombre',
+            'last_name': 'Apellido',
+        }
