@@ -10,7 +10,7 @@ from django.views.decorators.http import require_http_methods
 
 # Create your views here.
 @require_http_methods(["GET"])
-def StartPage(request):
+def start_page(request):
     return render(request, 'main/startPage.html')
 def index(request):
     return render(request, 'main/home.html')
