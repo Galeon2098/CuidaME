@@ -25,8 +25,14 @@ class Cuidador(models.Model):
     numero_seguridad_social = models.CharField(max_length=20, unique=True)
     fecha_nacimiento = models.DateField()
     formacion = models.TextField()
-    experiencia = models.TextField()
-    tipo_publico_dirigido = models.CharField(max_length=100)
+    descripcion = models.TextField()
+
+    PUBLICO_DIRIGIDO = [
+        ('personaSolitaria', 'Persona Solitaria'),
+        ('enfermedad', 'Enfermedad'),
+        ('cuidados', 'Cuidados'),
+    ]
+    tipo_publico_dirigido = models.CharField(max_length=100, choices=PUBLICO_DIRIGIDO)
     chat_requests_received = models.ManyToManyField('offer.ChatRequest', related_name='caregiver_received_requests')
     def __str__(self):
         return self.user.username

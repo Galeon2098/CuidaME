@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('numero_seguridad_social', models.CharField(max_length=20, unique=True)),
                 ('fecha_nacimiento', models.DateField()),
                 ('formacion', models.TextField()),
-                ('experiencia', models.TextField()),
+                ('descripcion', models.TextField()),
                 ('tipo_publico_dirigido', models.CharField(max_length=100)),
                 ('chat_requests_received', models.ManyToManyField(related_name='caregiver_received_requests', to='offer.chatrequest')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),

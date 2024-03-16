@@ -40,8 +40,8 @@ class CuidadorRegistrationForm(forms.ModelForm):
         label="Fecha de nacimiento",
         widget=forms.DateInput(attrs={'type': 'date'}),)
     formacion = forms.CharField(label="Formación")
-    experiencia = forms.CharField(label="Experiencia")
-    tipo_publico_dirigido = forms.CharField(label="Tipo de público al que te diriges", max_length=100)
+    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea)
+    tipo_publico_dirigido = forms.ChoiceField(label="Tipo de público al que te diriges", choices=Cuidador.PUBLICO_DIRIGIDO)
 
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
@@ -67,7 +67,7 @@ class CuidadorRegistrationForm(forms.ModelForm):
                                         numero_seguridad_social=self.cleaned_data['numero_seguridad_social'],
                                         fecha_nacimiento=self.cleaned_data['fecha_nacimiento'],
                                         formacion=self.cleaned_data['formacion'],
-                                        experiencia=self.cleaned_data['experiencia'],
+                                        descripcion=self.cleaned_data['descripcion'],
                                         tipo_publico_dirigido=self.cleaned_data['tipo_publico_dirigido'])
             return user, Cuidador
     
@@ -79,4 +79,4 @@ class ClienteProfileForm(forms.ModelForm):
 class CuidadorProfileForm(forms.ModelForm):
     class Meta:
         model = Cuidador
-        fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido']
+        fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'descripcion', 'tipo_publico_dirigido']
