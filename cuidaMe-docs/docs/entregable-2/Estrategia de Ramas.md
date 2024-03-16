@@ -4,27 +4,22 @@
 |**Fecha**|**Versión**|
 | :-: | :-: |
 |28/02/2024|v1.0|
+|08/03/2024|v1.1|
 
 ## Introducción
-En este documento se define la estrategia de ramas seguida por el grupo 9 de ISPP en el proyecto CuidaMe. Primero se explica el esquema de ramas que tenemos con la ayuda de una imagen y para terminar se define la estrategia que seguimos.
+En este documento se define la estrategia de ramas seguida por el grupo 9 de ISPP en el proyecto CuidaMe.
 
 
 
-## Esquema de ramas
+## Estrategia de ramas
 ![27/02/2024-01](./img/img1.PNG)
 
 
 Como vemos en este esquema, tenemos tres grandes ramas: máster, develop y hotfix.
-- Máster: rama principal con todo el código.
-- Develop: rama previa antes de subir a máster, todo lo que se encuentre en esta rama debe esta testeado.
-- Hotfix: rama en la que se unifica el trabajo de las ramas de cada subgrupo; backend, frontend y testing.
+- __Máster__: rama principal con todo el código actualizado al final del sprint.
+- __Develop__: rama previa antes de subir a máster utilizada en el desarrollo, todo lo que se encuentre en esta rama debe esta testeado.
+- __Hotfix__: rama intermedia que sirve para solucionar conflictos, pasar el codacy y añadir tests para que lo que se suba a la rama develop esté correcto y probado.
 
-A partir de la rama hotfix se han creado otras tres ramas en las que se trabajan exclusivamente el backend, frontend y el testing en sus
-respectivas ramas. Estas ramas contienen el trabajo ya terminado de cada tarea, teniendo una rama por tarea.
 
-## Estrategia de ramas
-- Las ramas task se crean a partir de máster excepto en el caso de las ramas task de testing ya que necesitan de backend para testearlo, así que se haría un pull de backend.
-- Cuando una tarea se califica como “hecha” se hace una pull request a la rama correspondiente; backend, frontend o testing.
-- Cuando todas las tareas de una rama backend, frontend o testing se han finalizado, se hace una pull request a hotfix.
-- En hotfix una vez que se comprueba que todo el código funciona correctamente se hace una pull request a develop que debe ser aprobada por todos los líderes.
-- Finalmente se sube de develop a máster.
+A partir de la rama hotfix se crean las ramas __tasks__ donde se implementan las tareas. Las ramas task pueden ser: __tareaX-backend__, __tareaX-frontend__ y __tareaX-test__. Cada vez que una tarea está completada se sube a hotfix y después a develop.
+
