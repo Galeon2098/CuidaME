@@ -1,16 +1,12 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
 from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm
 from main.models import Cliente, UserPayment
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from django.http import HttpResponse
 import stripe
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
-
-from main.offer.models import ChatRequest
 
 # Create your views here.
 def index(request):
@@ -26,6 +22,9 @@ def register_cliente(request):
             # Guarda el formulario y sus datos
             user = user_form.save()
             return render(request, 'registration/register_done.html', {'new_user': user})
+        else:
+            # Si el formulario no es válido, mostrar el formulario con los errores
+            return render(request, 'registration/register_cliente.html', {'form': user_form})
     else:
         user_form = ClienteRegistrationForm()
     return render(request, 'registration/register_cliente.html', {'user_form': user_form})
@@ -37,6 +36,9 @@ def register_cuidador(request):
             # Guarda el formulario y sus datos
             user = user_form.save()
             return render(request, 'registration/register_done.html', {'new_user': user})
+        else:
+            # Si el formulario no es válido, mostrar el formulario con los errores
+            return render(request, 'registration/register_cuidador.html', {'form': user_form})
     else:
         user_form = CuidadorRegistrationForm()
     return render(request, 'registration/register_cuidador.html', {'user_form': user_form})
@@ -85,23 +87,6 @@ def about_us(request):
 
 def edit_ad(request):
     return render(request, 'main/edit_ad.html')
-
-@login_required
-def chat_requests_for_caregiver(request):
-    chat_requests = ChatRequest.objects.filter(receiver=request.user, accepted=False)
-    return render(request, 'chat/chat_list.html', {'chat_requests': chat_requests})
-
-#Cuando se acepta te redirige al chat
-def accept_chat_request(request, chat_request_id):
-    chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
-    chat_request.accepted = True
-    chat_request.save()
-    return redirect(reverse('chat:chat_room', kwargs={'chat_id': chat_request.id}))
-
-def reject_chat_request(request, chat_request_id):
-    chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
-    chat_request.delete()
-    return redirect('chat_requests_for_caregiver')
 
 
 @login_required
