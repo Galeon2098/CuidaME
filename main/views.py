@@ -69,10 +69,6 @@ def edit_profile(request):
             profile = request.user.cuidador
             form_class = CuidadorProfileForm
 
-    if profile!= request.user:
-        form = form_class(instance=profile)
-        return render(request, 'main/error_page.html')
-
     if request.method == 'POST':
         form = form_class(request.POST, instance=profile)
         if form.is_valid():
@@ -144,7 +140,8 @@ def payment_cancelled(request):
     user_payment = UserPayment.objects.create(
         user_id=user_id,
         payment_bool=False,
-        stripe_checkout_id='')
+        stripe_checkout_id=''
+    )
     user_payment.save()
     return render(request, 'main/payment_cancelled.html')
 
@@ -195,6 +192,7 @@ def cliente_edit(request, cliente_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["","GET"])
 def cuidador_edit(request, cuidador_id):
     cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
     if request.method == 'POST':
@@ -204,27 +202,22 @@ def cuidador_edit(request, cuidador_id):
             return redirect('cuidador_list')
     else:
         form = CuidadorProfileForm(instance=cuidador)
-    
     return render(request, 'main/cuidador_edit.html', {'cuidador': cuidador, 'form': form})
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def cliente_delete(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
-    
     if request.method == 'POST':
         cliente.delete()
         return redirect('cliente_list')
-    
-    elif request.method == 'GET':
-        return render(request, 'main/cliente_confirm_delete.html', {'cliente': cliente})
+    return render(request, 'main/cliente_confirm_delete.html', {'cliente': cliente})
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def cuidador_delete(request, cuidador_id):
     cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
-    
     if request.method == 'POST':
         cuidador.delete()
         return redirect('cuidador_list')
-    
-    elif request.method == 'GET':
-        return render(request, 'main/cuidador_confirm_delete.html', {'cuidador': cuidador})
+    return render(request, 'main/cuidador_confirm_delete.html', {'cuidador': cuidador})
