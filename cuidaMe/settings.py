@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'main.offer.apps.OffersConfig',
     'main.chat.apps.ChatConfig',
     'channels',
-
+    'main.mapa.apps.MapaConfig',
 ]
 
 MIDDLEWARE = [

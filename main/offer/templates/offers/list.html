@@ -114,7 +114,7 @@
                                 Otros
                             {% endif %}
                         </p>
-                        <p class="card-text offer-card-text text-center"><strong>Ciudad:</strong> {{ offer.city }}</p>
+                        <p class="card-text offer-card-text text-center"><strong>Ciudad:</strong> {{ offer.address }}</p>
                         <hr>
                         <div class="text-center">
                             <form action="{{ offer.get_absolute_url }}" method="get">

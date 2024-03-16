@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
+import geocoder
 
 class Offer(models.Model):
 
@@ -27,7 +28,9 @@ class Offer(models.Model):
     client = models.CharField(max_length=255, verbose_name='Tipo de cliente', choices=CLIENT_CHOICES, default='OT')
     description = models.TextField(blank=True)
     price_per_hour = models.DecimalField(max_digits=10,decimal_places=2)
-    city = models.CharField(max_length=200, verbose_name='Ciudad')
+    address = models.CharField(max_length=200, verbose_name='Dirección')
+    lat = models.FloatField(verbose_name='Latitud')
+    lng = models.FloatField(verbose_name='Longitud')
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -47,6 +50,11 @@ class Offer(models.Model):
         return sum(valorations) / len(valorations) if valorations else 0
 
     def save(self, *args, **kwargs):
+        if not self.lat or not self.lng:  # Solo si las coordenadas no están ya definidas
+            g = geocoder.osm(self.address)
+            if g.ok:
+                self.lat = g.latlng[0]
+                self.lng = g.latlng[1]
         self.user.Total_average_rating = self.calculate_total_average_rating()
         self.user.save()
         super().save(*args, **kwargs)
