@@ -13,6 +13,7 @@ from .models import ChatRequest, Offer
 from .forms import OfferForm
 import datetime
 from django.contrib import messages
+import geocoder
 
 @login_required
 def publishOffer(request):
@@ -33,9 +34,17 @@ def publishOffer(request):
             new_offer.available = True
             new_offer.created = datetime.datetime.now()
             new_offer.updated = datetime.datetime.now()
-            new_offer.save()
-            offers = Offer.objects.filter(user=request.user)
-            return redirect('/offer/my_offers')
+            g = geocoder.osm(new_offer.address)
+            if g.ok:
+                new_offer.lat = g.latlng[0]
+                new_offer.lng = g.latlng[1]
+                new_offer.save()
+                offers = Offer.objects.filter(user=request.user)
+                return redirect('/offer/my_offers')
+            else:
+                # Si la geocodificación falla, muestra un mensaje de error
+                form.add_error('address', 'La dirección proporcionada no es válida. Introduce otra dirección.')
+                return render(request, 'offers/publish.html', {'form': form})
     else:
         form = OfferForm()
     return render(request, 'offers/publish.html', {'form': form})
