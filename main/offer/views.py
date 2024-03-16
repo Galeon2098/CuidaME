@@ -150,13 +150,13 @@ def editar_oferta_admin(request, offer_id):
             form.save()
             return redirect('offer:administrar_ofertas')
     else:
-        form = OfferForm(instance=oferta)  
+        form = OfferForm(instance=oferta)
     return render(request, 'offers/editar_oferta_admin.html', {'form': form, 'oferta': oferta})
 @staff_member_required
 @user_passes_test(lambda u: u.is_superuser)
 @require_http_methods(["GET","POST"])
 def eliminar_oferta_admin(request, offer_id):
-    oferta = get_object_or_404(Offer, pk=offer_id)  
+    oferta = get_object_or_404(Offer, pk=offer_id)
     if request.method == 'POST':
         oferta.delete()
         return redirect('offer:administrar_ofertas')
