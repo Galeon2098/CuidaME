@@ -2,12 +2,12 @@
 
 {% block content %}
 {% load static %}
-<body class="home-page"> <!-- Agrega la clase 'home-page' al cuerpo -->
+<body class="home-page"> 
     <style>
         .custom-button {
             position: absolute; 
             top: 34%; 
-            left: 21.5%; 
+            left: 22.5%; 
             transform: translate(-50%, -50%); 
             padding: 30px 170px; 
             background-color: #1B4965; 
@@ -22,7 +22,7 @@
         }
 
         .custom-button-text {
-            font-size: 24px; 
+            font-size: 20px; 
             line-height: 1; 
         }
 
@@ -39,9 +39,9 @@
     </style>
 
     <div class="button-container">
-        <img src="{% static 'Images/portadaPrincipal.png' %}" alt="Portada Principal">
+        <img src="{% static 'Images/portadaPrincipal.png' %}" alt="Portada Principal" style="max-width: 100%; height: auto;">
         <a href="{% url 'home' %}" class="custom-button">
-            <span class="custom-button-text">Start with us!!</span>
+            <span class="custom-button-text">Empieza Con Nosotros!!</span>
         </a>
     </div>
 </body>

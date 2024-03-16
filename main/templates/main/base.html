@@ -1,7 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="es">
-<head>
+<html lang="es" {% if is_home_page %}class="home-page"{% endif %}>
+<head >
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% endblock title %} - CuidaMe</title>
@@ -14,8 +14,8 @@
   {% block header %}{% endblock header %}
 </head>
 <body>
-  <header style="margin-top: 0;">
-    <section class="base-header-primary" style="padding-top: 10px;">
+  <header style="margin-top: 0;margin-down:0">
+    <section class="base-header-primary" style="padding-top: 10px;" >
         <h3 style="padding-left: 10px;"><a href="/" style="color: #cae9ff; text-decoration: none;"><strong>CuidaMe</strong></a></h3>
         <nav>
             {% if request.user.is_authenticated %}
