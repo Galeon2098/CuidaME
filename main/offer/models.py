@@ -50,7 +50,7 @@ class Offer(models.Model):
         return sum(valorations) / len(valorations) if valorations else 0
 
     def save(self, *args, **kwargs):
-        if not self.lat or not self.lng:  # Solo si las coordenadas no están ya definidas
+        if self.pk is None or self.address != self.__class__.objects.get(pk=self.pk).address or (self.lat is None or self.lng is None):
             g = geocoder.osm(self.address)
             if g.ok:
                 self.lat = g.latlng[0]
