@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from main.models import Cuidador
-from .choices import POB_CHOICES
 
 class Offer(models.Model):
 
