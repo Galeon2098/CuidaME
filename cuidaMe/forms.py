@@ -55,7 +55,7 @@ class CuidadorRegistrationForm(forms.ModelForm):
     formacion = forms.CharField(label="Formación")
     experiencia = forms.CharField(label="Experiencia")
     tipo_publico_dirigido = forms.CharField(label="Tipo de público al que te diriges", max_length=100)
-    poblacion = forms.ChoiceField(label='Población', choices=POB_CHOICES)  
+    poblacion = forms.ChoiceField(label='Población', choices=POB_CHOICES)
     # Añade campos adicionales de Cuidador
     dni = forms.CharField(label='DNI', max_length=20, required=True)
     numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=20, required=True)

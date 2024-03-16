@@ -94,7 +94,7 @@ def edit_offer(request, id):
             form.save()
             return redirect('MY_OFFERS_URL')
     else:
-        form = OfferForm(instance=offer, user=request.user)  
+        form = OfferForm(instance=offer, user=request.user)
 
     return render(request, 'offers/edit_offer.html', {'form': form, 'offer': offer})
 

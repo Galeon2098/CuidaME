@@ -28,7 +28,7 @@ class Cuidador(models.Model):
     experiencia = models.TextField()
     tipo_publico_dirigido = models.CharField(max_length=100)
     chat_requests_received = models.ManyToManyField('chat.ChatRequest', related_name='caregiver_received_requests')
-    poblacion = models.CharField(max_length=100, choices=POB_CHOICES, default='Sevilla')  
+    poblacion = models.CharField(max_length=100, choices=POB_CHOICES, default='Sevilla')
 
     def __str__(self):
         return self.user.username
