@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 from main.offer.choices import POB_CHOICES
-
 class Cliente(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     apellidos = models.CharField(max_length=100)
@@ -15,7 +14,7 @@ class Cliente(models.Model):
     
     tipo_dependencia = models.CharField(max_length=20, choices=OPCIONES_DEPENDENCIA)
     chat_requests_sent = models.ManyToManyField('chat.ChatRequest', related_name='client_sent_requests')
-    poblacion = models.CharField(max_length=100, choices=POB_CHOICES, default='Sevilla')  
+    poblacion = models.CharField(max_length=100, choices=POB_CHOICES, default='Sevilla')
 
     def __str__(self):
         return self.user.username

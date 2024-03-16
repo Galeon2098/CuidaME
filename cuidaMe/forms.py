@@ -11,7 +11,7 @@ class LoginForm(forms.Form):
 class ClienteRegistrationForm(forms.ModelForm):
     # Añade campos adicionales de Cliente
     tipo_dependencia = forms.ChoiceField(label='Tipo de Dependencia', choices=Cliente.OPCIONES_DEPENDENCIA)
-    poblacion = forms.ChoiceField(label='Población', choices=POB_CHOICES)  
+    poblacion = forms.ChoiceField(label='Población', choices=POB_CHOICES)
     first_name = forms.CharField(label='Nombre', required=True)
     last_name = forms.CharField(label='Apellidos', required=True)
     tipo_dependencia = forms.ChoiceField(label='Tipo de Dependencia', choices=Cliente.OPCIONES_DEPENDENCIA, required=True)
