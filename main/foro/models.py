@@ -10,7 +10,6 @@ class Thread(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f'{self.title} - {self.author.username}'
-    
 class Comment(models.Model):
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
