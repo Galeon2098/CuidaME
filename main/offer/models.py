@@ -50,11 +50,14 @@ class Offer(models.Model):
         return sum(valorations) / len(valorations) if valorations else 0
 
     def save(self, *args, **kwargs):
-        if self.pk is None or self.address != self.__class__.objects.get(pk=self.pk).address or (self.lat is None or self.lng is None):
+        if self.pk is None or self.address != self.__class__.objects.get(pk=self.pk).address:
             g = geocoder.osm(self.address)
             if g.ok:
                 self.lat = g.latlng[0]
                 self.lng = g.latlng[1]
+            else:
+                raise ValueError('La dirección proporcionada no es válida. Introduce otra dirección.')
+
         self.user.Total_average_rating = self.calculate_total_average_rating()
         self.user.save()
         super().save(*args, **kwargs)

@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="{{ form.address.id }}" style="font-size: 120%;"><b>Ciudad:</b></label>
+                        <label for="{{ form.address.id }}" style="font-size: 120%;"><b>Dirección:</b></label>
                         &nbsp; {{ form.address }}
                     </div>
 
@@ -80,6 +80,13 @@
                         <button type="submit" class="btn btn-primary update_button" style="width: 50%; font-size: 110%; font-weight: bolder;">Actualizar</button>
                     </div>
                 </form>
+                {% if messages %}
+                    <div class="alert alert-danger mt-3">
+                    {% for message in messages %}
+                        <strong>Error:</strong> {{ message }}
+                    {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </main>

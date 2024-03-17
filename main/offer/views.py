@@ -101,8 +101,11 @@ def edit_offer(request, id):
     if request.method == 'POST':
         form = OfferForm(request.POST, instance=offer)
         if form.is_valid():
-            form.save()
-            return redirect('offer:my_offers')
+            try:
+                form.save()
+                return redirect('offer:my_offers')
+            except ValueError as e:
+                messages.error(request, str(e))
     else:
         form = OfferForm(instance=offer, user=request.user)  # Pasa el usuario como argumento
 
