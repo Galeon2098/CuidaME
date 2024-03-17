@@ -84,12 +84,14 @@ const url = 'ws://' + window.location.host +
 '/ws/chat/room/' + chatId + '/';
 const chatSocket = new WebSocket(url);
 
+let lastMessageDate = ''; // Variable para almacenar la última fecha mostrada
+
 chatSocket.onmessage = function(event) {
 const data = JSON.parse(event.data);
 const chat = document.getElementById('chat');
 
-const dateOptions = {hour: 'numeric', minute: 'numeric', hour12: true};
-const datetime = new Date(data.datetime).toLocaleString('en', dateOptions);
+const dateOptions = {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false}; // Cambiado el formato de fecha
+const datetime = new Date(data.datetime).toLocaleString('es-ES', dateOptions); // Cambiado a español
 const isMe = data.user === requestUser;
 const source = isMe ? 'me' : 'other';
 const name = isMe ? 'Me' : data.user;
@@ -97,9 +99,17 @@ const name = isMe ? 'Me' : data.user;
 // Modificamos el estilo según si el mensaje es tuyo o no
 const messageStyle = isMe ? 'style="background-color: #DFF0D8; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: inline-block; float: right; clear: both; max-width: 70%;"' : 'style="background-color: #ffffff; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: inline-block; float: left; clear: both; max-width: 70%;"';
 
+// Verificamos si la fecha del mensaje es diferente a la última fecha mostrada
+if (lastMessageDate !== datetime.split(',')[0]) {
+    // Si es diferente, mostramos la fecha
+    chat.innerHTML += '<div class="date-marker" style="text-align: center; margin-bottom: 10px;">' + datetime.split(',')[0] + '</div>';
+    // Actualizamos la última fecha mostrada
+    lastMessageDate = datetime.split(',')[0];
+}
+
 chat.innerHTML += '<div class="message ' + source + '" ' + messageStyle + '>' +
   '<strong>' + name + '</strong> ' +
-  '<span class="date">' + datetime + '</span><br>' +
+  '<span class="date">' + datetime.split(',')[1] + '</span><br>' +
   data.message + '</div><br>';
 chat.scrollTop = chat.scrollHeight;
 };
