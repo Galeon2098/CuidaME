@@ -22,10 +22,17 @@
                         <img src="../../static/images/flecha.png" alt="volver" class="img-fluid" style="width: 12%; height: auto; position: absolute; top: 5%; left: 5%;">
                     </a>
                       <h2 class="text-center mt-3" style="margin-top:7%;"><b>Crear cuenta como cuidador</b></h2>
-                      <form style="font-size: 120%; font-family: Lato; font-weight: bolder; margin-left: 8%; margin-top: 5%;" method="post">
+                      <form style="font-size: 120%; font-family: Lato; font-weight: bolder; margin-left: 8%; margin-top: 5%;" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="{{ user_form.username.id_for_label }}"><b>Usuario:</b></label>
                             {{ user_form.username }}
+                        </div>
+                        <div class="form-group">
+                            <label for="profile_image"><b>Foto de perfil:</b></label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="profile_image" name="profile_image">
+                                <label class="custom-file-label" for="profile_image">Seleccionar imagen...</label>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -93,4 +100,12 @@
         </div>
     </div>
 </body>
+
+<script>
+    document.getElementById('profile_image').addEventListener('change', function (e) {
+        var fileName = document.getElementById('profile_image').files[0].name;
+        var nextSibling = e.target.nextElementSibling;
+        nextSibling.innerText = fileName;
+    });
+</script>
 {% endblock %}

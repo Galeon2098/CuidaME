@@ -8,6 +8,7 @@ class LoginForm(forms.Form):
 
 class ClienteRegistrationForm(forms.ModelForm):
     # Añade campos adicionales de Cliente
+    imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
     tipo_dependencia = forms.ChoiceField(label='Tipo de Dependencia', choices=Cliente.OPCIONES_DEPENDENCIA)
 
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
@@ -15,7 +16,7 @@ class ClienteRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil']
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -33,7 +34,7 @@ class ClienteRegistrationForm(forms.ModelForm):
             return user, Cliente
 
 class CuidadorRegistrationForm(forms.ModelForm):
-    # Añade campos adicionales de Cuidador
+    imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
     dni = forms.CharField(label='DNI', max_length=20)
     numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=20)
     fecha_nacimiento = forms.DateField(
@@ -48,7 +49,7 @@ class CuidadorRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil']
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -63,6 +64,7 @@ class CuidadorRegistrationForm(forms.ModelForm):
                 user.save()
                 # Guarda los campos adicionales de Cliente
                 Cuidador.objects.create(user=user, 
+                                        imagen_perfil=self.cleaned_data['imagen_perfil'],
                                         dni=self.cleaned_data['dni'],
                                         numero_seguridad_social=self.cleaned_data['numero_seguridad_social'],
                                         fecha_nacimiento=self.cleaned_data['fecha_nacimiento'],
@@ -74,9 +76,9 @@ class CuidadorRegistrationForm(forms.ModelForm):
 class ClienteProfileForm(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = ['apellidos', 'tipo_dependencia']
+        fields = ['imagen_perfil', 'apellidos', 'tipo_dependencia']
 
 class CuidadorProfileForm(forms.ModelForm):
     class Meta:
         model = Cuidador
-        fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'descripcion', 'tipo_publico_dirigido']
+        fields = ['imagen_perfil', 'dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'descripcion', 'tipo_publico_dirigido']

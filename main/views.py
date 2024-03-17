@@ -32,7 +32,7 @@ def register_cliente(request):
 
 def register_cuidador(request):
     if request.method == 'POST':
-        user_form = CuidadorRegistrationForm(request.POST)
+        user_form = CuidadorRegistrationForm(request.POST, request.FILES)
         if user_form.is_valid():
             # Guarda el formulario y sus datos
             user = user_form.save()
@@ -66,7 +66,7 @@ def edit_profile(request):
         return render(request, 'main/error_page.html')
 
     if request.method == 'POST':
-        form = form_class(request.POST, instance=profile)
+        form = form_class(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return redirect('my_profile_detail')
