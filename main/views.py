@@ -21,7 +21,7 @@ def pricing_plan(request):
 
 def register_cliente(request):
     if request.method == 'POST':
-        user_form = ClienteRegistrationForm(request.POST)
+        user_form = ClienteRegistrationForm(request.POST, request.FILES)
         if user_form.is_valid():
             # Guarda el formulario y sus datos
             user = user_form.save()

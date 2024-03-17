@@ -15,10 +15,15 @@
             <div>
 
                 <div class="container" style="display: flex; justify-content: center; position: relative;">
-                    {% if user.profile.photo %}
+                    {% if request.user.cliente.imagen_perfil %}
                     <div style="align-items: center; position: absolute; top: -120px;">
-                        <img src="{{ user.profile.photo.url }}"
-                            style="width: 160px; height: 160px; border-radius: 100%;">
+                        <img src="{{ request.user.cliente.imagen_perfil.url }}"
+                        style="width: 160px; height: 160px; border-radius: 100%;">
+                    </div>
+                    {% elif request.user.cuidador.imagen_perfil %}
+                    <div style="align-items: center; position: absolute; top: -120px;">
+                        <img src="{{ request.user.cuidador.imagen_perfil.url }}"
+                        style="width: 160px; height: 160px; border-radius: 100%;">
                     </div>
                     {% else %}
                     <!-- Si no hay foto de perfil, se muestra una imagen predeterminada -->

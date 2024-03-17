@@ -1,6 +1,23 @@
 from django import forms
 from django.contrib.auth.models import User
 from main.models import Cliente, Cuidador
+from django.core.exceptions import ValidationError
+import re
+
+
+def es_dni_valido(dni):
+    """
+    Función para validar el formato de un DNI español.
+    """
+    dni_regex = '^[0-9]{8}[A-Za-z]$'  # Expresión regular para validar DNI español
+    return bool(re.match(dni_regex, dni))
+
+def es_numero_seguridad_social_valido(numero_seguridad_social):
+    """
+    Función para validar el formato de un número de seguridad social español.
+    """
+    nss_regex = '^[0-9]{12}$'  # Expresión regular para validar número de seguridad social
+    return bool(re.match(nss_regex, numero_seguridad_social))
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Usuario')
@@ -30,7 +47,7 @@ class ClienteRegistrationForm(forms.ModelForm):
             if commit:
                 user.save()
                 # Guarda los campos adicionales de Cliente
-                Cliente.objects.create(user=user, tipo_dependencia=self.cleaned_data['tipo_dependencia'])
+                Cliente.objects.create(user=user, tipo_dependencia=self.cleaned_data['tipo_dependencia'], imagen_perfil=self.cleaned_data['imagen_perfil'])
             return user, Cliente
 
 class CuidadorRegistrationForm(forms.ModelForm):
@@ -56,6 +73,17 @@ class CuidadorRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password2']
+    def clean_dni(self):
+        dni = self.cleaned_data.get('dni')
+        if not es_dni_valido(dni):
+            raise ValidationError('DNI inválido. Introduce un DNI válido (8 dígitos seguidos de una letra)')
+        return dni
+
+    def clean_numero_seguridad_social(self):
+        nss = self.cleaned_data.get('numero_seguridad_social')
+        if not es_numero_seguridad_social_valido(nss):
+            raise ValidationError('Número de seguridad social inválido. Introduce un número válido (12 dígitos)')
+        return nss
 
     def save(self, commit=True):
             user = super(CuidadorRegistrationForm, self).save(commit=False)
