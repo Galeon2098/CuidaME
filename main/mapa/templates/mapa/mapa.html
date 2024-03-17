@@ -2,23 +2,8 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-md-4">
-        <h3>Ofertas:</h3>
-
-        <ol class="list-group">
-
-            {% for offer in offers %}
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                <div class="fw-bold">{{ offer.title }}</div>
-                {{ offer.address }}
-                </div>
-            </li>
-            {% endfor %}
-        </ol>
-    </div>
-    <div class="col-md-8">
+<div class="col-md-12">
+    <div class="map-container" style="margin-bottom: 20px;">
         {{ map|safe }}
     </div>
 </div>
