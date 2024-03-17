@@ -27,7 +27,6 @@ class ThreadForm(forms.ModelForm):
             self.add_error('description', "La descripción no puede tener más de 300 caracteres.")
         return cleaned_data
 class CommentForm(forms.ModelForm):
-    
     class Meta:
         model = Comment
         fields = [ 'text']
