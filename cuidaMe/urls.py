@@ -44,4 +44,5 @@ urlpatterns = [
     path('cuidadores/', views.cuidador_list, name='cuidador_list'),
     path('cuidadores/<int:cuidador_id>/editar/', views.cuidador_edit, name='editar_cuidador'),
     path('cuidadores/<int:cuidador_id>/delete/', views.cuidador_delete, name='eliminar_cuidador'),
+    path('foro/', include('main.foro.urls', namespace='foro')),
 ]

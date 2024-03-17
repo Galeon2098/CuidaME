@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Hilos</title>
+</head>
+<body>
+    <h1>Listado de Hilos</h1>
+    <form method="post" action="{% url 'foro:search_threads' %}">
+    {% csrf_token %}
+    <input type="text" name="search_query" placeholder="Buscar hilos...">
+    <button type="submit">Buscar</button>
+</form>
+<form method="post" action="{% url 'foro:order_threads' %}">
+    {% csrf_token %}
+    <button type="submit">Ordenar por fecha de creación</button>
+</form>
+    <button><a href="{% url 'foro:new_thread' %}">Crear Hilo</a></button>
+    <ul>
+        {% for thread in threads %}
+        <div class="card">
+           <a href="{% url 'foro:thread_detail' thread.id %}"> <h2>{{ thread.title }}</h2></a>
+            <p>{{ thread.author.username|default:"Anónimo" }} - {{ thread.date_created }}</p>
+        </div>
+        {% endfor %}
+    </ul>
+</body>
+</html>
