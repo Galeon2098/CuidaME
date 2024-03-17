@@ -46,6 +46,9 @@ def register_cuidador(request):
 def about_us(request):
     return render(request, 'main/aboutUs.html')
 
+def privacy_policy(request):
+    return render(request,'main/privacy_policy.html')
+
 @login_required
 def edit_ad(request):
     return render(request, 'main/edit_ad.html')

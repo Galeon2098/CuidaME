@@ -114,4 +114,23 @@
   background-color: #e5f4f8;
   border-radius: 3px;
 
+/* social-auth */
+
+.social {
+  float:right;
+}
+
+.social li {
+    list-style:none;
+    padding:10px 20px;
+    margin:0 0 10px 0;
+}
+.social li a {
+    width:100%;
+    height:100%;
+    display:block;
+    color:#fff;
+}
+.social li.facebook { background:#3b5399; }
+
 }

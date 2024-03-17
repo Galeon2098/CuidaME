@@ -47,6 +47,18 @@
                   <p style="display: flex; justify-content: center; font-family: Lato; font-weight: bold;">Tu nombre y tu contraseña no existen. Inténtelo de nuevo</p>
                 </div>
                 {% endif %}
+
+                <div class="social">
+                  <ul>
+                    <li class="facebook">
+                      <a href="{% url "social:begin" "facebook" %}">
+                        Sign in with Facebook
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+
                   <hr style="border: 1px solid #1B4965; width: 100%;">
                   <h3 style="text-align: center; font-family: Lato; font-weight: bold;">¿No tienes una cuenta?</h3>
                   <h5 style="text-align: center; font-family: Lato; font-weight: bold;">

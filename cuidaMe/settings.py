@@ -46,7 +46,13 @@ INSTALLED_APPS = [
     'main.offer.apps.OffersConfig',
     'main.chat.apps.ChatConfig',
     'channels',
+    'social_django',
+    'django_extensions',
 
+]
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2'
 ]
 
 MIDDLEWARE = [
@@ -146,6 +152,23 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+#FACEBOOK CONFIG
+SOCIAL_AUTH_FACEBOOK_KEY = '298464543044289'
+SOCIAL_AUTH_FACEBOOK_SECRET = '7f4b6507a51e9042f978be44d4ca6792'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_PIPELINE = [
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+]
 
 # STRIPE CONFIG
 STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_PUBLIC_KEY_TEST')

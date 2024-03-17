@@ -36,5 +36,8 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('product_page', views.product_page, name='product_page'), #Con fines de testeo
     path('payment_successful', views.payment_successful, name='payment_successful'),
     path('payment_cancelled', views.payment_cancelled, name='payment_cancelled'),
+    path('privacy_policy',views.privacy_policy, name='privacy_policy'),
+    path('social-auth/', include('social_django.urls', namespace='social')),
+    path('', include('django.contrib.auth.urls')),
 
 ]
