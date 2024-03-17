@@ -17,13 +17,27 @@ class ThreadForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
-    
+    def clean(self):
+        cleaned_data = super().clean()
+        title = cleaned_data.get("title")
+        description = cleaned_data.get("description")
+        if len(title) > 75:
+            raise forms.ValidationError("El título no puede tener más de 75 caracteres.")
+        if len(description) > 300:
+            self.add_error('description', "La descripción no puede tener más de 300 caracteres.")
+        return cleaned_data
 class CommentForm(forms.ModelForm):
-    text = forms.CharField(widget=forms.Textarea)
+    
     class Meta:
         model = Comment
         fields = [ 'text']
         labels = {
             'text': 'Comentario'
         }
+        def clean(self):
+            cleaned_data = super().clean()
+            text = cleaned_data.get("text")
+            if len(text) > 1000:
+                self.add_error('text', "El comentario no puede tener más de 1000 caracteres.")
+            return cleaned_data
 

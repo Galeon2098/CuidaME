@@ -2,8 +2,10 @@ from django.shortcuts import redirect, render
 from django.db.models import Q,Count
 from main.foro.forms import CommentForm, ThreadForm
 from main.foro.models import Comment, Thread
+from django.contrib.auth.decorators import login_required
 
 #Crear un nuevo hilo
+@login_required
 def new_thread(request):
     if request.method == 'POST':
         form = ThreadForm(request.POST)
@@ -26,11 +28,10 @@ def thread_detail(request, thread_id):
     comments = Comment.objects.filter(thread_id=thread_id)
     form = CommentForm()
     return render(request, 'thread_detail.html', {'thread': thread, 'comments': comments , 'form': form})
-
+@login_required
 #Comentar en un hilo
 def comment(request, thread_id):
     thread = Thread.objects.get(id=thread_id)
-    
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():

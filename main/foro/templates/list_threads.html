@@ -15,7 +15,9 @@
     {% csrf_token %}
     <button type="submit">Ordenar por fecha de creación</button>
 </form>
+    {% if user.is_authenticated %}
     <button><a href="{% url 'foro:new_thread' %}">Crear Hilo</a></button>
+    {% endif %}
     <ul>
         {% for thread in threads %}
         <div class="card">

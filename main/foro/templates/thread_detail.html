@@ -21,8 +21,9 @@
 
         {% endfor %}
     </ul>
-    <!-- Aquí podrías añadir más detalles del hilo si lo deseas -->
-     {% include "comment_form.html" %}
+    {% if user.is_authenticated %}
+        {% include "comment_form.html" %}
+    {% endif %}
     <!-- Botón para volver al listado de hilos -->
     <button><a href="{% url 'foro:list_threads' %}">Volver al listado de Hilos</a></button>
 </body>
