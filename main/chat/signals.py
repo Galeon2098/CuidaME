@@ -1,6 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import ChatRequest
+
+from main.chat.models import ChatRequest
 
 @receiver(post_save, sender=ChatRequest)
 def update_sent_chat_requests(sender, instance, created, **kwargs):

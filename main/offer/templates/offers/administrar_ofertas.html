@@ -1,0 +1,17 @@
+
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1>Ofertas existentes</h1>
+
+<ul>
+  {% for oferta in ofertas %}
+  <li>
+    {{ oferta.title }} - {{ oferta.offer_type }}
+    <a href="{% url 'offer:editar_oferta_admin' oferta.id %}">Editar</a>
+    <a href="{% url 'offer:eliminar_oferta_admin' oferta.id%}">Borrar</a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
+
