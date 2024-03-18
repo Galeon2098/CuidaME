@@ -7,11 +7,11 @@
                 <div class="card-header">Confirmación de eliminación</div>
 
                 <div class="card-body">
-                    <p>¿Estás seguro de que quieres eliminar la oferta "{{ offer.title }}"?</p>
+                    <p>¿Estás seguro de que quieres eliminar {{ object_type }} "{{ object_name }}"?</p>
                     <form method="post">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
-                        <a href="{% url 'offer:my_offers' %}" class="btn btn-secondary">Cancelar</a>
+                        <a href="{% url cancel_url %}" class="btn btn-secondary">Cancelar</a>
                     </form>
                 </div>
             </div>

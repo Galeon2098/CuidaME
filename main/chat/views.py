@@ -24,7 +24,7 @@ def send_chat_request(request, cuidador_id, offer_id):
     cuidador = get_object_or_404(Cuidador, id=cuidador_id)
     oferta = get_object_or_404(Offer, id=offer_id)
     # Verifica si ya existe una solicitud pendiente para esta oferta
-    existing_request = ChatRequest.objects.filter(sender=cliente.user, receiver=cuidador.user,accepted=False,offer=oferta).first()
+    existing_request = ChatRequest.objects.filter(sender=cliente.user, receiver=cuidador.user, offer=oferta).first()
     if not existing_request:
         # Si no existe, crea una nueva solicitud con la oferta asociada
         ChatRequest.objects.create(sender=cliente.user, receiver=cuidador.user, offer=oferta)

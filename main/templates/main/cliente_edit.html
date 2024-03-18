@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 {% extends "main/base.html" %}
-{% block content %}
+{% block title %}Edit cliente{% endblock %}
 {% load static %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
-
+{% block content %}
 <main class="container pt-5 pb-3">
     <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">
         <div class="col-md-6">
@@ -14,18 +12,18 @@
         <div class="col-md-6"
             style="background-color: #62B6CB; color: #1B4965; padding: 30px; border-radius: 10%; font-size: 18px; justify-content: center;">
             <div>
-                <h2 class="text-center"><b>Editar perfil</b></h2>
+                <h2 class="text-center"><b>Editar Cliente</b></h2>
 
                 <div class="container" style="display: flex; height: 20px;">
                     <a href="/mi_perfil">
-                        <img src="{% static 'Images/back.png' %}" style="width: 60%; height: auto; margin-top: -50%;">
+                        <img src="{% static 'Images/back.png' %}" alt="Botón de retroceso" style="width: 60%; height: auto; margin-top: -50%;">
                     </a>
                 </div>
-                <form method="post" style="font-size: 20px; font-weight: bolder; margin-top: 10%;">
+                <form action="{% url 'editar_cliente' cliente.id %}" method="post" style="font-size: 20px; font-weight: bolder; margin-top: 10%;">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <div class="d-flex justify-content-center">
-                      <button type="submit" class="btn btn-primary mt-3" style="width:60%; font-size: 20px;">Actualizar</button>
+                      <button type="submit" class="btn btn-primary mt-3" style="width:60%; font-size: 20px;">Guardar Cambios</button>
                     </div>
                   </form>
 
@@ -33,6 +31,4 @@
         </div>
     </div>
 </main>
-
 {% endblock %}
-
