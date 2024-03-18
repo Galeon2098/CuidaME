@@ -62,9 +62,24 @@ body{
 }
 
 .form-field input[type='submit']{
+    width: 49%;
     background-color:#1b4865;
     border:none;
     color: #fff;
+}
+
+.form-field button{
+    width: 49%;
+    border:2px solid rgba(198,202,219,1);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color:#1b4865;
+    border:none;
+    color: #fff;
+    float: right;
+    margin-top: -14%;
 }
 
 @media screen and (max-width:450px) {

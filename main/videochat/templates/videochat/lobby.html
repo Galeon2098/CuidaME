@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +22,7 @@
             <form id="form">
                 <div class="form-field">
                     <label>Nombre de la sala</label>
-                    <input type="text" name="room" placeholder="Introduce el nombre de la sala..." style="text-transform:uppercase;"/>
+                    <input type="text" name="room" placeholder="Introduce el nombre de la sala..." style="text-transform:uppercase;"/ required>
                 </div>
 
                 <div class="form-field">
@@ -32,9 +31,16 @@
                 </div>
 
                 <div class="form-field">
-                    <input type="submit"  value="Join Room">
+                    <input type="submit"  value="Entrar en la Sala"> <br><br>
+                    <button onclick="goBack()">Volver atrás</button>
+                    <script>
+                        function goBack() {
+                            window.history.back();
+                        }
+                    </script>
                 </div>
             </form>
+
         </section>
     </main>
 
