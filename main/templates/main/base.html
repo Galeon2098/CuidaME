@@ -15,52 +15,85 @@
 </head>
 <body>
   <header>
-    <section class="base-header-primary"  style="padding-top: 10px;">
-      <h3 style="padding-left: 10px;"><a href="/" style="color: #cae9ff;"><strong>CuidaMe</strong></a></h3>
-      <nav>
-          <a class="btn" href="{% url 'about_us' %}" role="button">Sobre Nosotros</a>
-          <a class="btn" href="{% url 'pricing_plan' %}" role="button">Planes de Precio</a>
-        {% if request.user.is_authenticated %}
-          <a class="btn" href="{% url 'my_profile_detail' %}" role="button">My profile</a>
-          <a class="btn" href="/chat/chat_rooms" role="button">My chat rooms</a>
-          
-          {% if user.is_superuser %}
-            <a class="btn" href="{% url 'cliente_list' %}" role="button">Lista de Clientes</a>
-            <a class="btn" href="{% url 'cuidador_list' %}" role="button">Lista de Cuidadores</a>
-            <a class="btn" href="{% url 'offer:administrar_ofertas' %}" role="button">Administrar Ofertas</a>
+    <nav class="navbar navbar-expand-lg base-header-primary">
+      <div class="container-fluid">
+        <a href="/" style="color: #cae9ff;"><strong>CuidaMe</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <p style="color: #cae9ff;">=</p>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
+            <li class="nav-item">
+              <a class="btn" href="{% url 'about_us' %}" role="button">Sobre Nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn" href="{% url 'pricing_plan' %}" role="button">Planes de Precio</a>
+            </li>
 
-          {% endif %}
-          {% if request.user.cuidador %}
-            <a class="btn" href="/offer/my_offers" role="button">My offers</a>
-            <a class="btn" href="/offer/list" role="button">Offers list</a>
-            <a class="btn" href="/chat/requests" role="button">Chat requests</a>
-          {% endif %}
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="btn" href="{% url 'my_profile_detail' %}" role="button">Mi perfil</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn" href="/chat/chat_rooms" role="button">Mis chats</a>
+            </li>
 
-          {% if request.user.cliente %}
-            <a class="btn" href="/offer/list" role="button">Offers list</a>
-          {% endif %}
-          <div class="logout-btn-wrapper">
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-info">Log Out</button>
-            </form>
+            {% if user.is_superuser %}
+            <li class="nav-item">
+              <a class="btn" href="{% url 'cliente_list' %}" role="button">Lista de Clientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn" href="{% url 'cuidador_list' %}" role="button">Lista de Cuidadores</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn" href="{% url 'offer:administrar_ofertas' %}" role="button">Administrar Ofertas</a>
+            </li>
+            {% endif %}
+
+            {% if request.user.cuidador %}
+            <li class="nav-item">
+              <a class="btn" href="/offer/my_offers" role="button">Mis ofertas</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn" href="/offer/list" role="button">Lista de ofertas</a>
+            </li>
+            {% endif %}
+
+            {% if request.user.cliente %}
+            <li class="nav-item">
+              <a class="btn" href="/offer/list" role="button">Lista de ofertas</a>
+            </li>
+            {% endif %}
+
+            <li class="nav-item">
+              <div class="logout-btn-wrapper">
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info">Cerrar sesión</button>
+                </form>
+              </div>
+            </li>
+
+            {% else %}
+            <li class="nav-item">
+              <a class="btn" href="{% url 'home' %}" role="button">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn" href="/login" role="button">Iniciar sesión</a>
+            </li>
+            {% endif %}
+          </ul>
         </div>
-        
-        {% else %}
-        
-        <a class="btn" href="{% url 'home' %}" role="button">Inicio</a>
-        <a class="btn" href="/login" role="button">Iniciar sesión</a>
-        {% endif %}
+      </div>
     </nav>
-</section>
 
-<style>
-    .logout-btn-wrapper {
-        display: inline-block;
-        margin-left: 10px; /* Ajusta el margen izquierdo según tu diseño */
-    }
-</style>
+    <style>
+        .logout-btn-wrapper {
+            display: inline-block;
+            margin-left: 10px; /* Ajusta el margen izquierdo según tu diseño */
+        }
+    </style>
     <section class="base-header-secondary">
       <h2>{% block description %}{% endblock description %}</h2>
     </section>
@@ -133,6 +166,9 @@
   </footer>
   {% block include_js %}
   {% endblock %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', (event) => {
       // DOM loaded

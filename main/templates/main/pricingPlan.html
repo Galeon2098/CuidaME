@@ -1,4 +1,5 @@
 {% extends 'main/base.html' %}
+{% block title %}Plan de precios{% endblock %}
 {% block content %}
     {% load static %}
     <!DOCTYPE html>
@@ -7,6 +8,8 @@
         <title>Subscription Plans</title>
         <h1 style="text-align: center; color: #1B4965; font-weight: bold; margin: 20px;">Princing Plan</h1>
         <link rel="stylesheet" href="{% static 'css/pricingPlan.css' %}">
+        <link rel="stylesheet" href="{% static "css/base.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
     </head>
     <body>
         <div class="wrapper">

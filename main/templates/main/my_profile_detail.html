@@ -1,8 +1,12 @@
 {% extends "main/base.html" %}
+{% block title %}Mi perfil{% endblock %}
+
 {% block content %}
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static "css/base.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 
 <main class="container pt-5 pb-3">
     <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">

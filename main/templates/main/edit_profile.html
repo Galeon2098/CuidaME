@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% extends "main/base.html" %}
+{% block title %}Editar perfil{% endblock %}
 {% block content %}
 {% load static %}
 
@@ -25,9 +26,10 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                     <div class="d-flex justify-content-center">
-                      <button type="submit" class="btn btn-primary mt-3" style="width:60%; font-size: 20px;">Actualizar</button>
+                        <button type="submit" class="btn btn-primary mt-3"
+                            style="width:60%; font-size: 20px;">Actualizar</button>
                     </div>
-                  </form>
+                </form>
 
             </div>
         </div>
@@ -35,4 +37,3 @@
 </main>
 
 {% endblock %}
-
