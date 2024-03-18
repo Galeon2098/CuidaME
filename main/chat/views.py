@@ -1,3 +1,4 @@
+from itertools import groupby
 import json
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseRedirect
@@ -11,10 +12,18 @@ from django.contrib.auth.decorators import user_passes_test
 @login_required
 def chat_room(request, chat_id):
     chat_request = get_object_or_404(ChatRequest, id=chat_id)
-    messages = ChatMessage.objects.filter(chat_request=chat_request)
+    messages = ChatMessage.objects.filter(chat_request=chat_request).order_by('timestamp')
+
+    # Agrupar los mensajes por día
+    grouped_messages = {}
+    for date, msgs in groupby(messages, key=lambda x: x.timestamp.date()):
+        grouped_messages[date] = list(msgs)
+    
+    print(grouped_messages.items())
+
     if chat_request.accepted:
         if request.user == chat_request.sender or request.user == chat_request.receiver:
-            return render(request, 'chat/room.html', {'chat_request': chat_request, 'messages': messages})
+            return render(request, 'chat/room.html', {'chat_request': chat_request, 'grouped_messages': grouped_messages})
         else:
             return HttpResponseForbidden()
     else:
