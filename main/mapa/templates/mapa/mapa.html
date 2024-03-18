@@ -3,6 +3,11 @@
 {% block content %}
 
 <div class="col-md-12">
+    <form method="post" action="{% url 'mapa:mapa' %}">
+        {% csrf_token %}
+        <input type="text" name="address" placeholder="Ingrese una dirección">
+        <button type="submit">Buscar</button>
+    </form>
     <div class="map-container" style="margin-bottom: 20px;">
         {{ map|safe }}
     </div>
