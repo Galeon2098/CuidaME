@@ -1,8 +1,9 @@
 from django import forms
+
 from .models import Thread, Comment
 
 class ThreadForm(forms.ModelForm):
-    anonymous = forms.BooleanField(required=False, label='Publicar de forma anónima')
+   
     class Meta:
         model = Thread
         fields = ['title','description']
@@ -10,13 +11,6 @@ class ThreadForm(forms.ModelForm):
             'title': 'Título',
             'description': 'Descripción'
         }
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        if self.cleaned_data.get('anonymous'):
-            instance.author = None  # Si el usuario elige la opción anónima, no se establece un autor
-        if commit:
-            instance.save()
-        return instance
     def clean(self):
         cleaned_data = super().clean()
         title = cleaned_data.get("title")

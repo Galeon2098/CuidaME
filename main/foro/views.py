@@ -11,6 +11,7 @@ def new_thread(request):
         form = ThreadForm(request.POST)
         if form.is_valid():
             new_thread = form.save(commit=False)
+            new_thread.author = request.user
             new_thread.save()
             return redirect('foro:list_threads')
     else:
