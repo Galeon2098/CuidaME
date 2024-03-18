@@ -1,19 +1,15 @@
 /* ------------------  Global Styling ------------------ */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap');
-
-
 :root {
     --shaddow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
   }
 
 body{
-    background-color: rgba(232,233,239,1);
+    background-color:#cae9fe;
     font-family: 'Roboto', sans-serif;
 }
 
-
 /* ------------------  Register Page ------------------ */
-
 #form-container{
     width: 400px;
     box-shadow:var(--shaddow);
@@ -41,7 +37,6 @@ body{
     font-size: 36px;
 }
 
-
 #welcome-message p{
     font-size: 16px;
     color: rgb(97, 98, 105);
@@ -67,11 +62,10 @@ body{
 }
 
 .form-field input[type='submit']{
-    background-color: rgb(75, 93, 172);
+    background-color:#1b4865;
     border:none;
     color: #fff;
 }
-
 
 @media screen and (max-width:450px) {
     #form-container{
@@ -81,16 +75,14 @@ body{
 
     #welcome-message h1{
         font-size: 24px;
-    }
-    
+    } 
 }
 
-
 /* ------------------  Streams Page ------------------ */
-
 #room-name-wrapper{
     text-align: center;
     font-size: 18px;
+    color:#000;
 }
 
 #video-streams{
@@ -101,19 +93,15 @@ body{
     margin:0 auto;
 }
 
-
-
-
 .video-container{
     flex-basis: 500px;
     flex-grow: 1;
-
     max-height: 100%;
     min-height: 350px;
-    border: 1px solid rgb(75, 93, 172);
+    border: 1px solid #cae9fe;
     border-radius: 5px;
     margin: 2px;
-    background-color: rgba(198,202,219,1);
+    background-color: #1b4865;
     position: relative;
 }
 
@@ -146,10 +134,7 @@ body{
     }
 }
 
-
 /* ------------------  Streams Page | Controls ------------------ */
-
-
 #controls-wrapper{
     display: flex;
     width: 100%;
@@ -158,8 +143,6 @@ body{
     padding: 5px 20px;
     position: fixed;
     bottom:20px;
-
-
 }
 
 .control-icon{
