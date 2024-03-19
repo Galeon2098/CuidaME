@@ -1,10 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="es" {% if is_home_page %}class="home-page"{% endif %}>
-<head >
+<html lang="es">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{% endblock title %} - CuidaMe</title>
+  <title >{% block title %}{% endblock title %} - CuidaMe</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,6 +49,7 @@
 </header>
   <main>
     {% block content %}
+
     {% endblock content %} 
   </main>
   <footer class="text-center text-lg-start bg-light text-muted " >
@@ -98,6 +99,7 @@
             
             <img src="{% static 'Images/App_logo.png' %}" alt="Logo de CuidaMe" width="200" height="200">
             <a href="{% url 'about_us' %}" style="color: #cae9ff; padding-left: 30px;">Sobre nosotros</a>
+
           </div>
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4"  style=" color: #cae9ff;">
             <h6 class="text-uppercase fw-bold mb-4">Contactos</h6>
@@ -113,7 +115,7 @@
     </section>
     <div class="text-center p-4" style="background-color: #1B4965  ; color: #cae9ff;">
       © 2024 Copyright :
-      <a class="text-reset fw-bold" style=" color: #cae9ff;" href="/">CuidaMe.com</a>
+      <a class="text-reset fw-bold"style=" color: #cae9ff;" href="/">CuidaMe.com</a>
     </div>
   </footer>
   {% block include_js %}
@@ -126,5 +128,4 @@
     })
   </script>
 </body>
-</body>
-</html>
+    </html>
