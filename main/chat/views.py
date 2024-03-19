@@ -8,22 +8,34 @@ from main.chat.models import ChatMessage, ChatRequest
 from main.models import Cliente, Cuidador
 from main.offer.models import Offer
 from django.contrib.auth.decorators import user_passes_test
+from django.utils import timezone
+import pytz
+
 
 @login_required
 def chat_room(request, chat_id):
     chat_request = get_object_or_404(ChatRequest, id=chat_id)
     messages = ChatMessage.objects.filter(chat_request=chat_request).order_by('timestamp')
+    
+    timezone = pytz.timezone('Europe/Madrid')
+    messages_timezone = []
+    for message in messages:
+        message.timestamp = message.timestamp.astimezone(timezone)
+        messages_timezone.append(message)
 
     # Agrupar los mensajes por día
     grouped_messages = {}
-    for date, msgs in groupby(messages, key=lambda x: x.timestamp.date()):
+    for date, msgs in groupby(messages_timezone, key=lambda x: x.timestamp.date()):
         grouped_messages[date] = list(msgs)
     
-    print(grouped_messages.items())
+    if grouped_messages:
+        lastMessageDate = max(grouped_messages.keys()).strftime("%Y-%m-%d") 
+    else:
+        lastMessageDate = None
 
     if chat_request.accepted:
         if request.user == chat_request.sender or request.user == chat_request.receiver:
-            return render(request, 'chat/room.html', {'chat_request': chat_request, 'grouped_messages': grouped_messages})
+            return render(request, 'chat/room.html', {'chat_request': chat_request, 'grouped_messages': grouped_messages, 'last_message_date': lastMessageDate})
         else:
             return HttpResponseForbidden()
     else:

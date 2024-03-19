@@ -1,10 +1,12 @@
 {% extends "main/base.html" %}
 
 {% block title %}Chat room for "{{ chat_request.offer }}"{% endblock %}
-
+{% load tz %}
 {% block content %}
 {% load static %}
 {% load tz %}
+{% load i18n %}
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-4" style="height: 100%; float: left;">
@@ -55,11 +57,16 @@
       
      <div class="chat-body" id="chat" style="background-color: rgb(117, 192, 241); height: 400px; overflow-y: auto; padding: 10px; display: flex; flex-direction: column;">
     {% for date, messages in grouped_messages.items %}
-        <div class="date-marker" style="text-align: center; margin-bottom: 10px;">{{ date }}</div>
+    
+        <div class="date-marker" style="text-align: center; margin-bottom: 10px;">
+          {% language 'es' %}
+            {{ date|date:'j \d\e F \d\e Y' }}
+          {% endlanguage %}
+        </div>
         {% for message in messages %}
             {% if message.user == request.user %}
                 <div class="message me" style="background-color: #DFF0D8; border-radius: 8px; padding: 10px; margin-bottom: 15px; display: inline-block; float: right; clear: both; max-width: 70%; align-self: flex-end">
-                    <strong>Me</strong>
+                    <strong>Yo</strong>
             {% else %}
                 <div class="message other" style="background-color: #ffffff; border-radius: 8px; padding: 10px; margin-bottom: 15px; display: inline-block; float: left; clear: both; max-width: 70%; align-self: flex-start">
                     <strong>{{ message.user }}</strong>
@@ -144,15 +151,32 @@ const authUsername = "{{ user.username }}";
 
 const dateOptions = {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false}; // Cambiado el formato de fecha
 const datetime = new Date(data.datetime).toLocaleString('es-ES', dateOptions); // Cambiado a español
+const datetimeFormatted = new Date(data.datetime).toISOString().slice(0,10)
+
+var lastDatetime = '{{ last_message_date }}';
+
+intlDateObj = new Intl.DateTimeFormat('en-US', {
+                timeZone: "Europe/Madrid"
+                        });
+usaTime = intlDateObj.format(new Date(data.datetime));
+var parts = usaTime.split('/');
+var year = parts[2];
+var month = parts[0];
+var day = parts[1];
+var formattedDate = year + '-' + ('0' + month).slice(-2) + '-' + ('0' + day).slice(-2);
+
+console.log({formattedDate})
+console.log(lastDatetime)
+
 const isMe = data.user === requestUser;
 const source = isMe ? 'me' : 'other';
-const name = isMe ? 'Me' : data.user;
+const name = isMe ? 'Yo' : data.user;
 
 // Modificamos el estilo según si el mensaje es tuyo o no
-const messageStyle = isMe ? 'style="background-color: #DFF0D8; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: inline-block; float: right; clear: both; max-width: 70%;"' : 'style="background-color: #ffffff; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: inline-block; float: left; clear: both; max-width: 70%;"';
+const messageStyle = isMe ? 'style="background-color: #DFF0D8; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: inline-block; float: right; clear: both; max-width: 70%; align-self: flex-end;"' : 'style="background-color: #ffffff; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: inline-block; float: left; clear: both; max-width: 70%; align-self: flex-start;"';
 
 // Verificamos si la fecha del mensaje es diferente a la última fecha mostrada
-if (lastMessageDate !== datetime.split(',')[0]) {
+if (lastDatetime !== formattedDate) {
     // Si es diferente, mostramos la fecha
     chat.innerHTML += '<div class="date-marker" style="text-align: center; margin-bottom: 10px;">' + datetime.split(',')[0] + '</div>';
     // Actualizamos la última fecha mostrada
@@ -162,7 +186,7 @@ if (lastMessageDate !== datetime.split(',')[0]) {
 chat.innerHTML += '<div class="message ' + source + '" ' + messageStyle + '>' +
   '<strong>' + name + '</strong> ' +
   '<span class="date">' + datetime.split(',')[1] + '</span><br>' +
-  data.message + '</div><br>';
+  data.message + '</div>';
 chat.scrollTop = chat.scrollHeight;
 };
 
