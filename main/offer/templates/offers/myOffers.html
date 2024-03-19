@@ -37,10 +37,10 @@
             {% for offer in offers %}
                 <tr>
                     <td>{{ offer.title }}</td>
-                    <td>{{ offer.offer_type }}</td>
+                    <td>{{ offer.get_offer_type_display }}</td>
                     <td>{{ offer.description }}</td>
                     <td class="num">${{ offer.price_per_hour }}</td>
-                    <td>{{ offer.client }}</td>
+                    <td>{{ offer.get_client_display }}</td>
                     <td>{{ offer.created }}</td>
                     <td><a href="/offer/{{offer.id}}/" class="btn btn-primary">Editar</a>   
                         <a href="{% url 'offer:delete_offer' offer.id %}" class="btn btn-danger">Eliminar</a>

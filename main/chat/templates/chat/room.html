@@ -6,12 +6,12 @@
 {% load static %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-5" style="height: 100%;float: left;">
+    <div class="col-md-4" style="height: 100%; float: left;">
       <form class="d-flex" role="search" style="margin-top: 2%; align-items: center; justify-content: center;">
         <input style="height: 50px;" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
         <button style="height: 50px;" class="btn btn-outline-success" type="submit">Buscar</button>
         {% if user.cuidador %}
-        <a href="{% url 'chat_requests_for_caregiver' %}"
+        <a href="{% url 'chat:chat_requests_for_caregiver' %}"
           style="height:70px; width: 70px; display: flex; align-items: center; justify-content: center;">
           <img src="{% static 'Images/sobre.png' %}" style="width: 80%; height: 80%; margin-left: 10px;">
         </a>
@@ -41,24 +41,21 @@
         {% endfor %}
       </ul>
       {% endif %}
-
     </div>
-    <div class="col-sm-7" style="background-color: rgb(117, 192, 241); float: right; height: 400px; overflow-y: auto; overflow-x: hidden; position: relative;">
-      <div class="chat-header"
-        style="position: sticky; top: 0; z-index: 1; background-color: #1B4965; margin-bottom: 0; padding: 10px; margin-left: -20px; margin-right: -20px;">
+    <div class="col-md-6" style="margin-left: 100px; margin-top: 30px; margin-bottom: 60px;">
+      <div class="chat-header" style="background-color: #1B4965; color: white; padding: 10px;">
         {% if user.cuidador %}        
-        <h4 class="mb-0" style="color: white;">{{ chat_request.sender }}</h4>
+        <h4 class="mb-0">{{ chat_request.sender }}</h4>
         {% endif %}
         {% if user.cliente %}        
-        <h4 class="mb-0" style="color: white;">{{ chat_request.receiver }}</h4>
+        <h4 class="mb-0">{{ chat_request.receiver }}</h4>
         {% endif %}
       </div>
-      <div class="col-md-9">
-        <div class="chat-body" id="chat">
-          <!-- Aquí se mostrarán los mensajes del chat -->
-        </div>
+      
+      <div class="chat-body" id="chat" style="background-color: rgb(117, 192, 241); height: 400px; overflow-y: auto; padding: 10px;">
       </div>
-      <div class="chat-footer" id="chat-input" style="position: sticky; bottom: 0; z-index: 1; width: calc(100% - 40px);">
+     
+      <div class="chat-footer" id="chat-input" style="background-color: rgb(117, 192, 241); padding: 10px;">
         <div class="input-group" style="margin-top: 10px;">
           <input id="chat-message-input" type="text" class="form-control" placeholder="Escriba su mensaje aqui">
           <div class="input-group-append">
@@ -69,9 +66,7 @@
     </div>
   </div>
 </div>
-
 {% endblock %}
-
 
 {% block include_js %}
 {{ chat_request.id|json_script:"chat-id" }}
@@ -99,10 +94,13 @@ const isMe = data.user === requestUser;
 const source = isMe ? 'me' : 'other';
 const name = isMe ? 'Me' : data.user;
 
-chat.innerHTML += '<div class="message ' + source + '">' +
+// Modificamos el estilo según si el mensaje es tuyo o no
+const messageStyle = isMe ? 'style="background-color: #DFF0D8; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: inline-block; float: right; clear: both; max-width: 70%;"' : 'style="background-color: #ffffff; border-radius: 8px; padding: 10px; margin-bottom: 10px; display: inline-block; float: left; clear: both; max-width: 70%;"';
+
+chat.innerHTML += '<div class="message ' + source + '" ' + messageStyle + '>' +
   '<strong>' + name + '</strong> ' +
   '<span class="date">' + datetime + '</span><br>' +
-  data.message + '</div>';
+  data.message + '</div><br>';
 chat.scrollTop = chat.scrollHeight;
 };
 
@@ -135,3 +133,4 @@ submitButton.click();
 
 input.focus();
 {% endblock %}
+  
