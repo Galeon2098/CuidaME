@@ -11,8 +11,7 @@
   <div class="row">
     <div class="col-md-4" style="height: 100%; float: left;">
       <form class="d-flex" role="search" style="margin-top: 2%; align-items: center; justify-content: center;">
-        <input style="height: 50px;" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-        <button style="height: 50px;" class="btn btn-outline-success" type="submit">Buscar</button>
+        <input style="height: 50px;" id="search" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
         {% if user.cuidador %}
         <a href="{% url 'chat:chat_requests_for_caregiver' %}"
           style="height:70px; width: 70px; display: flex; align-items: center; justify-content: center;">
@@ -22,24 +21,28 @@
       </form>
       <hr style="border: 1px solid #1B4965;opacity: 0.62;">
       {% if user.cuidador %}
-      <ul>
+      <ul id="my-chats" style="list-style: none;">
         {% for chat_request in user.cuidador.chat_requests_received.all %}
         {% if chat_request.accepted %}
-        <a class="mb-0" style="color: #1B4965; font-weight: bold;" href="/chat/room/{{ chat_request.id }} ">{{chat_request.sender }}</a>
-        <p>Oferta: {{ chat_request.offer.title }}</p>
-        <hr style="border: 1px solid #1B4965;opacity: 0.62;position: relative;left: -20px;">
+        <li>
+          <a class="mb-0" style="color: #1B4965; font-weight: bold;" href="/chat/room/{{ chat_request.id }} ">{{chat_request.sender }}</a>
+          <p>Oferta: {{ chat_request.offer.title }}</p>
+          <hr style="border: 1px solid #1B4965;opacity: 0.62;position: relative;left: -20px;">
+        </li>
         {% endif %}
         {% endfor %}
       </ul>
       {% endif %}
 
       {% if user.cliente %}
-      <ul>
+      <ul id="my-chats" style="list-style: none;">
         {% for chat_request in user.cliente.chat_requests_sent.all %}
         {% if chat_request.accepted %}
-        <a class="mb-0" style="color: #1B4965; font-weight: bold;" href="/chat/room/{{ chat_request.id }} "> {{chat_request.receiver }}</a>
-        <p>Oferta: {{ chat_request.offer.title }}</p>
-        <hr style="border: 1px solid #1B4965;opacity: 0.62;position: relative;left: -20px;">
+        <li>
+          <a class="mb-0" style="color: #1B4965; font-weight: bold;" href="/chat/room/{{ chat_request.id }} "> {{chat_request.receiver }}</a>
+          <p>Oferta: {{ chat_request.offer.title }}</p>
+          <hr style="border: 1px solid #1B4965;opacity: 0.62;position: relative;left: -20px;">
+        </li>
         {% endif %}
         {% endfor %}
       </ul>
@@ -218,5 +221,32 @@ submitButton.click();
 });
 
 input.focus();
+
+// BUSCADOR
+
+// Get the input field and list
+  const searchInput = document.getElementById('search');
+  const list = document.getElementById('my-chats').getElementsByTagName('li');
+
+  // Add event listener for input change
+  searchInput.addEventListener('input', function() {
+    // Get the search query and convert to lowercase for case-insensitive search
+    const query = this.value.toLowerCase();
+
+    // Loop through each list item
+    Array.from(list).forEach(function(item) {
+      // Get the text content of the list item and convert to lowercase
+      const text = item.textContent.toLowerCase();
+
+      // Check if the search query is found in the text content
+      // If found, display the list item, otherwise hide it
+      if (text.includes(query)) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+
 {% endblock %}
   
