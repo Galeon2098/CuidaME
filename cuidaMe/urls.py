@@ -34,6 +34,7 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('edit_ad/', views.edit_ad, name='edit_ad'),
     path('chat/', include('main.chat.urls', namespace='chat')),
     path('pricingPlan/', views.pricing_plan, name='pricing_plan'),
+    path('privacy_policy',views.privacy_policy, name='privacy_policy'),
     path('product_page/', views.product_page, name='product_page'), # Con fines de testeo
     path('payment_successful/', views.payment_successful, name='payment_successful'),
     path('payment_cancelled/', views.payment_cancelled, name='payment_cancelled'),
@@ -47,3 +48,4 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('cuidadores/<int:cuidador_id>/delete/', views.cuidador_delete, name='eliminar_cuidador'),
     path('foro/', include('main.foro.urls', namespace='foro')),
 ]
+
