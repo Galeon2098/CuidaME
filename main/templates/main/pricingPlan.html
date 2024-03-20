@@ -15,7 +15,7 @@
         <div class="wrapper">
             <div class="pricing-table gprice-single">
                 <div class="head">
-                    <h4 class="title">Basic</h4>
+                    <h4 class="title">Básico</h4>
                 </div>
                 <div class="content">
                     <div class="price">
@@ -30,21 +30,21 @@
                         <form method="post" action="{% url 'product_page' %}">
                             {% csrf_token %}
                             <input type="hidden" name="product_id" value="prod_PfuP7aE6rSI8DL">
-                            <button class="btn bordered radius" type="submit">Suscribirse</button>
+                            <div class="btn bordered radius">Plan actual</div>
                         </form>
                     </div>
                 </div>
             </div>
                 <div class="pricing-table gprice-single">
                     <div class="head">
-                        <h4 class="title">Premium</h4>
+                        <h4 class="title">Avanzado</h4>
                     </div>
                     <div class="content">
                         <div class="price">
                             <h1>4.99 €</h1>
                         </div>
                         <ul>
-                            <li>Todas las características del plan Basic, más:</li>
+                            <li>Todas las características del plan Básico, más:</li>
                             <li>- Acceso completo a herramientas de programación y gestión de clientes.</li>
                             <li>- Destacado de perfil en búsquedas y listados de cuidadores.</li>
                             <li>- Posibilidad de establecer tarifas personalizadas para los servicios ofrecidos.</li>
@@ -69,7 +69,7 @@
                                 <h1>20.00 €</h1>
                             </div>
                             <ul>
-                                <li>Todas las características de los planes Basic y Premium, más:</li>
+                                <li>Todas las características de los planes Básico y Avanzado, más:</li>
                                 <li>- Acceso completo a herramientas de creación y gestión de perfiles de cuidadores.</li>
                                 <li>- Opciones avanzadas de búsqueda y filtrado de oportunidades laborales.</li>
                                 <li>- Funciones de comunicación mejoradas con los clientes.</li>
@@ -77,7 +77,7 @@
                             <div class="sign-up">
                                 <form method="post" action="{% url 'product_page' %}">
                                     {% csrf_token %}
-                                    <input type="hidden" name="product_id" value="prod_PfuP7aE6rSI8DL">
+                                    <input type="hidden" name="product_id" value="prod_Plu56JbsXe2Y5C">
                                     <button class="btn bordered radius" type="submit">Suscribirse</button>
                                 </form>
                             </div>
