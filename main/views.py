@@ -1,13 +1,14 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, user_passes_test
-from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm,SuperuserProfileForm
+from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm,SuperuserProfileForm,InteresForm
 from main.models import Cliente, UserPayment
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.shortcuts import render
 import stripe
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
-from .models import Cliente, Cuidador
+from .models import Cliente, Cuidador, Interes
 
 # Create your views here.
 @require_http_methods(["GET"])
@@ -86,6 +87,63 @@ def edit_profile(request):
 def profile_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     return render(request, 'main/profile_detail.html', {'user': user})
+
+# CRUD INTERESES
+
+# LIST
+@login_required
+def list_intereses(request):
+    cliente = Cliente.objects.filter(user=request.user).exists()
+    if not cliente:
+        return render(request, 'main/error_page.html')
+    intereses = Interes.objects.filter(user=request.user)
+    return render(request, 'main/misIntereses.html', {'intereses': intereses})
+
+# CREATE
+@login_required
+def create_interes(request):
+    cliente = Cliente.objects.filter(user=request.user).exists()
+    if not cliente:
+        return render(request, 'main/error_page.html')
+    if request.method == 'POST':
+        form = InteresForm(request.POST)
+        if form.is_valid():
+            new_interes = form.save(commit=False)
+            new_interes.user = request.user
+            new_interes.save()
+            intereses = Interes.objects.filter(user=request.user)
+            return redirect('mis_intereses')
+    else:
+        form = InteresForm()
+    return render(request, 'main/interesCreate.html', {'form': form})
+
+#UPDATE
+@login_required
+def edit_interes(request, id):
+    interes = get_object_or_404(Interes, pk=id)
+    if request.user != interes.user:
+        return HttpResponseForbidden("No tienes permiso para editar este interés.")
+    if request.method == 'POST':
+        form = InteresForm(request.POST, instance=interes)
+        if form.is_valid():
+            form.save()
+            return redirect('mis_intereses')
+    else:
+        form = InteresForm(instance=interes, user=request.user)  
+    return render(request, 'main/edit_interes.html', {'form': form, 'interes': interes})
+
+#DELETE
+@login_required
+def delete_interes(request, interes_id):
+    interes = get_object_or_404(Interes, pk=interes_id)
+    if request.user != interes.user:
+        return HttpResponseForbidden("No tienes permiso para eliminar este interés.")
+    if request.method == 'POST':
+        interes.delete()
+        messages.success(request, 'El interés ha sido eliminado exitosamente.')
+        return redirect('mis_intereses')
+    return render(request, 'main/delete_interes_confirmation.html', {'interes': interes})
+
 
 def about_us(request):
     return render(request, 'main/aboutUs.html')

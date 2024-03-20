@@ -5,12 +5,12 @@ from django.contrib.auth.models import User
 
 @admin.register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
-    list_display = ['user', 'apellidos', 'tipo_dependencia']
+    list_display = ['user']
     raw_id_fields = ['user']
 
 @admin.register(Cuidador)
 class CuidadorAdmin(admin.ModelAdmin):
-    list_display = ['user', 'dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido']
+    list_display = ['user', 'dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia']
     raw_id_fields = ['user']
 
 class CustomUserAdmin(BaseUserAdmin):

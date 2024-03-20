@@ -19,8 +19,7 @@
         <thead class="thead-dark"> <!-- Aplica un estilo oscuro al encabezado -->
         <tr>
             <th>Nombre de usuario</th>
-            <th>Apellidos</th>
-            <th>Tipo de dependencia</th>
+
             <th>Opciones</th>
         </tr>
         </thead>
@@ -28,8 +27,6 @@
             {% for cliente in clientes %}
                 <tr>
                     <td>{{ cliente.user.username }}</td>
-                    <td>{{ cliente.apellidos }}</td>
-                    <td>{{ cliente.tipo_dependencia }}</td>
                     <td><a href="{% url 'editar_cliente' cliente.id %}" class="btn btn-primary">Editar</a>   
                         <a href="{% url 'eliminar_cliente' cliente.id %}" class="btn btn-danger">Eliminar</a>
                     </td>

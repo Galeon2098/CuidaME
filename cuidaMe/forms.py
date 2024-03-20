@@ -1,16 +1,45 @@
 from django import forms
 from django.contrib.auth.models import User
-from main.models import Cliente, Cuidador
+from main.models import Cliente, Cuidador, Interes
 import datetime, re
+from main.offer.choices import POB_CHOICES
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Usuario')
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 
+class InteresForm(forms.ModelForm):
+    TYPE_CHOICES = (
+        ('CO', 'COMPAÑÍA'),
+        ('CU', 'CUIDADO'),
+        ('TR', 'TRANSPORTE'),
+        ('DO', 'COMPRA A DOMICILIO'),
+        ('OT', 'OTROS')
+    )
+
+    CLIENT_CHOICES = (
+        ('DF', 'DISCAPACIDAD FÍSICA'), 
+        ('DM', 'DISCAPACIDAD MENTAL'), 
+        ('NI', 'NIÑOS'), 
+        ('AN', 'ANCIANOS'), 
+        ('OT', 'OTROS') 
+    )
+
+    offer_type = forms.ChoiceField(label='Tipo de oferta', choices=TYPE_CHOICES, initial='OT')
+    client = forms.ChoiceField(label='Tipo de cliente', choices=CLIENT_CHOICES, initial='OT')
+    poblacion = forms.ChoiceField(label='Población', choices=POB_CHOICES)                          
+    
+    class Meta:
+        model = Interes
+        fields = ['offer_type', 'client','poblacion']
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
 class ClienteRegistrationForm(forms.ModelForm):
     first_name = forms.CharField(label='Nombre', required=True)
     last_name = forms.CharField(label='Apellidos', required=True)
-    tipo_dependencia = forms.ChoiceField(label='Tipo de Dependencia', choices=Cliente.OPCIONES_DEPENDENCIA, required=True)
     email = forms.EmailField(label='Email', required=True)
 
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
@@ -38,7 +67,7 @@ class ClienteRegistrationForm(forms.ModelForm):
             if commit:
                 user.save()
                 # Guarda los campos adicionales de Cliente
-                Cliente.objects.create(user=user, tipo_dependencia=self.cleaned_data['tipo_dependencia'])
+                Cliente.objects.create(user=user)
             return user, Cliente
 
 class CuidadorRegistrationForm(forms.ModelForm):
@@ -50,7 +79,6 @@ class CuidadorRegistrationForm(forms.ModelForm):
         widget=forms.DateInput(attrs={'type': 'date'}),required=True)
     formacion = forms.CharField(label="Formación", required=True)
     experiencia = forms.CharField(label="Experiencia", required=True)
-    tipo_publico_dirigido = forms.CharField(label="Tipo de público al que te diriges", max_length=100, required=True)
 
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
@@ -111,19 +139,18 @@ class CuidadorRegistrationForm(forms.ModelForm):
                                         numero_seguridad_social=self.cleaned_data['numero_seguridad_social'],
                                         fecha_nacimiento=self.cleaned_data['fecha_nacimiento'],
                                         formacion=self.cleaned_data['formacion'],
-                                        experiencia=self.cleaned_data['experiencia'],
-                                        tipo_publico_dirigido=self.cleaned_data['tipo_publico_dirigido'])
+                                        experiencia=self.cleaned_data['experiencia'])
             return user, Cuidador
     
 class ClienteProfileForm(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = ['apellidos', 'tipo_dependencia']
+        fields = []
 
 class CuidadorProfileForm(forms.ModelForm):
     class Meta:
         model = Cuidador
-        fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido']
+        fields = ['formacion', 'experiencia']
 class SuperuserProfileForm(forms.ModelForm):
     class Meta:
         model = User
