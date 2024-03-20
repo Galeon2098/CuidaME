@@ -41,8 +41,18 @@
 
             <a href="/login" class="bi bi-box-arrow-in-left"style="color: white; font-size: 24px;"></a> <!--Login-->
             {% endif %}
-        </nav>
-    </section>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <style>
+        .logout-btn-wrapper {
+            display: inline-block;
+            margin-left: 10px; /* Ajusta el margen izquierdo según tu diseño */
+        }
+    </style>
+
     <section class="base-header-secondary">
         <h2>{% block description %}{% endblock description %}</h2>
     </section>
@@ -120,6 +130,9 @@
   </footer>
   {% block include_js %}
   {% endblock %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script>
     document.addEventListener('DOMContentLoaded', (event) => {
       // DOM loaded
@@ -127,5 +140,4 @@
       {% endblock %}
     })
   </script>
-</body>
     </html>

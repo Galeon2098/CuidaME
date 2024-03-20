@@ -90,6 +90,9 @@ def profile_detail(request, user_id):
 def about_us(request):
     return render(request, 'main/aboutUs.html')
 
+def privacy_policy(request):
+    return render(request,'main/privacy_policy.html')
+
 def edit_ad(request):
     return render(request, 'main/edit_ad.html')
 
