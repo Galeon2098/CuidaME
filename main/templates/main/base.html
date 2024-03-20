@@ -16,34 +16,70 @@
 
 <body>
   <header>
-    <section class="base-header-primary" style="padding-top: 10px;">
-        <h3 style="padding-left: 10px;"><a href="/" style="color: #cae9ff;"><strong>CuidaMe</strong></a></h3>
-
-
-        <nav style="float: right; margin-right: 20px; padding-bottom: 10px;">
-          <a class="btn" href="{% url 'pricing_plan' %}" role="button">Precios</a>
-            {% if request.user.cliente %}
-            <a class="btn" href="/offer/list" role="button">Ofertas</a>
-            {% endif %}
+    <nav class="navbar navbar-expand-lg base-header-primary">
+      <div class="container-fluid">
+        <a href="/" style="color: #cae9ff;"><strong>CuidaMe</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <p style="color: #cae9ff;">=</p>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item" style="padding-left: 5px;">
+              <a class="btn" href="{% url 'pricing_plan' %}" role="button">Precios</a>
+            </li>
 
             {% if request.user.is_authenticated %}
 
-            {% if request.user.cuidador %}
-            <a class="btn" href="/offer/my_offers" role="button">My offers</a>
-            <a class="btn" href="/offer/list" role="button">Ofertas</a>
-            <a href="/chat/requests" class="bi bi-chat-heart-fill" style="color: white; font-size: 24px;"></a> <!--Chat requests-->
+            {% if user.is_superuser %}
+            <li class="nav-item" style="padding-left: 5px;">
+              <a class="btn" href="{% url 'cliente_list' %}" role="button padding:left: 5px; padding-right: 5px;">Lista de Clientes</a>
+            </li>
+            <li class="nav-item" style="padding-left: 5px;">
+              <a class="btn" href="{% url 'cuidador_list' %}" role="button padding:left: 5px; padding-right: 5px;">Lista de Cuidadores</a>
+            </li>
+            <li class="nav-item" style="padding-left: 5px;">
+              <a class="btn" href="{% url 'offer:administrar_ofertas' %}" role="button padding:left: 5px; padding-right: 5px;">Administrar Ofertas</a>
+            </li>
             {% endif %}
 
-            <a href="/chat/chat_rooms" class="bi bi-chat-dots-fill" style="color: white; font-size: 24px;"></a> <!--Chats-->
-            <a href="{% url 'my_profile_detail' %}" class="bi bi-person-circle" style="color: white; font-size: 24px;"></a> <!--Profile-->
-            <a href="{% url 'logout' %}" class="bi bi-box-arrow-right" style="color: white; font-size: 24px;"></a> <!--Logout-->
-            {% else %}
+            {% if request.user.cuidador %}
+            <li class="nav-item" style="padding-left: 5px;">
+              <a class="btn" href="/offer/my_offers" role="button padding:left: 5px; padding-right: 5px;">Mis ofertas</a>
+            </li>
+            <li class="nav-item" style="padding-left: 5px;">
+              <a href="/chat/requests" class="bi bi-chat-heart-fill" style="color: white; font-size: 24px; padding:left: 5px; padding-right: 5px;"></a> <!--Chat requests-->
+            </li>
+            {% endif %}
 
-            <a href="/login" class="bi bi-box-arrow-in-left"style="color: white; font-size: 24px;"></a> <!--Login-->
+            <li class="nav-item" style="padding-left: 5px;">
+              <a class="btn" href="/offer/list" role="button">Ofertas</a>
+            </li>
+
+            <li class="nav-item" style="padding-left: 5px;">
+              <a href="/chat/chat_rooms" class="bi bi-chat-dots-fill" style="color: white; font-size: 24px; padding:left: 5px; padding-right: 5px;"></a> <!--Chats-->
+
+            <li class="nav-item" style="padding-left: 5px;">
+              <a href="{% url 'my_profile_detail' %}" class="bi bi-person-circle" style="color: white; font-size: 24px;"></a> <!--Profile-->
+            </li>
+
+            <li class="nav-item">
+              <div class="logout-btn-wrapper">
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info">Cerrar sesión</button>
+                </form>
+              </div>
+            </li>
+
+            {% else %}
+            <li class="nav-item"  style="padding-left: 5px;">
+              <a class="btn" href="/login" role="button">Iniciar sesión</a>
+            </li>
             {% endif %}
           </ul>
-        </nav>
-      </section>
+        </div>
+      </div>
+    </nav>
 
     <style>
         .logout-btn-wrapper {
