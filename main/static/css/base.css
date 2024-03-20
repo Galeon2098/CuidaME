@@ -129,14 +129,14 @@
 }
 
 /* Media query para pantallas más grandes, como las de ordenador */
-@media only screen and (min-width: 768px) {
+@media only screen and (width >= 768px) {
   .imagen1 {
       display: block; /* Asegúrate de que la imagen se muestre */
   }
 }
 
 /* Media query para pantallas más pequeñas, como las de móviles */
-@media only screen and (max-width: 767px) {
+@media only screen and (767px >= width) {
   .imagen1 {
       display: none; /* Oculta la imagen en pantallas más pequeñas */
   }
