@@ -18,7 +18,7 @@
 
 
   header {
-    min-height: 50px;
+    min-height: 60px;
   }
   
   main {
@@ -38,6 +38,7 @@
   .base-header-primary {
     display: flex;
     justify-content: space-between;
+
     background-color: #1B4965; 
     
   }
