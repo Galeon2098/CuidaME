@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.offer.apps.OffersConfig',
     'main.chat.apps.ChatConfig',
+    'main.foro.apps.ForoConfig',
     'channels',
 
 ]
