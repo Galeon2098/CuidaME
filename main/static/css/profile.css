@@ -187,10 +187,10 @@
 }
 
 
-/*NAVBAR ITEMS*/
 
 
-.profile_photo {
+
+.profile-photo {
     background-image: url(https://marvel-live.freetls.fastly.net/canvas/2024/2/31e099eb056745b1a4e43a527f34127e?quality=95&fake=.png);
     background-size: 100%;
     border-radius: 100%;
@@ -198,7 +198,7 @@
     height: 77px;
 }
 
-.publish_ad {
+.publish-ad {
     background-color: #CAE9FF;
     width: 64px;
     height: 64px;
@@ -210,7 +210,7 @@
     height: 64px;
 }
 
-.cuidaME_name {
+.cuidaME-name {
     color: #CAE9FF;
     font-family: Lato;
     font-size: 29px;
@@ -224,21 +224,20 @@
     height: 106px;
 }
 
-/*END OF THE NAVBAR ITEMS*/
 
 .imagen1 {
     display: block;
     max-width: 100%;
     height: auto;
   }
-  
+
   /* Media query para pantallas más grandes, como las de ordenador */
   @media only screen and (width >= 768px) {
     .imagen1 {
         display: block; /* Asegúrate de que la imagen se muestre */
     }
   }
-  
+
   /* Media query para pantallas más pequeñas, como las de móviles */
   @media only screen and (767px >= width) {
     .imagen1 {
