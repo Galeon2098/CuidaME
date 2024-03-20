@@ -20,7 +20,7 @@
         <h3 style="padding-left: 10px;"><a href="/" style="color: #cae9ff;"><strong>CuidaMe</strong></a></h3>
 
 
-        <nav>
+        <nav style="float: right; margin-right: 20px; padding-bottom: 10px;">
           <a class="btn" href="{% url 'pricing_plan' %}" role="button">Precios</a>
             {% if request.user.cliente %}
             <a class="btn" href="/offer/list" role="button">Ofertas</a>
@@ -42,21 +42,24 @@
             <a href="/login" class="bi bi-box-arrow-in-left"style="color: white; font-size: 24px;"></a> <!--Login-->
             {% endif %}
           </ul>
-        </div>
-      </div>
-    </nav>
+        </nav>
+      </section>
 
     <style>
         .logout-btn-wrapper {
             display: inline-block;
-            margin-left: 10px; /* Ajusta el margen izquierdo según tu diseño */
+            margin-left: 10px;
         }
+        nav.float-right {
+          float: right;
+          margin-right: 20px;
+      }
     </style>
 
     <section class="base-header-secondary">
         <h2>{% block description %}{% endblock description %}</h2>
     </section>
-</header>
+  </header>
   <main>
     {% block content %}
 
