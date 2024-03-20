@@ -15,7 +15,6 @@ class ClienteRegistrationForm(forms.ModelForm):
         ('cuidados', 'Cuidados'),
     ]
 
-    username = forms.CharField(label='Username', required=True)
     first_name = forms.CharField(label='Nombre', required=True)
     last_name = forms.CharField(label='Apellidos', required=True)
     tipo_dependencia = forms.ChoiceField(label='Tipo de Dependencia', choices=OPCIONES_DEPENDENCIA, required=True)
@@ -72,7 +71,6 @@ class CuidadorRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
 
-    username = forms.CharField(label='Username', required=True)
     first_name = forms.CharField(label='Nombre', required=True)
     last_name = forms.CharField(label='Apellidos', required=True)
     email = forms.EmailField(required=True)
