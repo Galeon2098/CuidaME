@@ -1,4 +1,5 @@
 {% extends "main/base.html" %}
+{% block title %}Lista de ofertas{% endblock %}
 {% block content %}
 {% load static %}
 
@@ -9,6 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CuidaME - Lista de Ofertas</title>
   <link rel="stylesheet" href="{% static "css/base.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
   <!-- Agrega esto en el encabezado de tu HTML -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -73,7 +75,7 @@
                 </div>
             
                 <div class="form-group col-12 text-center">
-                    <button type="submit" class="btn light-btn w-25">Aplicar Filtro</button>
+                    <button type="submit" class="btn light-btn">Aplicar Filtro</button>
                 </div>
             </form>
         </div>

@@ -1,55 +1,94 @@
 {% extends "main/base.html" %}
 {% block title %}Sobre Cuidame{% endblock %}
+{% block content %}
 {% load static %}
 
-{% block content %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/aboutUs.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <div class="section">
-        <div class="container1">
-            <h2 class="title-about">¿Quiénes somos?</h2>
-            <p>En CuidaMe, somos una comunidad comprometida con tu bienestar. Nuestra misión es proporcionarte los recursos y el apoyo que necesitas para llevar una vida más saludable y feliz.</p>
-            <p>Para los trabajadores que desean anunciarse en nuestra aplicación, ofrecemos la oportunidad de conectarse con posibles clientes y expandir su negocio.</p>
-            <p>Únete a nosotros y juntos hagamos del cuidado personal una prioridad.</p>
-            <p>¡Bienvenido a CuidaMe!</p>
-        </div>
-        <!--<div class="image1"><img src="../../images/care.jpg" alt=""></div> -->
-        <div class="image1"><img src="{% static 'images/care.jpg' %}" alt=""></div>
-    </div>
-    <h1 class="title-services">Servicios</h1>
-    <div class="section-service2">
-        <div class="container1">
-            <h2 class="services-text2">¡Amor y cuidado para nuestros mayores: ¡CuidaMe contigo!</h2>
-        </div>
-        <!-- <div class="image2"><img src="../../images/cuidadora-anciano.jpg" alt=""></div> -->
-        <div class="image2"><img src="{% static 'images/cuidadora-anciano.jpg' %}" alt=""></div>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CuidaME - Sobre nosotros</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/aboutUs.css' %}">
+        <link rel="stylesheet" href="{% static "css/base.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    </head>
 
-    </div>
+    <body style="background-color: var(--primary-bg-color);">
+        <div class="container">
 
-    <div class="row" style="margin-top: 5%;">
-        <div class="col-md-7">
-            <h3 style="margin-left: 10%; margin-top: 25%;color: #1B4965;">Jugando, Aprendiendo, Creciendo: CuidaMe con Cariño</h3>
-        </div>
-        <div class="col-md-5">
-            <img style="border-radius: 2%; width: 80%; height: auto;" src="../../static/images/cuidados_ninyos.jpeg" alt="">
-        </div>
-        <!--<div class="image1"><img src="../../images/Niñera.jpg" alt=""></div> -->
-        <div class="image2"><img src="{% static 'images/Niñera.jpg' %}" alt=""></div>
+            <div class="row" style="margin-top: 15%;">
+                <div class="col-md-6">
+                    <h1 class="title-about">¿Quiénes somos?</h1>
+                    <p style="font-family: Lato, sans-serif;  font-size: 20px; margin-top: 3%;">
+                        En CuidaMe, somos una comunidad comprometida con tu bienestar. Nuestra misión es proporcionarte los recursos y el apoyo 
+                        que necesitas para llevar una vida más saludable y feliz. Para los trabajadores que desean anunciarse en nuestra 
+                        aplicación, ofrecemos la oportunidad de conectarse con posibles clientes y expandir su negocio. Únete a nosotros 
+                        y juntos hagamos del cuidado personal una prioridad. Échale un vistazo a los
+                        <a href="#servicios">servicios</a> que ofrecemos. ¡Bienvenido a CuidaMe!</p>
+                </div>
+                <div class="col-md-6">
+                    <img src="{% static 'images/care.jpg' %}" alt="" class="img-fluid image1">
+                </div>
+            </div>
 
-    </div>
+            <div class="row" style="margin-top: 16%;">
+                <div class="col">
+                    <h1 class="title-about" id="servicios">Servicios</h1>
+                </div>
+            </div>
 
-    <div class="section-service2">
-        <div class="container1">
-            <h2 class="services-text2">Espacios Impecables, Vida Plena: CuidaMe, Cuida tu Hogar</h2>
+            <div class="row align-items-center" style="margin-top: 7%;">
+                <div class="col-md-6">
+                    <img src="{% static 'images/cuidadora-anciano.jpg' %}" alt="" class="image2" style="margin-bottom: 5%;">
+                </div>
+                <div class="col-md-6">
+                    <h2 class="text-center">¡Amor y cuidado para nuestros mayores: ¡CuidaMe contigo!</h2>
+                </div>
+            </div>
+            
+            
+            <div class="row align-items-center" style="margin-top: 10%;">
+                <div class="col-md-6">
+                    <h2 class="text-center">Jugando, Aprendiendo, Creciendo: CuidaMe con Cariño</h2>
+                </div>
+                <div class="col-md-6">
+                    <img class="image2" src="../../static/images/cuidados_ninyos.jpeg" alt="">
+                </div>
+            </div>
+
+            <div class="row align-items-center" style="margin-top: 10%; margin-bottom: 10%;">
+                <div class="col-md-6">
+                    <img class="image2" src="{% static 'images/Niñera.jpg' %}" alt="">
+                </div>
+                <div class="col-md-6">
+                    <h2 class="text-center">Espacios Impecables, Vida Plena: CuidaMe, Cuida tu Hogar</h2>
+                </div>
+            </div>
         </div>
-        <!-- <div class="image2"><img src="../../images/Limpiador.jpg" alt=""></div> -->
-        <div class="image2"><img src="{% static 'images/Limpiador.jpg' %}" alt=""></div>
-        
-    </div>
     <a class="btn" href="/privacy_policy" role="button">Accede a nuestra política de privacidad</a>
-</div>
+    </body>
+</html>
+        
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    });
+</script>    
+
+    
+
+    
     
 {% endblock %}
-

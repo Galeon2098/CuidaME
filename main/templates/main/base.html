@@ -13,30 +13,92 @@
   {% block header %}{% endblock header %}
 </head>
 <body>
-  <header style="margin-top: 0; margin-bottom: 0;">
-    <section class="base-header-primary" style="padding-top: 10px;" >
-        <h3 style="padding-left: 10px;"><a href="/" style="color: #cae9ff; text-decoration: none;"><strong>CuidaMe</strong></a></h3>
-        <nav>
+  <header>
+    <nav class="navbar navbar-expand-lg base-header-primary">
+      <div class="container-fluid">
+        <a href="/" style="color: #cae9ff;"><strong>CuidaMe</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <p style="color: #cae9ff;">=</p>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+            <li class="nav-item">
+              <a class="btn" href="{% url 'about_us' %}" role="button">Sobre Nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn" href="{% url 'pricing_plan' %}" role="button">Planes de Precio</a>
+            </li>
+
             {% if request.user.is_authenticated %}
-                <a class="btn" href="{% url 'about_us' %}" role="button">Sobre Nosotros</a>
-                <a class="btn" href="{% url 'pricing_plan' %}" role="button">Planes de Precio</a>
-                <a class="btn" href="{% url 'my_profile_detail' %}" role="button">Mi perfil</a>
-                <a class="btn" href="/chat/chat_rooms" role="button">Mis salas de chat</a>
-                {% if request.user.cuidador %}
-                    <a class="btn" href="/offer/my_offers" role="button">Mis ofertas</a>
-                    <a class="btn" href="/offer/list" role="button">Lista de ofertas</a>
-                    <a class="btn" href="/chat/requests" role="button">Solicitudes de chat</a>
-                {% endif %}
-                {% if request.user.cliente %}
-                    <a class="btn" href="/offer/list" role="button">Lista de ofertas</a>
-                {% endif %}
-                <a class="btn" href="{% url 'logout' %}" role="button">Cerrar sesión</a>
-            {% else %}
-                <a class="btn" href="{% url 'login' %}" role="button">Iniciar sesión</a>
-                <a class="btn" href="{% url 'about_us' %}" role="button">Sobre Nosotros</a>
+            <li class="nav-item">
+              <a class="btn" href="{% url 'my_profile_detail' %}" role="button">Mi perfil</a>
+            </li>
+            {% if request.user.cuidador %}
+            <li class="nav-item">
+              <a class="btn" href="{% url 'chat:chat_requests_for_caregiver' %}" role="button">Solicitudes de chat</a>
+            </li>
             {% endif %}
-        </nav>
-    </section>
+            <li class="nav-item">
+              <a class="btn" href="/chat/chat_rooms" role="button">Mis chats</a>
+            </li>
+
+            {% if user.is_superuser %}
+            <li class="nav-item">
+              <a class="btn" href="{% url 'cliente_list' %}" role="button">Lista de Clientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn" href="{% url 'cuidador_list' %}" role="button">Lista de Cuidadores</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn" href="{% url 'offer:administrar_ofertas' %}" role="button">Administrar Ofertas</a>
+            </li>
+            {% endif %}
+
+            {% if request.user.cuidador %}
+            <li class="nav-item">
+              <a class="btn" href="/offer/my_offers" role="button">Mis ofertas</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn" href="/offer/list" role="button">Lista de ofertas</a>
+            </li>
+            {% endif %}
+
+            {% if request.user.cliente %}
+            <li class="nav-item">
+              <a class="btn" href="/offer/list" role="button">Lista de ofertas</a>
+            </li>
+            {% endif %}
+
+            <li class="nav-item">
+              <div class="logout-btn-wrapper">
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info">Cerrar sesión</button>
+                </form>
+              </div>
+            </li>
+
+            {% else %}
+            <li class="nav-item">
+              <a class="btn" href="{% url 'home' %}" role="button">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn" href="/login" role="button">Iniciar sesión</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <style>
+        .logout-btn-wrapper {
+            display: inline-block;
+            margin-left: 10px; /* Ajusta el margen izquierdo según tu diseño */
+        }
+    </style>
+
     <section class="base-header-secondary">
       <h2>{% block description %}{% endblock description %}</h2>
     </section>
@@ -50,21 +112,7 @@
       
       <div class="me-5 d-none d-lg-block" style="padding-left:120px ;color: #cae9ff;">
         <span>Conecta con nosotros en nuestras redes sociales</span>
-      </div>
-      <div style="padding-right:50px"> 
-        <a href="https://www.facebook.com/UniversidaddeSevillaoficial" target="_blank" class="me-4 text-reset" style=" color: #cae9ff;">
-          <i class="fab fa-facebook-f"></i>
-          Facebook
-        </a> |
-        <a href="https://twitter.com/unisevilla" target="_blank" class="me-4 text-reset" style=" color: #cae9ff;">
-          <i class="fab fa-twitter"></i>
-          Twitter 
-        </a>|
-        <a href="https://www.instagram.com/unisevilla/" target="_blank" class="me-4 text-reset" style=" color: #cae9ff;">
-          <i class="fab fa-instagram"></i>
-          Instagram
-        </a>
-      </div>
+      </div>      
     </section>
     <section class="d-flex justify-content-center justify-content-lg-between p--1 border-bottom" style="background-color:  #1B4965">
       <div class="container text-center text-md-start mt-5">
@@ -107,6 +155,9 @@
   </footer>
   {% block include_js %}
   {% endblock %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script>
     document.addEventListener('DOMContentLoaded', (event) => {
       // DOM loaded

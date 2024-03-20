@@ -38,9 +38,6 @@
   .base-header-primary {
     display: flex;
     justify-content: space-between;
-    height: 60px;
-    
-
     background-color: #1B4965; 
     
   }
