@@ -35,6 +35,11 @@
             <li class="nav-item">
               <a class="btn" href="{% url 'my_profile_detail' %}" role="button">Mi perfil</a>
             </li>
+            {% if request.user.cuidador %}
+            <li class="nav-item">
+              <a class="btn" href="{% url 'chat:chat_requests_for_caregiver' %}" role="button">Solicitudes de chat</a>
+            </li>
+            {% endif %}
             <li class="nav-item">
               <a class="btn" href="/chat/chat_rooms" role="button">Mis chats</a>
             </li>
