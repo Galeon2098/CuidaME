@@ -8,9 +8,17 @@ class LoginForm(forms.Form):
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 
 class ClienteRegistrationForm(forms.ModelForm):
+
+    OPCIONES_DEPENDENCIA = [
+        ('personaSolitaria', 'Persona Solitaria'),
+        ('enfermedad', 'Enfermedad'),
+        ('cuidados', 'Cuidados'),
+    ]
+
+    username = forms.CharField(label='Username', required=True)
     first_name = forms.CharField(label='Nombre', required=True)
     last_name = forms.CharField(label='Apellidos', required=True)
-    tipo_dependencia = forms.ChoiceField(label='Tipo de Dependencia', choices=Cliente.OPCIONES_DEPENDENCIA, required=True)
+    tipo_dependencia = forms.ChoiceField(label='Tipo de Dependencia', choices=OPCIONES_DEPENDENCIA, required=True)
     email = forms.EmailField(label='Email', required=True)
 
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
@@ -42,18 +50,32 @@ class ClienteRegistrationForm(forms.ModelForm):
             return user, Cliente
 
 class CuidadorRegistrationForm(forms.ModelForm):
+
+    CLIENT_CHOICES = (
+        ('DF', 'DISCAPACIDAD FÍSICA'),
+        ('DM', 'DISCAPACIDAD MENTAL'),
+        ('NI', 'NIÑOS'),
+        ('AN', 'ANCIANOS'),
+        ('OT', 'OTROS')
+    )
+
     # Añade campos adicionales de Cuidador
-    dni = forms.CharField(label='DNI', max_length=20, required=True)
-    numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=20, required=True)
+    dni = forms.CharField(label='DNI', max_length=9, required=True)
+    numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=12, required=True)
     fecha_nacimiento = forms.DateField(
         label="Fecha de nacimiento",
         widget=forms.DateInput(attrs={'type': 'date'}),required=True)
     formacion = forms.CharField(label="Formación", required=True)
     experiencia = forms.CharField(label="Experiencia", required=True)
-    tipo_publico_dirigido = forms.CharField(label="Tipo de público al que te diriges", max_length=100, required=True)
+    tipo_publico_dirigido = forms.ChoiceField(label='Tipo de Dependencia', choices=CLIENT_CHOICES, required=True)
 
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
+
+    username = forms.CharField(label='Username', required=True)
+    first_name = forms.CharField(label='Nombre', required=True)
+    last_name = forms.CharField(label='Apellidos', required=True)
+    email = forms.EmailField(required=True)
 
     class Meta:
         model = User
