@@ -26,7 +26,6 @@ def chat_room(request, chat_id):
     grouped_messages = {}
     for date, msgs in groupby(messages_timezone, key=lambda x: x.timestamp.date()):
         grouped_messages[date] = list(msgs)
-    
     if grouped_messages:
         last_message_date = max(grouped_messages.keys()).strftime("%Y-%m-%d")
     else:
