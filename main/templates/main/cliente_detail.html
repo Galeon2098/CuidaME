@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends "main/base.html" %}
+{% block title %}Detalles del Cliente{% endblock %}
+{% load static %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Cliente</title>
+</head>
+<body>
+    <h1>Detalles del Cliente</h1>
+    <p>Nombre de usuario: {{ cliente.user.username }}</p>
+    <p>Apellidos: {{ cliente.apellidos }}</p>
+    <p>Tipo de Dependencia: {{ cliente.tipo_dependencia }}</p>
+    <p>Fecha de nacimiento: {{ cliente.fecha_nacimiento }}</p>
+    <a href="{% url 'editar_cliente' cliente.id %}">Editar</a>
+    <a href="{% url 'eliminar_cliente' cliente.id %}">Eliminar</a>
+</body>
+</html>
+{% endblock %}

@@ -79,7 +79,7 @@
         {% endfor %}
     {% endfor %}
 </div>
-     
+       
       <div class="chat-footer" id="chat-input" style="background-color: rgb(117, 192, 241); padding: 10px;">
         <div class="input-group" style="margin-top: 10px;">
           <input id="chat-message-input" type="text" class="form-control" placeholder="Escriba su mensaje aqui">
@@ -190,6 +190,7 @@ chat.innerHTML += '<div class="message ' + source + '" ' + messageStyle + '>' +
   '<strong>' + name + '</strong> ' +
   '<span class="date">' + datetime.split(',')[1] + '</span><br>' +
   data.message + '</div>';
+                       
 chat.scrollTop = chat.scrollHeight;
 };
 
@@ -247,6 +248,5 @@ input.focus();
       }
     });
   });
-
 {% endblock %}
   

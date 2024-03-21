@@ -2,8 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
-
-
 class Cliente(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     apellidos = models.CharField(max_length=100)
@@ -20,13 +18,22 @@ class Cliente(models.Model):
         return self.user.username
 
 class Cuidador(models.Model):
+
+    CLIENT_CHOICES = (
+        ('DF', 'DISCAPACIDAD FÍSICA'),
+        ('DM', 'DISCAPACIDAD MENTAL'),
+        ('NI', 'NIÑOS'),
+        ('AN', 'ANCIANOS'),
+        ('OT', 'OTROS')
+    )
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    dni = models.CharField(max_length=20, unique=True)
-    numero_seguridad_social = models.CharField(max_length=20, unique=True)
+    dni = models.CharField(max_length=9, unique=True)
+    numero_seguridad_social = models.CharField(max_length=12, unique=True)
     fecha_nacimiento = models.DateField()
     formacion = models.TextField()
     experiencia = models.TextField()
-    tipo_publico_dirigido = models.CharField(max_length=100)
+    tipo_publico_dirigido = models.CharField(max_length=50, choices=CLIENT_CHOICES, default='OT')
     chat_requests_received = models.ManyToManyField('chat.ChatRequest', related_name='caregiver_received_requests')
     def __str__(self):
         return self.user.username

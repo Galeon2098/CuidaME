@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Nuevo Hilo</title>
+</head>
+<body>
+    <h1>Crear Nuevo Hilo</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Crear Hilo</button>
+    </form>
+</body>
+</html>

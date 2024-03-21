@@ -1,13 +1,17 @@
 {% extends "main/base.html" %}
+{% block title %}Mi perfil{% endblock %}
+
 {% block content %}
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static "css/base.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 
 <main class="container pt-5 pb-3">
     <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">
         <div class="col-md-6">
-            <img src="{% static 'Images/anciano.png' %}" alt="anciano" class="img-fluid"
+            <img class="imagen1" src="{% static 'Images/anciano.png' %}" alt="anciano" class="img-fluid"
                 style="width: 100%; max-width: 660px; height: auto; margin-bottom:15%;">
         </div>
         <div class="col-md-6"

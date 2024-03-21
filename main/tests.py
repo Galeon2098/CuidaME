@@ -72,7 +72,7 @@ class EditProfileViewTestCase(TestCase):
         
     def test_edit_profile_cuidador(self):
         
-        self.cuidador = Cuidador.objects.create(user=self.user, dni='12345678A', numero_seguridad_social='1234567890A', fecha_nacimiento='1990-01-01', formacion='Formacion', experiencia='Experiencia', tipo_publico_dirigido='Tipo de publico')
+        self.cuidador = Cuidador.objects.create(user=self.user, dni='12345678A', numero_seguridad_social='12345678900A', fecha_nacimiento='1990-01-01', formacion='Formacion', experiencia='Experiencia', tipo_publico_dirigido='NI')
         
         self.client.login(username='testuser', password='testpassword')
         response = self.client.get(reverse('edit_profile'))
@@ -82,12 +82,12 @@ class EditProfileViewTestCase(TestCase):
         self.assertIsInstance(response.context['form'], CuidadorProfileForm)
         
         form_data = {
-            'dni': 'Apellido nuevo',
-            'numero_seguridad_social': '0004567890A',
+            'dni': '12345678B',
+            'numero_seguridad_social': '00045678900A',
             'fecha_nacimiento': '2002-11-22',
             'formacion': 'Test formacion',
             'experiencia': 'Ninguna',
-            'tipo_publico_dirigido': 'Abuelos'
+            'tipo_publico_dirigido': 'AN'
         }
         form = CuidadorProfileForm(data=form_data)
         
