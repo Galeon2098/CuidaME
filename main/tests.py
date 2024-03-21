@@ -83,7 +83,7 @@ class EditProfileViewTestCase(TestCase):
         
         form_data = {
             'dni': '12345678B',
-            'numero_seguridad_social': '00045678900A',
+            'numero_seguridad_social': '000456789004',
             'fecha_nacimiento': '2002-11-22',
             'formacion': 'Test formacion',
             'descripcion': 'Ninguna',
