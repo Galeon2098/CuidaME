@@ -150,7 +150,7 @@ class ClienteProfileForm(forms.ModelForm):
 class CuidadorProfileForm(forms.ModelForm):
     class Meta:
         model = Cuidador
-        fields = ['imagen_perfil', 'dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido']
+        fields = ['imagen_perfil', 'dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'descripcion', 'tipo_publico_dirigido']
 class SuperuserProfileForm(forms.ModelForm):
     class Meta:
         model = User
