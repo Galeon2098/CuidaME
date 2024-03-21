@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Hilo</title>
+
+
+</head>
+<body>
+    <h1>Detalles del Hilo</h1>
+    <h2>{{ thread.title }}</h2>
+    <p>{{ thread.description }}</p>
+    <p>Autor: {% if thread.author %}{{ thread.author.username }}{% else %}Anónimo{% endif %} - {{ thread.date_created }}</p>
+   
+
+
+      <h3>Comentarios:</h3>
+    <ul>
+        {% for comment in comments %}
+        <li>{{ comment.text }} - {{ comment.user.username }} - {{comment.date_created}}</li>
+
+        {% endfor %}
+    </ul>
+    {% if user.is_authenticated %}
+        {% include "comment_form.html" %}
+    {% endif %}
+    <!-- Botón para volver al listado de hilos -->
+    <button><a href="{% url 'foro:list_threads' %}">Volver al listado de Hilos</a></button>
+</body>
+</html>

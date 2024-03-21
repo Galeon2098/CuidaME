@@ -1,50 +1,73 @@
 {% extends "main/base.html" %}
 
-{% block title %}Chat rooms{% endblock %}
+{% block title %}Chats{% endblock %}
+
 
 {% block content %}
 {% load static %}
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-4" style="height: 100%; float: left;">
-      <form class="d-flex" role="search" style="margin-top: 2%; align-items: center; justify-content: center;">
-        <input style="height: 50px;" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-        <button style="height: 50px;" class="btn btn-outline-success" type="submit">Buscar</button>
-        {% if user.cuidador %}
-        <a href="{% url 'chat:chat_requests_for_caregiver' %}"
-          style="height:70px; width: 70px; display: flex; align-items: center; justify-content: center;">
-          <img src="{% static 'Images/sobre.png' %}" style="width: 80%; height: 80%; margin-left: 10px;">
-        </a>
-        {% endif %}
-      </form>
-      <hr style="border: 1px solid #1B4965;opacity: 0.62;">
-      {% if user.cuidador %}
-      <ul>
-        {% for chat_request in user.cuidador.chat_requests_received.all %}
-        {% if chat_request.accepted %}
-        <a class="mb-0" style="color: #1B4965; font-weight: bold;" href="/chat/room/{{ chat_request.id }} ">{{chat_request.sender }}</a>
-        <p>Oferta: {{ chat_request.offer.title }}</p>
-        <hr style="border: 1px solid #1B4965;opacity: 0.62;position: relative;left: -20px;">
-        {% endif %}
-        {% endfor %}
-      </ul>
-      {% endif %}
 
-      {% if user.cliente %}
-      <ul>
-        {% for chat_request in user.cliente.chat_requests_sent.all %}
-        {% if chat_request.accepted %}
-        <a class="mb-0" style="color: #1B4965; font-weight: bold;" href="/chat/room/{{ chat_request.id }} "> {{chat_request.receiver }}</a>
-        <p>Oferta: {{ chat_request.offer.title }}</p>
-        <hr style="border: 1px solid #1B4965;opacity: 0.62;position: relative;left: -20px;">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CuidaME - Mis chats</title>
+    <link rel="stylesheet" href="{% static "css/base.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <!-- Agrega esto en el encabezado de tu HTML -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha384-duAtk5RV7s42V6Zuw+tRBFcqD8RjRKw6RFnxmxIj1lUGAQJyum/vtcUQX8lqKQjp" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4" style="height: 100%; float: left;">
+        <form class="d-flex" role="search" style="margin-top: 2%; align-items: center; justify-content: center;">
+          <input id="search" style="height: 50px;" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+          {% if user.cuidador %}
+          <a href="{% url 'chat:chat_requests_for_caregiver' %}"
+            style="height:70px; width: 70px; display: flex; align-items: center; justify-content: center;">
+            <img src="{% static 'Images/sobre.png' %}" style="width: 80%; height: 80%; margin-left: 10px;">
+          </a>
+          {% endif %}
+        </form>
+        <hr style="border: 1px solid #1B4965;opacity: 0.62;">
+        {% if user.cuidador %}
+        <ul id="my-chats" style="list-style: none;">
+          {% for chat_request in user.cuidador.chat_requests_received.all %}
+          {% if chat_request.accepted %}
+          <li>
+            <a class="mb-0" style="color: #1B4965; font-weight: bold;" href="/chat/room/{{ chat_request.id }} ">{{chat_request.sender }}</a>
+            <p>Oferta: {{ chat_request.offer.title }}</p>
+            <hr style="border: 1px solid #1B4965;opacity: 0.62;position: relative;left: -20px;">
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
         {% endif %}
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </div>
-    <div class="col-sm-7" style="float: right; margin-left: 80px;">
-        <img src="../../static/images/Raster.png" alt="Imagen" style="width: 75%;height: 100%">
+  
+        {% if user.cliente %}
+        <ul id="my-chats" style="list-style: none;">
+          {% for chat_request in user.cliente.chat_requests_sent.all %}
+          {% if chat_request.accepted %}
+          <li>
+            <a class="mb-0" style="color: #1B4965; font-weight: bold;" href="/chat/room/{{ chat_request.id }} "> {{chat_request.receiver }}</a>
+            <p>Oferta: {{ chat_request.offer.title }}</p>
+            <hr style="border: 1px solid #1B4965;opacity: 0.62;position: relative;left: -20px;">
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="col-sm-7" style="float: right; margin-left: 80px;">
+          <img src="../../static/images/Raster.png" alt="Imagen" style="width: 75%;height: 100%">
+      </div>
     </div>
   </div>
-</div>
+</body>
+
+<script src="{% static 'js/buscador_chat.js' %}"></script>
+
 {% endblock %}

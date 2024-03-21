@@ -20,6 +20,8 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+BASE_DIR2 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'main.offer.apps.OffersConfig',
     'main.chat.apps.ChatConfig',
     'main.videochat.apps.VideochatConfig',
+    'main.foro.apps.ForoConfig',
     'channels',
 
 ]
@@ -91,6 +94,10 @@ DATABASES = {
     }
 }
 
+# URL base para servir archivos multimedia
+MEDIA_URL = '/media/'
+# Define la ruta donde se almacenarán los archivos multimedia cargados por los usuarios
+MEDIA_ROOT = os.path.join(BASE_DIR2, "media")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -133,7 +140,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/offer/list/'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
