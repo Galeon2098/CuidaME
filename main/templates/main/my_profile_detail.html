@@ -19,10 +19,15 @@
             <div>
 
                 <div class="container" style="display: flex; justify-content: center; position: relative;">
-                    {% if user.profile.photo %}
+                    {% if request.user.cliente.imagen_perfil %}
                     <div style="align-items: center; position: absolute; top: -120px;">
-                        <img src="{{ user.profile.photo.url }}"
-                            style="width: 160px; height: 160px; border-radius: 100%;">
+                        <img src="{{ request.user.cliente.imagen_perfil.url }}" alt="Perfil del cliente"
+                        style="width: 160px; height: 160px; border-radius: 100%;">
+                    </div>
+                    {% elif request.user.cuidador.imagen_perfil %}
+                    <div style="align-items: center; position: absolute; top: -120px;">
+                        <img src="{{ request.user.cuidador.imagen_perfil.url }}" alt="Perfil del cuidador"
+                        style="width: 160px; height: 160px; border-radius: 100%;">
                     </div>
                     {% else %}
                     <!-- Si no hay foto de perfil, se muestra una imagen predeterminada -->
@@ -51,7 +56,7 @@
                     <p><strong>Número de Seguridad Social:</strong> {{ user.cuidador.numero_seguridad_social }}</p>
                     <p><strong>Fecha de Nacimiento:</strong> {{ user.cuidador.fecha_nacimiento }}</p>
                     <p><strong>Formación:</strong> {{ user.cuidador.formacion }}</p>
-                    <p><strong>Experiencia:</strong> {{ user.cuidador.experiencia }}</p>
+                    <p><strong>Descripción:</strong> {{ user.cuidador.descripcion }}</p>
                     <p><strong>Tipo de Público Dirigido:</strong> {{ user.cuidador.tipo_publico_dirigido }}</p>
                     {% endif %}
                     <div style="text-align: center;">
