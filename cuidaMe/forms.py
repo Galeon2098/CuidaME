@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 from main.models import Cliente, Cuidador
-from django.core.exceptions import ValidationError
 import datetime, re
 
 
