@@ -84,8 +84,7 @@
                 <select class="form-control" id="tipo_dependencia" name="tipo_dependencia"
                   value="{{cliente.tipo_dependencia}}">
                   {% for choice in user_form.tipo_dependencia.field.choices %}
-                  <option value="{{ choice.0 }}" {% if choice.0==user_form.tipo_dependencia %}selected{% endif %}>{{
-                    choice.1 }}</option>
+                  <option value="{{ choice.0 }}" {% if choice.0 == user_form.tipo_dependencia %}selected{% endif %}>{{ choice.1 }}</option>
                   {% endfor %}
                 </select>
               </div>
