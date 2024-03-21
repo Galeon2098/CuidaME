@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+{% block title %}Solicitudes de chat{% endblock %}
+
+
+
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CuidaME - Solicitudes de chat</title>
+    <link rel="stylesheet" href="{% static "css/base.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <!-- Agrega esto en el encabezado de tu HTML -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha384-duAtk5RV7s42V6Zuw+tRBFcqD8RjRKw6RFnxmxIj1lUGAQJyum/vtcUQX8lqKQjp" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5" style="height: 100%;float: left;">
+                <form class="d-flex" role="search" style="margin-top: 2%;">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <hr style="border: 1px solid #1B4965;opacity: 0.62;">
+                <ul>
+                    {% for chat_request in user.cuidador.chat_requests_received.all %}
+                    {% if not chat_request.accepted %}
+                    <b style="color: #1B4965;font-family: Lato, sans-serif;font-size: 36px;line-height: 46px;">{{
+                        chat_request.sender.username }}</b>
+                    <p>{{ chat_request.offer.title }}</p>
+                    <p>{{ chat_request.sender.location }}</p>
+                    <!-- Para aceptar oferta  -->
+                    <a class="btn btn-success" href="{% url 'chat:accept_chat_request' chat_request.id %}" role="button"
+                        style="background-color: green; color: white;">
+                        Aceptar
+                    </a>
+                    <!-- Para denegar la oferta -->
+                    <a class="btn btn-danger" href="{% url 'chat:reject_chat_request' chat_request.id %}" role="button"
+                        style="background-color: red;color: white;">
+                        Denegar
+                    </a>
+                    <hr style="border: 1px solid #1B4965;opacity: 0.62;position: relative;left: -20px;">
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-sm-7" style="background-color: white;float: right;">
+                <img src="../../static/images/Raster.png" alt="Imagen" style="width: 75%;height: 100%">
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}
