@@ -15,7 +15,7 @@ def publishOffer(request):
     if not cuidador:
         return render(request, 'main/error_page.html')
     if Offer.objects.filter(user=request.user).count() >= 5:
-      return render(request, 'main/error_page.html')
+        return render(request, 'main/error_page.html')
     if request.method == 'POST':
         form = OfferForm(request.POST)
         if form.is_valid():
