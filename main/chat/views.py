@@ -8,7 +8,7 @@ from main.chat.models import ChatMessage, ChatRequest
 from main.models import Cliente, Cuidador
 from main.offer.models import Offer
 from django.contrib.auth.decorators import user_passes_test
-from django.utils import timezone
+from django.views.decorators.http import require_POST
 import pytz
 
 
@@ -16,7 +16,6 @@ import pytz
 def chat_room(request, chat_id):
     chat_request = get_object_or_404(ChatRequest, id=chat_id)
     messages = ChatMessage.objects.filter(chat_request=chat_request).order_by('timestamp')
-    
     timezone = pytz.timezone('Europe/Madrid')
     messages_timezone = []
     for message in messages:
@@ -29,13 +28,13 @@ def chat_room(request, chat_id):
         grouped_messages[date] = list(msgs)
     
     if grouped_messages:
-        lastMessageDate = max(grouped_messages.keys()).strftime("%Y-%m-%d") 
+        last_message_date = max(grouped_messages.keys()).strftime("%Y-%m-%d")
     else:
-        lastMessageDate = None
+        last_message_date = None
 
     if chat_request.accepted:
         if request.user == chat_request.sender or request.user == chat_request.receiver:
-            return render(request, 'chat/room.html', {'chat_request': chat_request, 'grouped_messages': grouped_messages, 'last_message_date': lastMessageDate})
+            return render(request, 'chat/room.html', {'chat_request': chat_request, 'grouped_messages': grouped_messages, 'last_message_date': last_message_date})
         else:
             return HttpResponseForbidden()
     else:
@@ -87,7 +86,7 @@ def chat_rooms(request):
     else:
         return render(request, 'chat/chat_rooms.html', {})
 
-
+@require_POST
 def send_message(request, chat_request_id):
     chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
     if request.method == 'POST':
@@ -96,7 +95,7 @@ def send_message(request, chat_request_id):
             content = data.get('message')
 
             if content:
-                message = ChatMessage.objects.create(user=request.user, chat_request=chat_request, message=content)
+                ChatMessage.objects.create(user=request.user, chat_request=chat_request, message=content)
                 return HttpResponse('Message sent successfully')
             else:
                 return HttpResponseBadRequest('Message cannot be empty')
