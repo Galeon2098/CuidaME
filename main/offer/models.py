@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
-
+from main.offer.choices import POB_CHOICES
 from main.models import Cuidador
 
 
@@ -29,7 +29,7 @@ class Offer(models.Model):
     client = models.CharField(max_length=255, verbose_name='Tipo de cliente', choices=CLIENT_CHOICES, default='OT')
     description = models.TextField(blank=True)
     price_per_hour = models.DecimalField(max_digits=10,decimal_places=2, validators=[MinValueValidator(1.00), MaxValueValidator(100.00)])
-    city = models.CharField(max_length=200, verbose_name='Ciudad')
+    poblacion = models.CharField(max_length=200, verbose_name='Población', choices=POB_CHOICES, default='Sevilla')
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

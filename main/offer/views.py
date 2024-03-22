@@ -2,12 +2,14 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseForbidden
 from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
 import datetime
-from main.models import Cliente, Cuidador
+from main.models import Cliente, Cuidador, Interes
 from django.views.decorators.http import require_http_methods
 @login_required
 def publishOffer(request):
@@ -25,7 +27,17 @@ def publishOffer(request):
             new_offer.created = datetime.datetime.now()
             new_offer.updated = datetime.datetime.now()
             new_offer.save()
-            offers = Offer.objects.filter(user=request.user)
+            users = User.objects.all()
+            for user in users:
+                cliente = Cliente.objects.filter(user=user).exists()
+                if cliente:
+                    intereses = Interes.objects.filter(user_id=user.id)
+                    for interes in intereses:
+                        if (interes.offer_type == new_offer.offer_type 
+                        and interes.client == new_offer.client and
+                        interes.poblacion == new_offer.poblacion):
+                            send_offer_mail(user.username,user.email,new_offer.id)
+                            break
             return redirect('/offer/my_offers')
     else:
         form = OfferForm()
@@ -45,7 +57,7 @@ def searchOffers(request):
     search_query = request.POST.get('search_query', '')
     offers = Offer.objects.all()
     if search_query:
-        offers = offers.filter(Q(title__icontains=search_query) | Q(city__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
+        offers = offers.filter(Q(title__icontains=search_query) | Q(poblacion__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
     return render(request, 'offers/search_results.html', {'offers': offers, 'search_query': search_query})
 #FILTER OFFERS
 def filterOffers(request):
@@ -162,3 +174,36 @@ def eliminar_oferta_admin(request, offer_id):
         return redirect('offer:administrar_ofertas')
     elif request.method == 'GET':
         return render(request, 'offers/eliminar_oferta_admin.html', {'oferta': oferta})
+
+def send_offer_mail(username, email, id_offer):
+    try:
+
+        offer = Offer.objects.get(id = id_offer)
+
+        asunto = f'Se ha publicado una oferta que coincide con uno de tus intereses'
+        mensaje = f'Hola {username},\n\nSe acaba de publicar una oferta que te interesa\n'
+        mensaje += 'La oferta tiene las siguientes características: \n\n'
+        mensaje += f"Tipo de oferta: {offer.get_offer_type_display()}\n"
+        mensaje += f"Tipo de público: {offer.get_client_display()}\n"
+        mensaje += f"Población: {offer.poblacion}\n"
+        mensaje += '\nPuedes consultar más información de la oferta entrando en el siguiente link\n'
+        mensaje += 'https://ispp-09-cuidame.oa.r.appspot.com/offer/list/' + str(offer.id) + '/\n' 
+
+
+        mensaje += '\n¡Estamos deseando que encuentres tu cuidador ideal!\n\nAtentamente, El equipo de CuidaMe.'
+
+        sender_mail = 'cuidame09@outlook.com'
+
+        send_mail(
+            subject=asunto,
+            message=mensaje,
+            from_email=sender_mail,
+            recipient_list=[email],
+            fail_silently=False
+        )
+
+        return True  
+
+    except Exception as e:
+        print(f"Error al enviar el correo: {e}")
+        return False

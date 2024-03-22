@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'main.chat.apps.ChatConfig',
     'main.foro.apps.ForoConfig',
     'channels',
+    'cuidaMe',
 
 ]
 
@@ -152,3 +153,11 @@ CHANNEL_LAYERS = {
 STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_PUBLIC_KEY_TEST')
 STRIPE_SECRET_KEY_TEST = os.getenv('STRIPE_SECRET_KEY_TEST')
 REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
+
+#EMAIL CONFIG
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'cuidame09@outlook.com'
+EMAIL_HOST_PASSWORD = 'cuidamepass09'
