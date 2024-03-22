@@ -118,8 +118,8 @@ def create_interes(request):
 
 #UPDATE
 @login_required
-def edit_interes(request, id):
-    interes = get_object_or_404(Interes, pk=id)
+def edit_interes(request, interes_id):
+    interes = get_object_or_404(Interes, pk=interes_id)
     if request.user != interes.user:
         return HttpResponseForbidden("No tienes permiso para editar este interés.")
     if request.method == 'POST':
