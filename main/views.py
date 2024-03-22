@@ -22,7 +22,7 @@ def pricing_plan(request):
 
 def register_cliente(request):
     if request.method == 'POST':
-        user_form = ClienteRegistrationForm(request.POST)
+        user_form = ClienteRegistrationForm(request.POST, request.FILES)
         if user_form.is_valid():
             # Guarda el formulario y sus datos
             user = user_form.save()
@@ -36,7 +36,7 @@ def register_cliente(request):
 
 def register_cuidador(request):
     if request.method == 'POST':
-        user_form = CuidadorRegistrationForm(request.POST)
+        user_form = CuidadorRegistrationForm(request.POST, request.FILES)
         if user_form.is_valid():
             # Guarda el formulario y sus datos
             user = user_form.save()
@@ -74,7 +74,7 @@ def edit_profile(request):
             form_class = CuidadorProfileForm
 
     if request.method == 'POST':
-        form = form_class(request.POST, instance=profile)
+        form = form_class(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return redirect('my_profile_detail')
@@ -147,6 +147,9 @@ def delete_interes(request, interes_id):
 
 def about_us(request):
     return render(request, 'main/aboutUs.html')
+
+def privacy_policy(request):
+    return render(request,'main/privacy_policy.html')
 
 def edit_ad(request):
     return render(request, 'main/edit_ad.html')

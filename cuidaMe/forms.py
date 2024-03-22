@@ -38,6 +38,15 @@ class InteresForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
 class ClienteRegistrationForm(forms.ModelForm):
+    # Añade campos adicionales de Cliente
+    imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
+
+    OPCIONES_DEPENDENCIA = [
+        ('personaSolitaria', 'Persona Solitaria'),
+        ('enfermedad', 'Enfermedad'),
+        ('cuidados', 'Cuidados'),
+    ]
+
     first_name = forms.CharField(label='Nombre', required=True)
     last_name = forms.CharField(label='Apellidos', required=True)
     email = forms.EmailField(label='Email', required=True)
@@ -47,7 +56,7 @@ class ClienteRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil']
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -67,13 +76,17 @@ class ClienteRegistrationForm(forms.ModelForm):
             if commit:
                 user.save()
                 # Guarda los campos adicionales de Cliente
-                Cliente.objects.create(user=user)
+                Cliente.objects.create(user=user, imagen_perfil=self.cleaned_data['imagen_perfil'])
             return user, Cliente
 
 class CuidadorRegistrationForm(forms.ModelForm):
+    imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
+    experiencia = forms.CharField(label="Experiencia", widget=forms.Textarea)
+
+
     # Añade campos adicionales de Cuidador
-    dni = forms.CharField(label='DNI', max_length=20, required=True)
-    numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=20, required=True)
+    dni = forms.CharField(label='DNI', max_length=9, required=True)
+    numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=12, required=True)
     fecha_nacimiento = forms.DateField(
         label="Fecha de nacimiento",
         widget=forms.DateInput(attrs={'type': 'date'}),required=True)
@@ -83,9 +96,13 @@ class CuidadorRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
 
+    first_name = forms.CharField(label='Nombre', required=True)
+    last_name = forms.CharField(label='Apellidos', required=True)
+    email = forms.EmailField(required=True)
+
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil']
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -135,6 +152,7 @@ class CuidadorRegistrationForm(forms.ModelForm):
                 user.save()
                 # Guarda los campos adicionales de Cliente
                 Cuidador.objects.create(user=user, 
+                                        imagen_perfil=self.cleaned_data['imagen_perfil'],
                                         dni=self.cleaned_data['dni'],
                                         numero_seguridad_social=self.cleaned_data['numero_seguridad_social'],
                                         fecha_nacimiento=self.cleaned_data['fecha_nacimiento'],
@@ -145,12 +163,12 @@ class CuidadorRegistrationForm(forms.ModelForm):
 class ClienteProfileForm(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = []
+        fields = ['imagen_perfil']
 
 class CuidadorProfileForm(forms.ModelForm):
     class Meta:
         model = Cuidador
-        fields = ['formacion', 'experiencia']
+        fields = ['imagen_perfil', 'formacion', 'experiencia']
 class SuperuserProfileForm(forms.ModelForm):
     class Meta:
         model = User

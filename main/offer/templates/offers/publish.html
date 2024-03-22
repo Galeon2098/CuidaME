@@ -1,4 +1,6 @@
 {% extends "main/base.html" %}
+{% block title %}Publicar oferta{% endblock %}
+
 {% block content %}
 {% load static %}
 
@@ -14,6 +16,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <style>
+    /* Estilos generales */
+    .imagen {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Media query para pantallas más grandes, como las de ordenador */
+    @media only screen and (min-width: 768px) {
+        .imagen {
+            display: block; /* Asegúrate de que la imagen se muestre */
+        }
+    }
+
+    /* Media query para pantallas más pequeñas, como las de móviles */
+    @media only screen and (max-width: 767px) {
+        .imagen {
+            display: none; /* Oculta la imagen en pantallas más pequeñas */
+        }
+    }
+  </style>
 
   
 </head>
@@ -22,7 +46,7 @@
     <main class="container pt-4 pb-3" style="margin: 1%; max-width: 95%;">
         <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">
 
-            <img src="{% static 'Images/carer.png' %}" alt="Caregiver" class="img-fluid" style="width: 100%; max-width: 50%; height: auto; margin-bottom: 100px;">
+            <img class="imagen" src="{% static 'Images/carer.png' %}" alt="Caregiver" class="img-fluid" style="width: 100%; max-width: 50%; height: auto; margin-bottom: 100px;">
             <div class="col-md-6" style="background-color: #62B6CB; color: #1B4965; padding: 5%; border-radius: 10%; font-size: 100%;">
                 <div class="container-fluid" style="display: flex; height: 30%;">
                 </div>
@@ -45,7 +69,7 @@
                         <input type="hidden" name="id" value="{{ offer.id }}">
                         <div class="form-group">
                             <label for="title"><b>Título</b></label>
-                            <input type="text" class="form-control" id="title" name="title" placeholder="Añada un título" value="{{offer.title}}">
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Añada un título" value="{{offer.title}}" maxlength="75">
                             {% if form.title.errors %}
                                 <p>{{"Debe tener un título de máximo 75 caracteres"}}</p>
                             {% endif %}
