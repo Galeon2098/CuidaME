@@ -140,16 +140,16 @@ class PublishOfferTestCase(TestCase):
         form = OfferForm(data=form_data)
         self.assertFalse(form.is_valid())
 
-    # def test_invalid_publish_offer_form_negative_price(self):
-    #     form_data = {
-    #         'title': 'Test Offer',
-    #         'offer_type': 'CO',
-    #         'client': 'DF',
-    #         'description': 'This is a test offer description.',
-    #         'price_per_hour': -10.50,  # Precio negativo
-    #         'poblacion': 'Sevilla'
-    #     }
-    #     form = OfferForm(data=form_data)
+    def test_invalid_publish_offer_form_negative_price(self):
+        form_data = {
+            'title': 'Test Offer',
+            'offer_type': 'CO',
+            'client': 'DF',
+            'description': 'This is a test offer description.',
+            'price_per_hour': -10.50,  # Precio negativo
+            'poblacion': 'Sevilla'
+        }
+        form = OfferForm(data=form_data)
     #     self.assertFalse(form.is_valid())
 
     def test_invalid_publish_offer_form_invalid_enum(self):
@@ -190,17 +190,17 @@ class OffersTestCase(TestCase):
         self.offer6 = Offer.objects.create(title="Oferta 6", offer_type="CO", client="DM", description="Descripción de la Oferta 6", price_per_hour=65, poblacion="Almadén de la Plata", available=True, user=self.user)
         self.offer7 = Offer.objects.create(title="Oferta 7", offer_type="CU", client="AN", description="Descripción de la Oferta 7", price_per_hour=45, poblacion="Almensilla", available=True, user=self.user)
 
-    # def test_list_offers(self):
-    #     response = self.client.get(reverse('offer:list'))
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'offers/list.html')
-    #     self.assertContains(response, self.offer1.title)
-    #     self.assertContains(response, self.offer2.title)
-    #     self.assertContains(response, self.offer3.title)
-    #     self.assertContains(response, self.offer4.title)
-    #     self.assertContains(response, self.offer5.title)
-    #     self.assertContains(response, self.offer6.title)
-    #     self.assertContains(response, self.offer7.title)
+    def test_list_offers(self):
+        response = self.client.get(reverse('offer:list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'offers/list.html')
+        self.assertContains(response, self.offer1.title)
+        self.assertContains(response, self.offer2.title)
+        self.assertContains(response, self.offer3.title)
+        self.assertContains(response, self.offer4.title)
+        self.assertContains(response, self.offer5.title)
+        self.assertContains(response, self.offer6.title)
+        self.assertContains(response, self.offer7.title)
 
     # def test_offer_detail(self):
     #     response = self.client.get(reverse('offer:detail', args=(self.offer1.id,)))
@@ -210,16 +210,16 @@ class OffersTestCase(TestCase):
     #     self.assertNotContains(response, self.offer2.title)
 
     def test_search_offers(self):
-        response = self.client.post(reverse('offer:searchOffers'), {'search_query': 'Nueva York'})
+        response = self.client.post(reverse('offer:searchOffers'), {'search_query': 'Albaida del Aljarafe'})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'offers/search_results.html')
         self.assertContains(response, self.offer1.title)
         self.assertNotContains(response, self.offer2.title)
 
-    # def test_filter_offers(self):
-    #     response = self.client.post(reverse('offer:filterOffers'), {'min_price_filter': 55})
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'offers/list.html')
-    #     self.assertNotContains(response, self.offer1.title)
-    #     self.assertContains(response, self.offer2.title)
+    def test_filter_offers(self):
+        response = self.client.post(reverse('offer:filterOffers'), {'min_price_filter': 55})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'offers/list.html')
+        self.assertNotContains(response, self.offer1.title)
+        self.assertContains(response, self.offer2.title)
 

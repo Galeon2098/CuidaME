@@ -28,7 +28,7 @@ class Cuidador(models.Model):
 
     dni = models.CharField(max_length=20, unique=True, validators=[dni_validator])
     numero_seguridad_social = models.CharField(max_length=20, unique=True, validators=[nss_validator])
-    descripcion = models.TextField()
+    experiencia = models.TextField()
 
     CLIENT_CHOICES = (
         ('DF', 'DISCAPACIDAD FÍSICA'),
