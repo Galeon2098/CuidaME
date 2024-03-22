@@ -111,7 +111,6 @@ def create_interes(request):
             new_interes = form.save(commit=False)
             new_interes.user = request.user
             new_interes.save()
-            intereses = Interes.objects.filter(user=request.user)
             return redirect('mis_intereses')
     else:
         form = InteresForm()
@@ -129,7 +128,7 @@ def edit_interes(request, id):
             form.save()
             return redirect('mis_intereses')
     else:
-        form = InteresForm(instance=interes, user=request.user)  
+        form = InteresForm(instance=interes, user=request.user)
     return render(request, 'main/edit_interes.html', {'form': form, 'interes': interes})
 
 #DELETE

@@ -18,16 +18,16 @@ class InteresForm(forms.ModelForm):
     )
 
     CLIENT_CHOICES = (
-        ('DF', 'DISCAPACIDAD FÍSICA'), 
-        ('DM', 'DISCAPACIDAD MENTAL'), 
-        ('NI', 'NIÑOS'), 
-        ('AN', 'ANCIANOS'), 
-        ('OT', 'OTROS') 
+        ('DF', 'DISCAPACIDAD FÍSICA'),
+        ('DM', 'DISCAPACIDAD MENTAL'),
+        ('NI', 'NIÑOS'),
+        ('AN', 'ANCIANOS'),
+        ('OT', 'OTROS')
     )
 
     offer_type = forms.ChoiceField(label='Tipo de oferta', choices=TYPE_CHOICES, initial='OT')
     client = forms.ChoiceField(label='Tipo de cliente', choices=CLIENT_CHOICES, initial='OT')
-    poblacion = forms.ChoiceField(label='Población', choices=POB_CHOICES)                          
+    poblacion = forms.ChoiceField(label='Población', choices=POB_CHOICES)
     
     class Meta:
         model = Interes
@@ -40,13 +40,6 @@ class InteresForm(forms.ModelForm):
 class ClienteRegistrationForm(forms.ModelForm):
     # Añade campos adicionales de Cliente
     imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
-
-    OPCIONES_DEPENDENCIA = [
-        ('personaSolitaria', 'Persona Solitaria'),
-        ('enfermedad', 'Enfermedad'),
-        ('cuidados', 'Cuidados'),
-    ]
-
     first_name = forms.CharField(label='Nombre', required=True)
     last_name = forms.CharField(label='Apellidos', required=True)
     email = forms.EmailField(label='Email', required=True)

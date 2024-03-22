@@ -150,7 +150,7 @@ class PublishOfferTestCase(TestCase):
             'poblacion': 'Sevilla'
         }
         form = OfferForm(data=form_data)
-    #     self.assertFalse(form.is_valid())
+        self.assertFalse(form.is_valid())
 
     def test_invalid_publish_offer_form_invalid_enum(self):
         form_data = {

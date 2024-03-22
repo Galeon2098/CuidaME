@@ -33,7 +33,7 @@ def publishOffer(request):
                 if cliente:
                     intereses = Interes.objects.filter(user_id=user.id)
                     for interes in intereses:
-                        if (interes.offer_type == new_offer.offer_type 
+                        if (interes.offer_type == new_offer.offer_type
                         and interes.client == new_offer.client and
                         interes.poblacion == new_offer.poblacion):
                             send_offer_mail(user.username,user.email,new_offer.id)
@@ -187,9 +187,7 @@ def send_offer_mail(username, email, id_offer):
         mensaje += f"Tipo de público: {offer.get_client_display()}\n"
         mensaje += f"Población: {offer.poblacion}\n"
         mensaje += '\nPuedes consultar más información de la oferta entrando en el siguiente link\n'
-        mensaje += 'https://ispp-09-cuidame.oa.r.appspot.com/offer/list/' + str(offer.id) + '/\n' 
-
-
+        mensaje += 'https://ispp-09-cuidame.oa.r.appspot.com/offer/list/' + str(offer.id) + '/\n'
         mensaje += '\n¡Estamos deseando que encuentres tu cuidador ideal!\n\nAtentamente, El equipo de CuidaMe.'
 
         sender_mail = 'cuidame09@outlook.com'
@@ -202,7 +200,7 @@ def send_offer_mail(username, email, id_offer):
             fail_silently=False
         )
 
-        return True  
+        return True
 
     except Exception as e:
         print(f"Error al enviar el correo: {e}")
