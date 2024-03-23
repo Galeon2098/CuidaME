@@ -18,72 +18,76 @@
 </head>
 
 <body>
-    <main style="margin: 3%; margin-top: 4%; max-width: 100%;">
-        <div style="display: flex; align-items: start; justify-content: left; margin-bottom:3%;">
-            <a class="btn dark-btn" href="{% url 'foro:list_threads' %}"role="button">Atrás</a>
+    <main>
+        <div style="display: flex; align-items: start; justify-content: left; margin-top: 2%; margin-left: 1.8%;">
+            <a href="{% url 'foro:list_threads' %}" role="button">
+                <img src="/static/Images/back.png" alt="Atrás" style="max-width: 80px;">
+            </a>
         </div>
-        <div class="card thread-detail-card text-left" style="padding: 1%;"> 
-            <p style="margin: 0%; font-size: 120%;"><b>{{ thread.title }}</b></p>
-            <p style="margin: 0%; margin-top: 0.5%;">
-                {{ thread.author.username }} - 
-                {{ thread.date_created.day }} de
-                {% if thread.date_created.month == 1 %}enero
-                {% elif thread.date_created.month == 2 %}febrero
-                {% elif thread.date_created.month == 3 %}marzo
-                {% elif thread.date_created.month == 4 %}abril
-                {% elif thread.date_created.month == 5 %}mayo
-                {% elif thread.date_created.month == 6 %}junio
-                {% elif thread.date_created.month == 7 %}julio
-                {% elif thread.date_created.month == 8 %}agosto
-                {% elif thread.date_created.month == 9 %}septiembre
-                {% elif thread.date_created.month == 10 %}octubre
-                {% elif thread.date_created.month == 11 %}noviembre
-                {% elif thread.date_created.month == 12 %}diciembre
+        <div style="margin: 3%; margin-top: 2%; max-width: 100%;">
+            <div class="card thread-detail-card text-left" style="padding: 1%;"> 
+                <p style="margin: 0%; font-size: 120%;"><b>{{ thread.title }}</b></p>
+                <p style="margin: 0%; margin-top: 0.5%;">
+                    {{ thread.author.username }} - 
+                    {{ thread.date_created.day }} de
+                    {% if thread.date_created.month == 1 %}enero
+                    {% elif thread.date_created.month == 2 %}febrero
+                    {% elif thread.date_created.month == 3 %}marzo
+                    {% elif thread.date_created.month == 4 %}abril
+                    {% elif thread.date_created.month == 5 %}mayo
+                    {% elif thread.date_created.month == 6 %}junio
+                    {% elif thread.date_created.month == 7 %}julio
+                    {% elif thread.date_created.month == 8 %}agosto
+                    {% elif thread.date_created.month == 9 %}septiembre
+                    {% elif thread.date_created.month == 10 %}octubre
+                    {% elif thread.date_created.month == 11 %}noviembre
+                    {% elif thread.date_created.month == 12 %}diciembre
+                    {% endif %}
+                    de {{ thread.date_created|date:" Y" }}
+                </p>
+                <hr>
+                <p style="margin: 0%;">{{ thread.description }}</p>
+            </div>
+            <div class="text-left" style="padding: 1%;">
+                <br>
+                {% if user.is_authenticated %}
+                    {% include "comment_form.html" %}
                 {% endif %}
-                de {{ thread.date_created|date:" Y" }}
-            </p>
-            <hr>
-            <p style="margin: 0%;">{{ thread.description }}</p>
-        </div>
-        <div class="text-left" style="padding: 1%;">
-            <br>
-            {% if user.is_authenticated %}
-                {% include "comment_form.html" %}
-            {% endif %}
-        </div>
-        <div class="text-left" style="padding: 1%;">
-            <p style="margin: 0%; font-size: 120%; color: #1B4965;"><b>Comentarios</b></p>
-            <hr style="margin-top: 0%;">
-            {% if comments %}
-                {% for comment in comments %}
-                    <div class="card thread-comment-card text-left" style="padding: 2%; margin-bottom: 1%;">
-                        <b>{{ comment.user.username }}</b>
-                        <div style="font-size: 80%;">
-                            {{ comment.date_created.day }} de
-                            {% if comment.date_created.month == 1 %}enero
-                            {% elif comment.date_created.month == 2 %}febrero
-                            {% elif comment.date_created.month == 3 %}marzo
-                            {% elif comment.date_created.month == 4 %}abril
-                            {% elif comment.date_created.month == 5 %}mayo
-                            {% elif comment.date_created.month == 6 %}junio
-                            {% elif comment.date_created.month == 7 %}julio
-                            {% elif comment.date_created.month == 8 %}agosto
-                            {% elif comment.date_created.month == 9 %}septiembre
-                            {% elif comment.date_created.month == 10 %}octubre
-                            {% elif comment.date_created.month == 11 %}noviembre
-                            {% elif comment.date_created.month == 12 %}diciembre
-                            {% endif %}
-                            de {{ comment.date_created|date:" Y" }}                        
+            </div>
+            <div class="text-left" style="padding: 1%;">
+                <p style="margin: 0%; font-size: 120%; color: #1B4965;"><b>Comentarios</b></p>
+                <hr style="margin-top: 0%;">
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="card thread-comment-card text-left" style="padding: 2%; margin-bottom: 1%;">
+                            <b>{{ comment.user.username }}</b>
+                            <div style="font-size: 80%;">
+                                {{ comment.date_created.day }} de
+                                {% if comment.date_created.month == 1 %}enero
+                                {% elif comment.date_created.month == 2 %}febrero
+                                {% elif comment.date_created.month == 3 %}marzo
+                                {% elif comment.date_created.month == 4 %}abril
+                                {% elif comment.date_created.month == 5 %}mayo
+                                {% elif comment.date_created.month == 6 %}junio
+                                {% elif comment.date_created.month == 7 %}julio
+                                {% elif comment.date_created.month == 8 %}agosto
+                                {% elif comment.date_created.month == 9 %}septiembre
+                                {% elif comment.date_created.month == 10 %}octubre
+                                {% elif comment.date_created.month == 11 %}noviembre
+                                {% elif comment.date_created.month == 12 %}diciembre
+                                {% endif %}
+                                de {{ comment.date_created|date:" Y" }}                        
+                            </div>
+                            <div>
+                                <br>
+                                {{ comment.text }}                        
+                            </div>
                         </div>
-                        <div>
-                            <br>
-                            {{ comment.text }}                        
-                        </div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p style="color: #1B4965;">Aún no hay comentarios.</p>
-            {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p style="color: #1B4965;">Aún no hay comentarios.</p>
+                {% endif %}
+            </div>
         </div>
     </main>
 </body>

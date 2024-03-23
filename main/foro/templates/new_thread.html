@@ -46,33 +46,37 @@
         <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 5%; margin-left: 2%;">
             <!-- Columna para el formulario (izquierda) -->
             <div class="col-md-6">
-                <div style="background-color: #62B6CB; color: #1B4965; padding: 4%; padding-bottom: 3%; border-radius: 40px; font-size: 100%;">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="title"><b>Título</b></label>
-                            <input type="text" class="form-control" id="title" name="title" placeholder="Añada un título" value="{{thread.title}}" maxlength="75">
-                            {% if form.title.errors %}
-                                <p>{{"Debe tener un título y de máximo 75 caracteres"}}</p>
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            <label for="description"><b>Descripción</b></label>
-                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Añada una descripción al hilo">{{ thread.description }}</textarea>
-                            {% if form.description.errors %}
-                                <p>{{ "Debe tener una descripción y de máximo 300 caracteres" }}</p>
-                            {% endif %}
-                        </div>
-                        <div class="form-group text-center">
-                            <br>
-                            <button type="submit" class="btn light-btn" style="width: 50%;font-size: 100%;font-weight: bolder;">Crear Hilo</button>
-                        </div>
-                    </form>
+                <div style="background-color: #62B6CB; color: #1B4965; padding: 0%;border-radius: 40px; font-size: 100%;">
+                    <div style="display: flex; align-items: start; justify-content: left; margin-bottom: 5%;">
+                        <a href="{% url 'foro:list_threads' %}" role="button">
+                            <img src="/static/Images/back.png" alt="Atrás" style="max-width: 80px;">
+                        </a>
+                    </div>
+                    <div style="padding: 4%; padding-top: 0%;">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="title"><b>Título</b></label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Añada un título" value="{{thread.title}}" maxlength="75">
+                                {% if form.title.errors %}
+                                    <p>{{"Debe tener un título y de máximo 75 caracteres"}}</p>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="description"><b>Descripción</b></label>
+                                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Añada una descripción al hilo">{{ thread.description }}</textarea>
+                                {% if form.description.errors %}
+                                    <p>{{ "Debe tener una descripción y de máximo 300 caracteres" }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="form-group text-center">
+                                <br>
+                                <button type="submit" class="btn light-btn" style="width: 50%; font-size: 100%; font-weight: bolder; min-width: 100px;">Crear Hilo</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <br>
-                <div style="display: flex; align-items: start; justify-content: left; margin:3%;">
-                    <a class="btn dark-btn" href="{% url 'foro:list_threads' %}"role="button">Atrás</a>
-                </div>
             </div>
             <!-- Columna para la imagen (derecha) -->
             <div class="col-md-6">
