@@ -8,9 +8,6 @@ from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
 import datetime
 from main.models import Cliente, Cuidador
-from .forms import OfferForm
-import datetime
-from django.contrib import messages
 import geocoder
 from django.views.decorators.http import require_http_methods
 
@@ -59,7 +56,6 @@ def searchOffers(request):
     offers = Offer.objects.all()
     if search_query:
         offers = offers.filter(Q(title__icontains=search_query) | Q(address__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
-    
     return render(request, 'offers/search_results.html', {'offers': offers, 'search_query': search_query})
 #FILTER OFFERS
 def filterOffers(request):

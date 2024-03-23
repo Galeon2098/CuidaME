@@ -51,7 +51,6 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('cuidadores/<int:cuidador_id>/editar/', views.cuidador_edit, name='editar_cuidador'),
     path('cuidadores/<int:cuidador_id>/delete/', views.cuidador_delete, name='eliminar_cuidador'),
     path('foro/', include('main.foro.urls', namespace='foro')),
-    
 ]
 
 # Agrega la ruta de medios para servir archivos multimedia durante el desarrollo
