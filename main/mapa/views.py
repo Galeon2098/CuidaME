@@ -9,7 +9,6 @@ from folium.plugins import FastMarkerCluster
 from folium import Marker, Popup
 from django.views.decorators.http import require_http_methods
 
-@require_http_methods(["POST", "GET"])
 def mapaHome(request):
     if request.method == 'POST':
         address = request.POST.get('address')
@@ -37,9 +36,4 @@ def mapaHome(request):
         Marker([offer.lat, offer.lng], popup=popup).add_to(marker_cluster)
 
     context = {'map': initialMap._repr_html_(), 'offers': offers}
-
-    allowed_methods = ['GET', 'POST']
-    if request.method not in allowed_methods:
-        return HttpResponseNotAllowed(allowed_methods)
-
     return render(request, 'mapa/mapa.html', context)

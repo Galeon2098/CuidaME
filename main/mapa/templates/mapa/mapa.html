@@ -9,9 +9,7 @@
         <button type="submit" class="btn">Buscar</button>
     </form>
     <div class="map-container" style="margin-bottom: 20px;">
-        {% autoescape off %}
-            {{ map }}
-        {% endautoescape %}
+        {{ map|safe }}
     </div>
 </div>
 
