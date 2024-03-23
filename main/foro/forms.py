@@ -18,7 +18,6 @@ class ThreadForm(forms.ModelForm):
             raise forms.ValidationError("El título no puede tener más de 75 caracteres.")
         if description and len(description) > 300:
             self.add_error('description', "La descripción no puede tener más de 300 caracteres.")
-        
         return cleaned_data
 class CommentForm(forms.ModelForm):
     class Meta:
