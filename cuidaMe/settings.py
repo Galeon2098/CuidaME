@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'main.chat.apps.ChatConfig',
     'main.foro.apps.ForoConfig',
     'channels',
-
+    'main.mapa.apps.MapaConfig',
 ]
 
 MIDDLEWARE = [
@@ -158,3 +158,5 @@ CHANNEL_LAYERS = {
 STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_PUBLIC_KEY_TEST')
 STRIPE_SECRET_KEY_TEST = os.getenv('STRIPE_SECRET_KEY_TEST')
 REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
+
+GEOCODER_USER_AGENT = 'cuidaME/1.0'
