@@ -13,16 +13,19 @@ class EditOfferTestCase(TestCase):
         self.client = Client()
         self.user = User.objects.create_user(username='testuser', password='testpassword')
         self.user2 = User.objects.create_user(username='testuser2', password='testpassword2')
-        self.offer = Offer.objects.create(
+        self.offer = Offer(
             title='Original Title',
             offer_type='CO',
             client='DF',
             description='Original Description',
             price_per_hour=10.50,
             address='Calle Velazquez 1, Sevilla',
+            lat=37.3887735,  # Manualmente porque sino falla GitHub Actions
+            lng=-5.9835773,  
             available=True,
             user=self.user
         )
+        self.offer.save()
 
     def test_edit_offer_authenticated_user_valid_data(self):
         self.client.login(username='testuser', password='testpassword')
@@ -183,13 +186,33 @@ class OffersTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', email='test@example.com', password='password123')
 
-        self.offer1 = Offer.objects.create(title="Oferta 1", offer_type="CO", client="DF", description="Descripción de la Oferta 1", price_per_hour=50, address="Calle Velazquez 13, Sevilla", available=True, user=self.user)
-        self.offer2 = Offer.objects.create(title="Oferta 2", offer_type="CU", client="DM", description="Descripción de la Oferta 2", price_per_hour=60, address="Calle Velazquez 14, Sevilla", available=True, user=self.user)
-        self.offer3 = Offer.objects.create(title="Oferta 3", offer_type="TR", client="AN", description="Descripción de la Oferta 3", price_per_hour=40, address="Calle Velazquez 15, Sevilla", available=True, user=self.user)
-        self.offer4 = Offer.objects.create(title="Oferta 4", offer_type="DO", client="NI", description="Descripción de la Oferta 4", price_per_hour=70, address="Calle Velazquez 16, Sevilla", available=True, user=self.user)
-        self.offer5 = Offer.objects.create(title="Oferta 5", offer_type="OT", client="OT", description="Descripción de la Oferta 5", price_per_hour=55, address="Calle Velazquez 17, Sevilla", available=True, user=self.user)
-        self.offer6 = Offer.objects.create(title="Oferta 6", offer_type="CO", client="DM", description="Descripción de la Oferta 6", price_per_hour=65, address="Calle Velazquez 18, Sevilla", available=True, user=self.user)
-        self.offer7 = Offer.objects.create(title="Oferta 7", offer_type="CU", client="AN", description="Descripción de la Oferta 7", price_per_hour=45, address="Calle Velazquez 19, Sevilla", available=True, user=self.user)
+        self.offer1 = Offer(
+            title="Oferta 1",
+            offer_type="CO",
+            client="DF",
+            description="Descripción de la Oferta 1",
+            price_per_hour=50,
+            address="Calle Velazquez 13, Sevilla",
+            lat=37.3887735,  # Example latitude
+            lng=-5.9835773,  # Example longitude
+            available=True,
+            user=self.user
+        )
+        self.offer1.save()
+
+        self.offer2 = Offer(
+            title="Oferta 2",
+            offer_type="CU",
+            client="DM",
+            description="Descripción de la Oferta 2",
+            price_per_hour=60,
+            address="Calle Velazquez 14, Sevilla",
+            lat=37.3887736,  # Example latitude
+            lng=-5.9835774,  # Example longitude
+            available=True,
+            user=self.user
+        )
+        self.offer2.save()
 
     # def test_list_offers(self):
     #     response = self.client.get(reverse('offer:list'))

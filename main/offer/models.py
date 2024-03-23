@@ -53,13 +53,14 @@ class Offer(models.Model):
 
     def save(self, *args, **kwargs):
         if self.pk is None or self.address != self.__class__.objects.get(pk=self.pk).address:
-            user_agent = getattr(settings, 'GEOCODER_USER_AGENT', 'cuidaME/1.0')
-            g = hacer_solicitud_geocoder_osm(self.address, user_agent=user_agent)
-            if g.ok:
-                self.lat = g.latlng[0]
-                self.lng = g.latlng[1]
-            else:
-                raise ValueError('La dirección proporcionada no es válida. Introduce otra dirección.')
+            if self.lat is None or self.lng is None:
+                user_agent = getattr(settings, 'GEOCODER_USER_AGENT', 'cuidaME/1.0')
+                g = hacer_solicitud_geocoder_osm(self.address, user_agent=user_agent)
+                if g.ok:
+                    self.lat = g.latlng[0]
+                    self.lng = g.latlng[1]
+                else:
+                    raise ValueError('La dirección proporcionada no es válida. Introduce otra dirección.')
 
         if hasattr(self.user, 'cuidador') and self.user.cuidador:
             self.user.cuidador.Total_average_rating = self.calculate_total_average_rating()
