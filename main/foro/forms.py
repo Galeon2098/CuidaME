@@ -14,7 +14,6 @@ class ThreadForm(forms.ModelForm):
         cleaned_data = super().clean()
         title = cleaned_data.get("title")
         description = cleaned_data.get("description")
-        
         if title and len(title) > 75:
             raise forms.ValidationError("El título no puede tener más de 75 caracteres.")
         
