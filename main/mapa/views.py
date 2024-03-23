@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.http import HttpResponseNotAllowed
 from django.shortcuts import render
 from django.urls import reverse
 from main.mapa.llamadaAPI import hacer_solicitud_geocoder_osm
@@ -7,7 +6,6 @@ from main.offer.models import Offer
 import folium
 from folium.plugins import FastMarkerCluster
 from folium import Marker, Popup
-from django.views.decorators.http import require_http_methods
 
 def mapaHome(request):
     if request.method == 'POST':
