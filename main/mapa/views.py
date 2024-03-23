@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.http import HttpResponseNotAllowed
 from django.shortcuts import render
 from django.urls import reverse
 from main.mapa.llamadaAPI import hacer_solicitud_geocoder_osm
@@ -36,4 +37,9 @@ def mapaHome(request):
         Marker([offer.lat, offer.lng], popup=popup).add_to(marker_cluster)
 
     context = {'map': initialMap._repr_html_(), 'offers': offers}
+
+    allowed_methods = ['GET', 'POST']
+    if request.method not in allowed_methods:
+        return HttpResponseNotAllowed(allowed_methods)
+
     return render(request, 'mapa/mapa.html', context)
