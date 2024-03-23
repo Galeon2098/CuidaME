@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 import geocoder
+from main.models import Cuidador
+
 
 class Offer(models.Model):
 
@@ -23,11 +25,11 @@ class Offer(models.Model):
         ('OT', 'OTROS')
     )
 
-    title = models.CharField(max_length=200, verbose_name='Título')
+    title = models.CharField(max_length=75, verbose_name='Título')
     offer_type= models.CharField(max_length=255, verbose_name='Tipo de oferta', choices=TYPE_CHOICES, default='OT')
     client = models.CharField(max_length=255, verbose_name='Tipo de cliente', choices=CLIENT_CHOICES, default='OT')
     description = models.TextField(blank=True)
-    price_per_hour = models.DecimalField(max_digits=10,decimal_places=2)
+    price_per_hour = models.DecimalField(max_digits=10,decimal_places=2, validators=[MinValueValidator(1.00), MaxValueValidator(100.00)])
     address = models.CharField(max_length=200, verbose_name='Dirección')
     lat = models.FloatField(verbose_name='Latitud')
     lng = models.FloatField(verbose_name='Longitud')
@@ -35,7 +37,7 @@ class Offer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    User.add_to_class('Total_average_rating', models.FloatField(default=0))
+    Cuidador.add_to_class('Total_average_rating', models.FloatField(default=0))
 
     def __str__(self):
         return self.title
@@ -58,8 +60,10 @@ class Offer(models.Model):
             else:
                 raise ValueError('La dirección proporcionada no es válida. Introduce otra dirección.')
 
-        self.user.Total_average_rating = self.calculate_total_average_rating()
-        self.user.save()
+        if hasattr(self.user, 'cuidador') and self.user.cuidador:
+            self.user.cuidador.Total_average_rating = self.calculate_total_average_rating()
+            self.user.cuidador.save()
+
         super().save(*args, **kwargs)
 
 
@@ -71,14 +75,4 @@ class Review(models.Model):
 
     def __str__(self):
         return str(self.user.username)
-    
 
-class  ChatRequest(models.Model):
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='sent_chat_requests')
-    receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_chat_requests')
-    offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
-    accepted = models.BooleanField(default=False)
-    time_send = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.sender} to {self.receiver}'

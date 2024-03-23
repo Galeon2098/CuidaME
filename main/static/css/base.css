@@ -12,8 +12,13 @@
     flex-direction: column;
   }
 
+  .home-page {
+    --primary-bg-color: #1B4965;
+}
+
+
   header {
-    min-height: 50px;
+    min-height: 60px;
   }
   
   main {
@@ -33,7 +38,6 @@
   .base-header-primary {
     display: flex;
     justify-content: space-between;
-    height: 60px;
 
     background-color: #1B4965; 
     
@@ -102,7 +106,7 @@
 
 .offer-card-title {
   font-weight: bolder;
-  font-size: 150%;
+  font-size: 300%;
   color: #62B6CB;
   -webkit-text-stroke: 1px #1B4965; /* Para navegadores basados en WebKit como Chrome y Safari */
   text-stroke: 1px #1B4965; /* Para navegadores que admiten la propiedad text-stroke */
@@ -155,4 +159,24 @@
   width: 500px;
   height: 40px;
   padding-left: 10px;
+}
+
+.imagen1 {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Media query para pantallas más grandes, como las de ordenador */
+@media only screen and (width >= 768px) {
+  .imagen1 {
+      display: block; /* Asegúrate de que la imagen se muestre */
+  }
+}
+
+/* Media query para pantallas más pequeñas, como las de móviles */
+@media only screen and (767px >= width) {
+  .imagen1 {
+      display: none; /* Oculta la imagen en pantallas más pequeñas */
+  }
 }
