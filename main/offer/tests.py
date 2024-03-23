@@ -19,7 +19,7 @@ class EditOfferTestCase(TestCase):
             client='DF',
             description='Original Description',
             price_per_hour=10.50,
-            address='Calle Velazquez 8, Sevilla',
+            address='Calle Velazquez 1, Sevilla',
             available=True,
             user=self.user
         )
@@ -32,7 +32,7 @@ class EditOfferTestCase(TestCase):
             'client': 'AN',
             'description': 'Updated Description',
             'price_per_hour': 15.75,
-            'address': 'Calle Velazquez 9, Sevilla',
+            'address': 'Calle Velazquez 2, Sevilla',
             'available': False
         })
 
@@ -43,7 +43,7 @@ class EditOfferTestCase(TestCase):
         self.assertEqual(updated_offer.client, 'AN')
         self.assertEqual(updated_offer.description, 'Updated Description')
         self.assertEqual(updated_offer.price_per_hour, 15.75)
-        self.assertEqual(updated_offer.address, 'Calle Velazquez 9, Sevilla')
+        self.assertEqual(updated_offer.address, 'Calle Velazquez 2, Sevilla')
         self.assertTrue(updated_offer.available)
 
     def test_edit_offer_authenticated_user_invalid_data(self):
@@ -54,7 +54,7 @@ class EditOfferTestCase(TestCase):
             'client': 'XX',  # Invalid client type
             'description': 'Updated Description',
             'price_per_hour': -5.00,  # Invalid negative price
-            'address': 'Calle Velazquez 9, Sevilla',
+            'address': 'Calle Velazquez 4, Sevilla',
             'available': False
         })
 
@@ -66,7 +66,7 @@ class EditOfferTestCase(TestCase):
         self.assertEqual(unchanged_offer.client, 'DF')
         self.assertEqual(unchanged_offer.description, 'Original Description')
         self.assertEqual(unchanged_offer.price_per_hour, 10.50)
-        self.assertEqual(unchanged_offer.address, 'Calle Velazquez 9, Sevilla')
+        self.assertEqual(unchanged_offer.address, 'Calle Velazquez 5, Sevilla')
         self.assertTrue(unchanged_offer.available)
 
     def test_edit_offer_unauthenticated_user(self):
@@ -76,7 +76,7 @@ class EditOfferTestCase(TestCase):
             'client': 'NI',
             'description': 'Attempted Description Update',
             'price_per_hour': 20.00,
-            'address': 'Calle Velazquez 9, Sevilla',
+            'address': 'Calle Velazquez 6, Sevilla',
             'available': False
         })
         self.assertRedirects(response, f'/login/?next=/offer/1/')
@@ -89,7 +89,7 @@ class EditOfferTestCase(TestCase):
             'client': 'XX',  # Invalid client type
             'description': 'Updated Description',
             'price_per_hour': -5.00,  # Invalid negative price
-            'address': 'Calle Velazquez 9, Sevilla',
+            'address': 'Calle Velazquez 7, Sevilla',
             'available': False
         })
 
@@ -101,7 +101,7 @@ class EditOfferTestCase(TestCase):
             'client': 'NI',
             'description': 'Attempted Description Update',
             'price_per_hour': 20.00,
-            'address': 'Calle Velazquez 9, Sevilla',
+            'address': 'Calle Velazquez 8, Sevilla',
             'available': False
         })
         self.assertEqual(response.status_code, 403)
@@ -123,7 +123,7 @@ class PublishOfferTestCase(TestCase):
             'client': 'DF',
             'description': 'This is a test offer description.',
             'price_per_hour': 10.50,
-            'address': 'Calle Velazquez 8, Sevilla'
+            'address': 'Calle Velazquez 9, Sevilla'
         }
         form = OfferForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -135,7 +135,7 @@ class PublishOfferTestCase(TestCase):
             'client': 'DF',
             'description': 'This is a test offer description.',
             'price_per_hour': 10.50,
-            'address': 'Calle Velazquez 8, Sevilla'
+            'address': 'Calle Velazquez 10, Sevilla'
         }
         form = OfferForm(data=form_data)
         self.assertFalse(form.is_valid())
@@ -159,7 +159,7 @@ class PublishOfferTestCase(TestCase):
             'client': 'DF',
             'description': 'This is a test offer description.',
             'price_per_hour': 10.50,
-            'address': 'Calle Velazquez 8, Sevilla'
+            'address': 'Calle Velazquez 11, Sevilla'
         }
         form = OfferForm(data=form_data)
         self.assertFalse(form.is_valid())
@@ -171,7 +171,7 @@ class PublishOfferTestCase(TestCase):
             'client': 'DF',
             'description': 'This is a test offer description.',
             'price_per_hour': 10.50,
-            'address': 'Calle Velazquez 8, Sevilla'
+            'address': 'Calle Velazquez 12, Sevilla'
         }
         form = OfferForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -183,13 +183,13 @@ class OffersTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', email='test@example.com', password='password123')
 
-        self.offer1 = Offer.objects.create(title="Oferta 1", offer_type="CO", client="DF", description="Descripción de la Oferta 1", price_per_hour=50, address="Calle Velazquez 1, Sevilla", available=True, user=self.user)
-        self.offer2 = Offer.objects.create(title="Oferta 2", offer_type="CU", client="DM", description="Descripción de la Oferta 2", price_per_hour=60, address="Calle Velazquez 2, Sevilla", available=True, user=self.user)
-        self.offer3 = Offer.objects.create(title="Oferta 3", offer_type="TR", client="AN", description="Descripción de la Oferta 3", price_per_hour=40, address="Calle Velazquez 3, Sevilla", available=True, user=self.user)
-        self.offer4 = Offer.objects.create(title="Oferta 4", offer_type="DO", client="NI", description="Descripción de la Oferta 4", price_per_hour=70, address="Calle Velazquez 4, Sevilla", available=True, user=self.user)
-        self.offer5 = Offer.objects.create(title="Oferta 5", offer_type="OT", client="OT", description="Descripción de la Oferta 5", price_per_hour=55, address="Calle Velazquez 5, Sevilla", available=True, user=self.user)
-        self.offer6 = Offer.objects.create(title="Oferta 6", offer_type="CO", client="DM", description="Descripción de la Oferta 6", price_per_hour=65, address="Calle Velazquez 6, Sevilla", available=True, user=self.user)
-        self.offer7 = Offer.objects.create(title="Oferta 7", offer_type="CU", client="AN", description="Descripción de la Oferta 7", price_per_hour=45, address="Calle Velazquez 7, Sevilla", available=True, user=self.user)
+        self.offer1 = Offer.objects.create(title="Oferta 1", offer_type="CO", client="DF", description="Descripción de la Oferta 1", price_per_hour=50, address="Calle Velazquez 13, Sevilla", available=True, user=self.user)
+        self.offer2 = Offer.objects.create(title="Oferta 2", offer_type="CU", client="DM", description="Descripción de la Oferta 2", price_per_hour=60, address="Calle Velazquez 14, Sevilla", available=True, user=self.user)
+        self.offer3 = Offer.objects.create(title="Oferta 3", offer_type="TR", client="AN", description="Descripción de la Oferta 3", price_per_hour=40, address="Calle Velazquez 15, Sevilla", available=True, user=self.user)
+        self.offer4 = Offer.objects.create(title="Oferta 4", offer_type="DO", client="NI", description="Descripción de la Oferta 4", price_per_hour=70, address="Calle Velazquez 16, Sevilla", available=True, user=self.user)
+        self.offer5 = Offer.objects.create(title="Oferta 5", offer_type="OT", client="OT", description="Descripción de la Oferta 5", price_per_hour=55, address="Calle Velazquez 17, Sevilla", available=True, user=self.user)
+        self.offer6 = Offer.objects.create(title="Oferta 6", offer_type="CO", client="DM", description="Descripción de la Oferta 6", price_per_hour=65, address="Calle Velazquez 18, Sevilla", available=True, user=self.user)
+        self.offer7 = Offer.objects.create(title="Oferta 7", offer_type="CU", client="AN", description="Descripción de la Oferta 7", price_per_hour=45, address="Calle Velazquez 19, Sevilla", available=True, user=self.user)
 
     # def test_list_offers(self):
     #     response = self.client.get(reverse('offer:list'))
@@ -211,7 +211,7 @@ class OffersTestCase(TestCase):
     #     self.assertNotContains(response, self.offer2.title)
 
     def test_search_offers(self):
-        response = self.client.post(reverse('offer:searchOffers'), {'search_query': 'Calle Velazquez 1, Sevilla'})
+        response = self.client.post(reverse('offer:searchOffers'), {'search_query': 'Calle Velazquez 13, Sevilla'})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'offers/search_results.html')
         self.assertContains(response, self.offer1.title)
