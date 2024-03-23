@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseForbidden
 
-from main.mapa.prueba import hacer_solicitud_geocoder_osm
+from main.mapa.llamadaAPI import hacer_solicitud_geocoder_osm
 
 from .models import Offer, Review
 from .forms import OfferForm, ReviewForm

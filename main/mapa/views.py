@@ -2,7 +2,7 @@ import time
 from django.conf import settings
 from django.shortcuts import render
 from django.urls import reverse
-from main.mapa.prueba import hacer_solicitud_geocoder_osm
+from main.mapa.llamadaAPI import hacer_solicitud_geocoder_osm
 from main.offer.models import Offer
 import folium
 from folium.plugins import FastMarkerCluster

@@ -3,7 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
-from main.mapa.prueba import hacer_solicitud_geocoder_osm
+from main.mapa.llamadaAPI import hacer_solicitud_geocoder_osm
 from main.models import Cuidador
 
 
