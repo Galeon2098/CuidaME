@@ -6,7 +6,9 @@ from main.offer.models import Offer
 import folium
 from folium.plugins import FastMarkerCluster
 from folium import Marker, Popup
+from django.views.decorators.http import require_http_methods
 
+@require_http_methods(["POST", "GET"])
 def mapaHome(request):
     if request.method == 'POST':
         address = request.POST.get('address')
