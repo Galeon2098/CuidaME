@@ -21,7 +21,7 @@ class EditOfferTestCase(TestCase):
             price_per_hour=10.50,
             address='Calle Velazquez 1, Sevilla',
             lat=37.3887735,  # Manualmente porque sino falla GitHub Actions
-            lng=-5.9835773,  
+            lng=-5.9835773,
             available=True,
             user=self.user
         )
