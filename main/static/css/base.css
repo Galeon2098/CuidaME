@@ -172,10 +172,7 @@
   margin-bottom: 6px;
   font-size: 180%;
   color: #62B6CB;
-  /* NOSONAR */
   -webkit-text-stroke: 1px #1B4965; /* Para navegadores basados en WebKit como Chrome y Safari */
-  /* NOSONAR */
-  text-stroke: 1px #1B4965; /* Para navegadores que admiten la propiedad text-stroke */
 }
 
 .thread-card-text {
