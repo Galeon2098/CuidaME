@@ -1,8 +1,8 @@
-from datetime import date, datetime
-from django.test import Client, TestCase
+from datetime import date
+from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import reverse
-from cuidaMe.forms import ClienteProfileForm, CuidadorProfileForm, ClienteRegistrationForm, CuidadorRegistrationForm
+from cuidaMe.forms import ClienteProfileForm, CuidadorProfileForm
 from main.models import Cliente, Cuidador
 
 class ProfileViewTests(TestCase):

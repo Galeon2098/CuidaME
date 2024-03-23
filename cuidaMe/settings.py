@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from secret_pass import EMAIL_PASSWORD
 
 # Load environment variables from .env file
 load_dotenv()
@@ -166,4 +167,4 @@ EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'cuidame09@outlook.com'
-EMAIL_HOST_PASSWORD = 'cuidamepass09'
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
