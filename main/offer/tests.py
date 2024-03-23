@@ -211,7 +211,7 @@ class OffersTestCase(TestCase):
     #     self.assertNotContains(response, self.offer2.title)
 
     def test_search_offers(self):
-        response = self.client.post(reverse('offer:searchOffers'), {'search_query': 'Nueva York'})
+        response = self.client.post(reverse('offer:searchOffers'), {'search_query': 'Calle Velazquez 1, Sevilla'})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'offers/search_results.html')
         self.assertContains(response, self.offer1.title)

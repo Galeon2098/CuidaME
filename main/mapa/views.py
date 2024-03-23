@@ -1,6 +1,7 @@
 import geocoder
 from django.shortcuts import render
 from django.urls import reverse
+import geopy
 from main.offer.models import Offer
 import folium
 from folium.plugins import FastMarkerCluster
@@ -9,6 +10,7 @@ from folium import Marker, Popup
 def mapaHome(request):
     if request.method == 'POST':
         address = request.POST.get('address')
+        geopy.geocoders.options.default_user_agent = "cuidaME"
         g = geocoder.osm(address)
         if g.ok:
             lat, lng = g.latlng

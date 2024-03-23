@@ -48,7 +48,6 @@ jobs:
         python manage.py migrate
     - name: Run tests
       run: |
-        python -c "import requests; headers = {'User-Agent': 'peticionesMapa/CuidaMe'}; response = requests.get('https://nominatim.openstreetmap.org/search', params={'q': 'Calle Velazquez 8, Sevilla', 'format': 'jsonv2', 'addressdetails': '1', 'limit': '1'}, headers=headers); print(response.text)"
         coverage run --branch --source=. ./manage.py test  --keepdb
         coverage xml
     - name: Codacy Coverage Reporter
