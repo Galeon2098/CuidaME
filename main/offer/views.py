@@ -5,11 +5,13 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseForbidden
+
+from main.mapa.prueba import hacer_solicitud_geocoder_osm
+
 from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
 import datetime
 from main.models import Cliente, Cuidador
-import geocoder
 from django.views.decorators.http import require_http_methods
 
 @login_required
@@ -28,7 +30,7 @@ def publishOffer(request):
             new_offer.created = datetime.datetime.now()
             new_offer.updated = datetime.datetime.now()
             user_agent = getattr(settings, 'GEOCODER_USER_AGENT', 'cuidaME/1.0')
-            g = geocoder.osm(new_offer.address, user_agent=user_agent)
+            g = hacer_solicitud_geocoder_osm(new_offer.address, user_agent=user_agent)
             if g.ok:
                 new_offer.lat = g.latlng[0]
                 new_offer.lng = g.latlng[1]

@@ -3,7 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
-import geocoder
+from main.mapa.prueba import hacer_solicitud_geocoder_osm
 from main.models import Cuidador
 
 
@@ -54,7 +54,7 @@ class Offer(models.Model):
     def save(self, *args, **kwargs):
         if self.pk is None or self.address != self.__class__.objects.get(pk=self.pk).address:
             user_agent = getattr(settings, 'GEOCODER_USER_AGENT', 'cuidaME/1.0')
-            g = geocoder.osm(self.address, user_agent=user_agent)
+            g = hacer_solicitud_geocoder_osm(self.address, user_agent=user_agent)
             if g.ok:
                 self.lat = g.latlng[0]
                 self.lng = g.latlng[1]

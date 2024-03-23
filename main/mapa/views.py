@@ -1,7 +1,8 @@
+import time
 from django.conf import settings
-import geocoder
 from django.shortcuts import render
 from django.urls import reverse
+from main.mapa.prueba import hacer_solicitud_geocoder_osm
 from main.offer.models import Offer
 import folium
 from folium.plugins import FastMarkerCluster
@@ -11,7 +12,7 @@ def mapaHome(request):
     if request.method == 'POST':
         address = request.POST.get('address')
         user_agent = getattr(settings, 'GEOCODER_USER_AGENT', 'cuidaME/1.0')
-        g = geocoder.osm(address, user_agent=user_agent)
+        g = hacer_solicitud_geocoder_osm(address, user_agent=user_agent)
         if g.ok:
             lat, lng = g.latlng
             # Usamos un zoom mayor para las búsquedas
