@@ -1,9 +1,9 @@
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 import geocoder
-import geopy
 from main.models import Cuidador
 
 
@@ -53,8 +53,8 @@ class Offer(models.Model):
 
     def save(self, *args, **kwargs):
         if self.pk is None or self.address != self.__class__.objects.get(pk=self.pk).address:
-            geopy.geocoders.options.default_user_agent = "cuidaME"
-            g = geocoder.osm(self.address)
+            user_agent = getattr(settings, 'GEOCODER_USER_AGENT', 'cuidaME/1.0')
+            g = geocoder.osm(self.address, user_agent=user_agent)
             if g.ok:
                 self.lat = g.latlng[0]
                 self.lng = g.latlng[1]
