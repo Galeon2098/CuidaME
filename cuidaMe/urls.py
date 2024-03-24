@@ -39,6 +39,11 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('product_page', views.product_page, name='product_page'), #Con fines de testeo
     path('payment_successful', views.payment_successful, name='payment_successful'),
     path('payment_cancelled', views.payment_cancelled, name='payment_cancelled'),
-    path('accounts/', include('allauth.urls')),
+    path('select_role/', views.select_role, name='select_role'),
+    path('google_registro_cliente/', views.register_cliente_google, name='google_registro_cliente'),
+    path('google_registro_cuidador/', views.register_cuidador_google, name='google_registro_cuidador'),
+    path('', include('allauth.urls')),
 
 ]
+"""     path('google_register_cuidador/', views.google_registration, name='google_register_cuidador'),
+    path('google_register_cliente/', views.google_registration, name='google_register_cliente'), """

@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm
-from main.models import Cliente, UserPayment
+from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm, ClienteRegistrationFormGoogle, CuidadorRegistrationFormGoogle
+from main.models import Cliente, UserPayment, Cuidador
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -18,6 +18,32 @@ def index(request):
 
 def pricing_plan(request):
     return render(request, 'main/pricingPlan.html')
+
+@login_required
+def register_cliente_google(request):
+    if request.method == 'POST':
+        cliente_form = ClienteRegistrationFormGoogle(request.POST)
+        if cliente_form.is_valid():
+            cliente = cliente_form.save(commit=False)
+            cliente.user = request.user  # Asociar al usuario actual
+            cliente.save()
+            return render(request, 'registration/register_done.html', {'new_user': request.user})
+    else:
+        cliente_form = ClienteRegistrationFormGoogle()
+    return render(request, 'registration/google_register_cliente.html', {'cliente_form': cliente_form})
+
+@login_required
+def register_cuidador_google(request):
+    if request.method == 'POST':
+        cuidador_form = CuidadorRegistrationFormGoogle(request.POST)
+        if cuidador_form.is_valid():
+            cuidador = cuidador_form.save(commit=False)
+            cuidador.user = request.user  # Asociar al usuario actual
+            cuidador.save()
+            return render(request, 'registration/register_done.html', {'new_user': request.user})
+    else:
+        cuidador_form = CuidadorRegistrationFormGoogle()
+    return render(request, 'registration/google_register_cuidador.html', {'cuidador_form': cuidador_form})
 
 def register_cliente(request):
     if request.method == 'POST':
@@ -47,6 +73,10 @@ def about_us(request):
 @login_required
 def edit_ad(request):
     return render(request, 'main/edit_ad.html')
+
+@login_required
+def select_role(request):
+    return render(request, 'main/select_role.html')
 
 @login_required
 def my_profile_detail(request):
@@ -157,4 +187,3 @@ def payment_cancelled(request):
     )
     user_payment.save()
     return render(request, 'main/payment_cancelled.html')
-

@@ -6,6 +6,34 @@ class LoginForm(forms.Form):
     username = forms.CharField(label='Usuario')
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 
+class ClienteRegistrationFormGoogle(forms.ModelForm):
+    tipo_dependencia = forms.ChoiceField(label='Tipo de Dependencia', choices=Cliente.OPCIONES_DEPENDENCIA)
+    password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
+
+    class Meta:
+        model = Cliente
+        fields = ['tipo_dependencia']
+
+    # Eliminamos el método save()
+
+class CuidadorRegistrationFormGoogle(forms.ModelForm):
+    dni = forms.CharField(label='DNI', max_length=20)
+    numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=20)
+    fecha_nacimiento = forms.DateField(label="Fecha de nacimiento", widget=forms.DateInput(attrs={'type': 'date'}))
+    formacion = forms.CharField(label="Formación")
+    experiencia = forms.CharField(label="Experiencia")
+    tipo_publico_dirigido = forms.CharField(label="Tipo de público al que te diriges", max_length=100)
+
+    password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
+
+    class Meta:
+        model = Cuidador
+        fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido']
+
+    # Eliminamos el método save()
+
 class ClienteRegistrationForm(forms.ModelForm):
     # Añade campos adicionales de Cliente
     tipo_dependencia = forms.ChoiceField(label='Tipo de Dependencia', choices=Cliente.OPCIONES_DEPENDENCIA)
@@ -80,3 +108,4 @@ class CuidadorProfileForm(forms.ModelForm):
     class Meta:
         model = Cuidador
         fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido']
+
