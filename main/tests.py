@@ -259,10 +259,10 @@ class TestClienteLogin(TestCase):
     #     user = User.objects.create_user(username='cliente2', password='password123')
     #     data = {
     #         'username': 'cliente2',
-    #         'password': 'incorrect_password', 
+    #         'password': 'incorrect_password',
     #     }
     #     response = self.client.post(self.login_url, data)
-    #     self.assertEqual(response.status_code, 200)  
+    #     self.assertEqual(response.status_code, 200)
 
 
 
