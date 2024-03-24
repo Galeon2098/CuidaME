@@ -1,8 +1,10 @@
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from main.offer.choices import POB_CHOICES
+from main.mapa.llamadaAPI import hacer_solicitud_geocoder_osm
 from main.models import Cuidador
 
 
@@ -30,6 +32,9 @@ class Offer(models.Model):
     description = models.TextField(blank=True)
     price_per_hour = models.DecimalField(max_digits=10,decimal_places=2, validators=[MinValueValidator(1.00), MaxValueValidator(100.00)])
     poblacion = models.CharField(max_length=200, verbose_name='Población', choices=POB_CHOICES, default='Sevilla')
+    address = models.CharField(max_length=200, verbose_name='Dirección')
+    lat = models.FloatField(verbose_name='Latitud')
+    lng = models.FloatField(verbose_name='Longitud')
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -49,9 +54,20 @@ class Offer(models.Model):
         return sum(valorations) / len(valorations) if valorations else 0
 
     def save(self, *args, **kwargs):
+        if self.pk is None or self.address != self.__class__.objects.get(pk=self.pk).address:
+            if self.lat is None or self.lng is None:
+                user_agent = getattr(settings, 'GEOCODER_USER_AGENT', 'cuidaME/1.0')
+                g = hacer_solicitud_geocoder_osm(self.address, user_agent=user_agent)
+                if g.ok:
+                    self.lat = g.latlng[0]
+                    self.lng = g.latlng[1]
+                else:
+                    raise ValueError('La dirección proporcionada no es válida. Introduce otra dirección.')
+
         if hasattr(self.user, 'cuidador') and self.user.cuidador:
             self.user.cuidador.Total_average_rating = self.calculate_total_average_rating()
             self.user.cuidador.save()
+
         super().save(*args, **kwargs)
 
 

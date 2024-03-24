@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required,user_passes_test
@@ -6,18 +7,22 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseForbidden
+
+from main.mapa.llamadaAPI import hacer_solicitud_geocoder_osm
+
 from .models import Offer, Review
 from .forms import OfferForm, ReviewForm
 import datetime
 from main.models import Cliente, Cuidador, Interes
 from django.views.decorators.http import require_http_methods
+
 @login_required
 def publishOffer(request):
     cuidador = Cuidador.objects.filter(user=request.user).exists()
     if not cuidador:
         return render(request, 'main/error_page.html')
     if Offer.objects.filter(user=request.user).count() >= 5:
-      return render(request, 'main/error_page.html')
+        return render(request, 'main/error_page.html')
     if request.method == 'POST':
         form = OfferForm(request.POST)
         if form.is_valid():
@@ -26,8 +31,13 @@ def publishOffer(request):
             new_offer.available = True
             new_offer.created = datetime.datetime.now()
             new_offer.updated = datetime.datetime.now()
-            new_offer.save()
-            users = User.objects.all()
+            user_agent = getattr(settings, 'GEOCODER_USER_AGENT', 'cuidaME/1.0')
+            g = hacer_solicitud_geocoder_osm(new_offer.address, user_agent=user_agent)
+            if g.ok:
+                new_offer.lat = g.latlng[0]
+                new_offer.lng = g.latlng[1]
+                new_offer.save()
+                users = User.objects.all()
             for user in users:
                 cliente = Cliente.objects.filter(user=user).exists()
                 if cliente:
@@ -38,7 +48,11 @@ def publishOffer(request):
                         interes.poblacion == new_offer.poblacion):
                             send_offer_mail(user.username,user.email,new_offer.id)
                             break
-            return redirect('/offer/my_offers')
+                return redirect('/offer/my_offers')
+            else:
+                # Si la geocodificación falla, muestra un mensaje de error
+                form.add_error('address', 'La dirección proporcionada no es válida. Introduce otra dirección.')
+                return render(request, 'offers/publish.html', {'form': form})
     else:
         form = OfferForm()
     return render(request, 'offers/publish.html', {'form': form})
@@ -57,7 +71,7 @@ def searchOffers(request):
     search_query = request.POST.get('search_query', '')
     offers = Offer.objects.all()
     if search_query:
-        offers = offers.filter(Q(title__icontains=search_query) | Q(poblacion__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
+        offers = offers.filter(Q(title__icontains=search_query) | Q(poblacion__icontains=search_query) | Q(address__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
     return render(request, 'offers/search_results.html', {'offers': offers, 'search_query': search_query})
 #FILTER OFFERS
 def filterOffers(request):
@@ -84,8 +98,11 @@ def edit_offer(request, id):
     if request.method == 'POST':
         form = OfferForm(request.POST, instance=offer)
         if form.is_valid():
-            form.save()
-            return redirect('offer:my_offers')
+            try:
+                form.save()
+                return redirect('offer:my_offers')
+            except ValueError as e:
+                messages.error(request, str(e))
     else:
         form = OfferForm(instance=offer, user=request.user)  # Pasa el usuario como argumento
     return render(request, 'offers/edit_offer.html', {'form': form, 'offer': offer})

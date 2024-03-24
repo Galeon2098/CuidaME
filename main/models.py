@@ -42,7 +42,7 @@ class Cuidador(models.Model):
     fecha_nacimiento = models.DateField()
     formacion = models.TextField()
     experiencia = models.TextField()
-    chat_requests_received = models.ManyToManyField('chat.ChatRequest', related_name='caregiver_received_requests')
+    chat_requests_received = models.ManyToManyField('chat.ChatRequest', related_name='caregiver_received_requests',blank=True)
     def __str__(self):
         return self.user.username
 

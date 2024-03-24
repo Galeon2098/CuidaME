@@ -76,7 +76,7 @@
                         </div>
     
                         <div class="form-group">
-                            <label for="offer_type" style= "font-size: 120%;"><b>Tipo de oferta</b></label>
+                            <label for="offer_type" style= "font-size: 100%;"><b>Tipo de oferta</b></label>
                             <div class="input-group">
                                 <select class="form-control" id="offer_type" name="offer_type">
                                     {% for choice in form.offer_type.field.choices %}
@@ -87,7 +87,7 @@
                         </div>
     
                         <div class="form-group">
-                            <label for="client" style= "font-size: 120%;"><b>Tipo de cliente</b></label>
+                            <label for="client" style= "font-size: 100%;"><b>Tipo de cliente</b></label>
                             <div class="input-group">
                                 <select class="form-control" id="client" name="client" value="{{offer.client}}">
                                     {% for choice in form.client.field.choices %}
@@ -113,6 +113,14 @@
                             {% endif %}
                         </div>
     
+                        <div class="form-group">
+                            <label for="address"><b>Dirección</b></label>
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Dirección" value="{{offer.address}}">
+                            {% if form.address.errors %}
+                                <p>{{ "La oferta debe tener una dirección" }}</p>
+                            {% endif %}
+                        </div>
+
                         <div class="form-group">
                             <label for="poblacion" style="font-size: 120%;"><b>Población:</b></label>
                             <input type="text" id="poblacion" name="{{ form.poblacion.name }}" class="form-control" value="{{ form.poblacion.value }}" style="font-size:100%;" list="poblacion-list">

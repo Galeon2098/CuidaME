@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="col-md-12">
+    <form method="post" action="{% url 'mapa:mapa' %}", id="map-form">
+        {% csrf_token %}
+        <input type="text" name="address" class="address" placeholder="Ingrese una dirección">
+        <button type="submit" class="btn">Buscar</button>
+    </form>
+    <div class="map-container" style="margin-bottom: 20px;">
+        {{ map|safe }}
+    </div>
+</div>
+
+{% endblock %}
