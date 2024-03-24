@@ -53,17 +53,12 @@ INSTALLED_APPS = [
     'channels',
     'cuidaMe',
     'main.mapa.apps.MapaConfig',    'django.contrib.sites',
-    
     # allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-
     # providers
     'allauth.socialaccount.providers.google',
-
-
-
 ]
 
 
