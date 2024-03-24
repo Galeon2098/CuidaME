@@ -1,5 +1,15 @@
 import sqlite3
+import json
 
+CONFIG_FILE_PATH = 'google_key.json'
+
+# Leer el archivo JSON
+with open(CONFIG_FILE_PATH, 'r') as config_file:
+    config_data = json.load(config_file)
+
+# Configurar la variable de configuración EMAIL_HOST_PASSWORD
+CLIENT_ID = config_data.get('CLIENT_ID')
+SECRET = config_data.get('SECRET')
 # Conectar a la base de datos SQLite
 conn = sqlite3.connect('db.sqlite3')
 
@@ -22,7 +32,9 @@ if result == 0:
     # Definir una sentencia SQL de inserción con marcadores de posición para socialaccount_socialapp
     sql_insert_socialapp = '''INSERT INTO socialaccount_socialapp (id, provider, name, client_id, secret, key, provider_id, settings) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
     # Datos a insertar en socialaccount_socialapp (tupla de valores)
-    datos_socialapp = (1, 'google', 'CuidaMe', '315281190119-kfel7gapss534099fo612gbbuab2kj9t.apps.googleusercontent.com', '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', '', '', '{}')
+
+
+    datos_socialapp = (1, 'google', 'CuidaMe', CLIENT_ID, SECRET, '', '', '{}')
     # Ejecutar la sentencia SQL de inserción en socialaccount_socialapp con los datos
     cursor.execute(sql_insert_socialapp, datos_socialapp)
 
