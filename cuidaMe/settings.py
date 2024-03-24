@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     # providers
-    'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
 
 
@@ -179,5 +178,8 @@ STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_PUBLIC_KEY_TEST')
 STRIPE_SECRET_KEY_TEST = os.getenv('STRIPE_SECRET_KEY_TEST')
 REDIRECT_DOMAIN = 'http://127.0.0.1:8000/'
 
-SITE_ID = 1
+
+#SI DA UN FALLO DE SOCIALAPP DOES NOT EXIST PROBAR A CAMBIAR EL SITE_ID DE NUMERO: 1,2,3....
+SITE_ID = 2
+
 SOCIALACCOUNT_LOGIN_ON_GET=True

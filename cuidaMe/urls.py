@@ -45,5 +45,3 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('', include('allauth.urls')),
 
 ]
-"""     path('google_register_cuidador/', views.google_registration, name='google_register_cuidador'),
-    path('google_register_cliente/', views.google_registration, name='google_register_cliente'), """

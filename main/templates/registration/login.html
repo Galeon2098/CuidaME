@@ -1,7 +1,7 @@
 {% extends "main/base.html" %}
 
 {% block title %}Iniciar sesión{% endblock %}
-
+{% load socialaccount %}
 {% block content %}
 {% load static %}
 
@@ -41,6 +41,7 @@
                   <input style="color: #FFFFFF; font-family: Lato; font-weight: bold; text-align: center; background-color: #1B4965; border-radius: 5%; width: 70%;" type="submit" value="Iniciar sesión">
               </p>
           </form>
+          <button class="btn"><a href="{% provider_login_url 'google' %}?next=/"><i class="fab fa-google"></i>  Iniciar sesión con Google</a></button>
           
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 8%;">
                 {% if form.errors %}
