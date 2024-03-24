@@ -23,11 +23,15 @@ result = cursor.fetchone()[0]
 # Si no hay ningún registro con el dominio '127.0.0.1:8000', ejecutar el resto del código
 if result == 0:
     # Definir una sentencia SQL de inserción con marcadores de posición para django_site
-    sql_insert_django_site = '''INSERT INTO django_site (id, name, domain) VALUES (?, ?, ?)'''
-    # Datos a insertar en django_site (tupla de valores)
-    datos_django_site = (10, '127.0.0.1:8000', '127.0.0.1:8000')
-    # Ejecutar la sentencia SQL de inserción en django_site con los datos
-    cursor.execute(sql_insert_django_site, datos_django_site)
+    # Sentencia SQL para actualizar el registro en django_site
+    sql_update_django_site = '''UPDATE django_site SET name = ?, domain = ? WHERE id = ?'''
+
+    # Nuevos datos para el registro con id 1 en django_site
+    nuevo_nombre = '127.0.0.1:8000'
+    nuevo_dominio = '127.0.0.1:8000'
+
+    # Ejecutar la sentencia SQL de actualización en django_site con los nuevos datos
+    cursor.execute(sql_update_django_site, (nuevo_nombre, nuevo_dominio, 1))
 
     # Definir una sentencia SQL de inserción con marcadores de posición para socialaccount_socialapp
     sql_insert_socialapp = '''INSERT INTO socialaccount_socialapp (id, provider, name, client_id, secret, key, provider_id, settings) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
