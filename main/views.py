@@ -1,18 +1,19 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse
-from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm, ClienteRegistrationFormGoogle, CuidadorRegistrationFormGoogle
+from django.contrib.auth.decorators import login_required, user_passes_test
+from cuidaMe.forms import ClienteRegistrationForm, CuidadorRegistrationForm, ClienteProfileForm, CuidadorProfileForm,SuperuserProfileForm,InteresForm, ClienteRegistrationFormGoogle, CuidadorRegistrationFormGoogle
 from main.models import Cliente, UserPayment, Cuidador
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.shortcuts import render
-from django.http import HttpResponse
 import stripe
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
-
-from main.offer.models import ChatRequest
+from .models import Cliente, Cuidador, Interes
 
 # Create your views here.
+@require_http_methods(["GET"])
+def start_page(request):
+    return render(request, 'main/startPage.html')
 def index(request):
     return render(request, 'main/home.html')
 
@@ -47,22 +48,28 @@ def register_cuidador_google(request):
 
 def register_cliente(request):
     if request.method == 'POST':
-        user_form = ClienteRegistrationForm(request.POST)
+        user_form = ClienteRegistrationForm(request.POST, request.FILES)
         if user_form.is_valid():
             # Guarda el formulario y sus datos
             user = user_form.save()
             return render(request, 'registration/register_done.html', {'new_user': user})
+        else:
+            # Si el formulario no es válido, mostrar el formulario con los errores
+            return render(request, 'registration/register_cliente.html', {'form': user_form})
     else:
         user_form = ClienteRegistrationForm()
     return render(request, 'registration/register_cliente.html', {'user_form': user_form})
 
 def register_cuidador(request):
     if request.method == 'POST':
-        user_form = CuidadorRegistrationForm(request.POST)
+        user_form = CuidadorRegistrationForm(request.POST, request.FILES)
         if user_form.is_valid():
             # Guarda el formulario y sus datos
             user = user_form.save()
             return render(request, 'registration/register_done.html', {'new_user': user})
+        else:
+            # Si el formulario no es válido, mostrar el formulario con los errores
+            return render(request, 'registration/register_cuidador.html', {'form': user_form})
     else:
         user_form = CuidadorRegistrationForm()
     return render(request, 'registration/register_cuidador.html', {'user_form': user_form})
@@ -85,18 +92,19 @@ def my_profile_detail(request):
 
 @login_required
 def edit_profile(request):
-    try:
-        profile = request.user.cliente
-        form_class = ClienteProfileForm
-    except Cliente.DoesNotExist:
-        profile = request.user.cuidador
-        form_class = CuidadorProfileForm
-
-    if profile.user != request.user:
-        return render(request, 'main/error_page.html')
+    if request.user.is_superuser:
+        profile = request.user
+        form_class = SuperuserProfileForm
+    else:
+        try:
+            profile = request.user.cliente
+            form_class = ClienteProfileForm
+        except Cliente.DoesNotExist:
+            profile = request.user.cuidador
+            form_class = CuidadorProfileForm
 
     if request.method == 'POST':
-        form = form_class(request.POST, instance=profile)
+        form = form_class(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return redirect('my_profile_detail')
@@ -110,28 +118,70 @@ def profile_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     return render(request, 'main/profile_detail.html', {'user': user})
 
+# CRUD INTERESES
+
+# LIST
+@login_required
+def list_intereses(request):
+    cliente = Cliente.objects.filter(user=request.user).exists()
+    if not cliente:
+        return render(request, 'main/error_page.html')
+    intereses = Interes.objects.filter(user=request.user)
+    return render(request, 'main/misIntereses.html', {'intereses': intereses})
+
+# CREATE
+@login_required
+def create_interes(request):
+    cliente = Cliente.objects.filter(user=request.user).exists()
+    if not cliente:
+        return render(request, 'main/error_page.html')
+    if request.method == 'POST':
+        form = InteresForm(request.POST)
+        if form.is_valid():
+            new_interes = form.save(commit=False)
+            new_interes.user = request.user
+            new_interes.save()
+            return redirect('mis_intereses')
+    else:
+        form = InteresForm()
+    return render(request, 'main/interesCreate.html', {'form': form})
+
+#UPDATE
+@login_required
+def edit_interes(request, interes_id):
+    interes = get_object_or_404(Interes, pk=interes_id)
+    if request.user != interes.user:
+        return HttpResponseForbidden("No tienes permiso para editar este interés.")
+    if request.method == 'POST':
+        form = InteresForm(request.POST, instance=interes)
+        if form.is_valid():
+            form.save()
+            return redirect('mis_intereses')
+    else:
+        form = InteresForm(instance=interes, user=request.user)
+    return render(request, 'main/edit_interes.html', {'form': form, 'interes': interes})
+
+#DELETE
+@login_required
+def delete_interes(request, interes_id):
+    interes = get_object_or_404(Interes, pk=interes_id)
+    if request.user != interes.user:
+        return HttpResponseForbidden("No tienes permiso para eliminar este interés.")
+    if request.method == 'POST':
+        interes.delete()
+        messages.success(request, 'El interés ha sido eliminado exitosamente.')
+        return redirect('mis_intereses')
+    return render(request, 'main/delete_interes_confirmation.html', {'interes': interes})
+
+
 def about_us(request):
     return render(request, 'main/aboutUs.html')
 
+def privacy_policy(request):
+    return render(request,'main/privacy_policy.html')
+
 def edit_ad(request):
     return render(request, 'main/edit_ad.html')
-
-@login_required
-def chat_requests_for_caregiver(request):
-    chat_requests = ChatRequest.objects.filter(receiver=request.user, accepted=False)
-    return render(request, 'chat/chat_list.html', {'chat_requests': chat_requests})
-
-#Cuando se acepta te redirige al chat
-def accept_chat_request(request, chat_request_id):
-    chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
-    chat_request.accepted = True
-    chat_request.save()
-    return redirect(reverse('chat:chat_room', kwargs={'chat_id': chat_request.id}))
-
-def reject_chat_request(request, chat_request_id):
-    chat_request = get_object_or_404(ChatRequest, id=chat_request_id)
-    chat_request.delete()
-    return redirect('chat_requests_for_caregiver')
 
 
 @login_required
@@ -187,3 +237,83 @@ def payment_cancelled(request):
     )
     user_payment.save()
     return render(request, 'main/payment_cancelled.html')
+
+# Vistas para el backend (requieren autenticación de superusuario)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["POST"])
+def user_list(request):
+    users = User.objects.all()
+    return render(request, 'main/user_list.html', {'users': users})
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["POST"])
+def delete_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        user.delete()
+        return redirect('user_list')
+    return render(request, 'main/user_delete.html', {'user': user})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET"])
+def cliente_list(request):
+    clientes = Cliente.objects.all()
+    return render(request, 'main/cliente_list.html', {'clientes': clientes})
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET"])
+def cuidador_list(request):
+    cuidadores = Cuidador.objects.all()
+    return render(request, 'main/cuidador_list.html', {'cuidadores': cuidadores})
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET","POST"])
+def cliente_edit(request, cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    if request.method == 'POST':
+        form = ClienteProfileForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('cliente_list')
+    else:
+        form = ClienteProfileForm(instance=cliente)
+    return render(request, 'main/cliente_edit.html', {'cliente': cliente, 'form': form})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET","POST"])
+def cuidador_edit(request, cuidador_id):
+    cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
+    if request.method == 'POST':
+        form = CuidadorProfileForm(request.POST, instance=cuidador)
+        if form.is_valid():
+            form.save()
+            return redirect('cuidador_list')
+    else:
+        form = CuidadorProfileForm(instance=cuidador)
+    return render(request, 'main/cuidador_edit.html', {'cuidador': cuidador, 'form': form})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET","POST"])
+def cliente_delete(request, cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    if request.method == 'POST':
+        cliente.delete()
+        return redirect('cliente_list')
+    return render(request, 'main/cliente_confirm_delete.html', {'cliente': cliente})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+@require_http_methods(["GET","POST"])
+def cuidador_delete(request, cuidador_id):
+    cuidador = get_object_or_404(Cuidador, pk=cuidador_id)
+    if request.method == 'POST':
+        cuidador.delete()
+        return redirect('cuidador_list')
+    return render(request, 'main/cuidador_confirm_delete.html', {'cuidador': cuidador})

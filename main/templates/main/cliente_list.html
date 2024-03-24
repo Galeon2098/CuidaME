@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends "main/base.html" %}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CuidaME - Lista de Clientes</title>
+  <link rel="stylesheet" href="{% static "css/base.css" %}">
+</head>
+<body>
+
+    <br>
+    <table class="table clients">
+            <caption class="visually-hidden"> </caption>
+        <thead class="thead-dark"> <!-- Aplica un estilo oscuro al encabezado -->
+        <tr>
+            <th>Nombre de usuario</th>
+
+            <th>Opciones</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.user.username }}</td>
+                    <td><a href="{% url 'editar_cliente' cliente.id %}" class="btn btn-primary">Editar</a>   
+                        <a href="{% url 'eliminar_cliente' cliente.id %}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+</body>
+</html>
+{% endblock %}

@@ -23,9 +23,8 @@
         <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">
 
             <img src="{% static 'Images/carer.png' %}" alt="Caregiver" class="img-fluid" style="width: 100%; max-width: 50%; height: auto; margin-bottom: 100px;">
-            <div class="col-md-6" style="background-color: #62B6CB; color: #1B4965; padding: 20px; border-radius: 10%; font-size: 18px;">
+            <div class="col-md-6" style="background-color: #62B6CB; color: #1B4965; padding: 5%; border-radius: 10%; font-size: 100%;">
                 <div class="container-fluid" style="display: flex; height: 30%;">
-
                 </div>
 
                 <div class="container" style="display: flex; justify-content: center; position: relative;">
@@ -47,7 +46,10 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="{{ form.title.id }}" style="font-size: 120%;"><b>Título:</b></label>
-                        &nbsp; {{ form.title }}
+                        <textarea name="{{ form.title.name }}" class="form-control" rows="1" style="font-size:100%;">{{ form.title.value }}</textarea>
+                        {% if form.title.errors %}
+                        <p>{{"Debe tener un título de máximo de 75 caracteres"}}</p>
+                    {% endif %}
                     </div>
 
                     <div class="form-group">
@@ -62,29 +64,59 @@
 
                     <div class="form-group">
                         <label for="{{ form.description.id }}" style="font-size: 120%;"><b>Descripción:</b></label>
-                        <textarea name="{{ form.description.name }}" class="form-control" rows="3" style="font-size:100%;">{{ form.description.value }}</textarea>
+                        <textarea name="{{ form.description.name }}" class="form-control" rows="3" style="font-size:100%;", value="{{offer.description}}">{{ form.description.value }}</textarea>
+                        {% if form.description.errors %}
+                        <p>{{ "La oferta debe tener una descripción" }}</p>
+                    {% endif %}
                     </div>
                     
                     <div class="form-group">
-                        <label for="{{ form.price_per_hour.id }}" style="font-size: 120%;"><b>Precio por hora (€):</b></label>
-                        &nbsp; {{ form.price_per_hour }}
+                        <label for="{{ form.price_per_hour.id }}" style="font-size: 120%;"><b>Precio por hora:</b></label>
+                        <textarea name="{{ form.price_per_hour.name }}" class="form-control" rows="1" style="font-size:100%;">{{ form.price_per_hour.value }}</textarea>
+                        {% if form.price_per_hour.errors %}
+                            <p>{{"El precio debe ser superior a 1.00 e inferior a 100.00" }}</p>
+                        {% endif %}
                     </div>
 
                     <div class="form-group">
-                        <label for="{{ form.city.id }}" style="font-size: 120%;"><b>Ciudad:</b></label>
-                        &nbsp; {{ form.city }}
+                        <label for="{{ form.address.id }}" style="font-size: 120%;"><b>Dirección:</b></label>
+                        <textarea name="{{ form.address.name }}" class="form-control" rows="1" style="font-size:100%;">{{ form.address.value }}</textarea>
+                        {% if form.address.errors %}
+                        <p>{{ "La oferta debe tener una dirección" }}</p>
+                    {% endif %}
                     </div>
+                    <div class="form-group">
+                        <label for="poblacion" style="font-size: 120%;"><b>Población:</b></label>
+                        <input type="text" id="poblacion" name="{{ form.poblacion.name }}" class="form-control" value="{{ form.poblacion.value }}" style="font-size:100%;" list="poblacion-list">
+                        <datalist id="poblacion-list">
+                            {% for choice_value, choice_label in form.poblacion.field.choices %}
+                                <option value="{{ choice_label }}"></option>
+                            {% endfor %}
+                        </datalist>
+                        {% if form.poblacion.errors %}
+                            <p>{{ "La oferta debe tener una población" }}</p>
+                        {% endif %}
+                    </div>
+
 
                     <div class="form-group d-flex justify-content-center">
                         <button type="submit" class="btn btn-danger remove_button" style="width: 50%; min-width: 50%; margin-right: 10px; font-size: 110%; background-color: #EC5252; color: white; font-weight: bolder;">Eliminar Anuncio</button>
                         <button type="submit" class="btn btn-primary update_button" style="width: 50%; font-size: 110%; font-weight: bolder;">Actualizar</button>
                     </div>
                 </form>
+                {% if messages %}
+                    <div class="alert alert-danger mt-3">
+                    {% for message in messages %}
+                        <strong>Error:</strong> {{ message }}
+                    {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVfQWqcC+aIgM5vmzKLvXhPTsyD95zEdN9SiwtcU6NOiz9z4M2L" crossorigin="anonymous"></script>
+    <script src="{% static "js/../../offer/templates/offers/autoCompleto.js" %}"></script>
 </body>
 </html>
 {% endblock %}

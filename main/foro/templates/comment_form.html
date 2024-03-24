@@ -1,0 +1,14 @@
+  <p style="margin: 0%; font-size: 120%; color: #1B4965;  "><b>Nuevo comentario</b></p>
+    <form method="post" action="{% url 'foro:comment' thread.id %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <textarea class="form-control" id="text" name="text" rows="3">{{ comment.text }}</textarea>
+        {% if form.text.errors %}
+            <p>{{ "Debe tener un comentario y de máximo 1000 caracteres" }}</p>
+        {% endif %}
+        <div style="text-align: center;">
+          <button type="submit" class="btn light-dark-btn" style="min-width: 120px; width: 15%; font-size: 100%; font-weight: bolder;">Comentar</button>
+        </div>
+      </div>
+    </form>
+  </p>

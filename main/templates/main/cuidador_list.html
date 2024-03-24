@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% extends "main/base.html" %}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CuidaME - Lista de Cuidadores</title>
+  <link rel="stylesheet" href="{% static "css/base.css" %}">
+</head>
+<body>
+    <br>
+    <table class="table caregivers"> 
+        <caption class="visually-hidden"> </caption>
+
+        <thead class="thead-dark"> <!-- Aplica un estilo oscuro al encabezado -->
+        <tr>
+            <th>Nombre de usuario</th>
+            <th>DNI</th>
+            <th>Fecha de nacimiento</th>
+            <th>Opciones</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for cuidador in cuidadores %}
+                <tr>
+                    <td>{{ cuidador.user.username }}</td>
+                    <td>{{ cuidador.dni }}</td>
+                    <td>{{ cuidador.fecha_nacimiento }}</td>
+                    <td><a href="{% url 'editar_cuidador' cuidador.id %}" class="btn btn-primary">Editar</a>   
+                        <a href="{% url 'eliminar_cuidador' cuidador.id %}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+</body>
+</html>
+{% endblock %}
