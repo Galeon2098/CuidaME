@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import json
 
 # Load environment variables from .env file
 load_dotenv()
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'main.chat.apps.ChatConfig',
     'main.foro.apps.ForoConfig',
     'channels',
+    'cuidaMe',
     'main.mapa.apps.MapaConfig',
 ]
 
@@ -160,3 +162,23 @@ STRIPE_SECRET_KEY_TEST = os.getenv('STRIPE_SECRET_KEY_TEST')
 REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
 
 GEOCODER_USER_AGENT = 'cuidaME/1.0'
+
+
+#EMAIL CONFIG
+
+CONFIG_FILE_PATH = 'config.json'
+
+# Leer el archivo JSON
+with open(CONFIG_FILE_PATH, 'r') as config_file:
+    config_data = json.load(config_file)
+
+# Configurar la variable de configuración EMAIL_HOST_PASSWORD
+EMAIL_PASSWORD = config_data.get('EMAIL_HOST_PASSWORD')
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'cuidame09@outlook.com'
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD

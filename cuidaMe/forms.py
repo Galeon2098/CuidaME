@@ -1,27 +1,47 @@
 from django import forms
 from django.contrib.auth.models import User
-from main.models import Cliente, Cuidador
+from main.models import Cliente, Cuidador, Interes
 import datetime, re
-
-
+from main.offer.choices import POB_CHOICES
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Usuario')
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 
+class InteresForm(forms.ModelForm):
+    TYPE_CHOICES = (
+        ('CO', 'COMPAÑÍA'),
+        ('CU', 'CUIDADO'),
+        ('TR', 'TRANSPORTE'),
+        ('DO', 'COMPRA A DOMICILIO'),
+        ('OT', 'OTROS')
+    )
+
+    CLIENT_CHOICES = (
+        ('DF', 'DISCAPACIDAD FÍSICA'),
+        ('DM', 'DISCAPACIDAD MENTAL'),
+        ('NI', 'NIÑOS'),
+        ('AN', 'ANCIANOS'),
+        ('OT', 'OTROS')
+    )
+
+    offer_type = forms.ChoiceField(label='Tipo de oferta', choices=TYPE_CHOICES, initial='OT')
+    client = forms.ChoiceField(label='Tipo de cliente', choices=CLIENT_CHOICES, initial='OT')
+    poblacion = forms.ChoiceField(label='Población', choices=POB_CHOICES)
+    
+    class Meta:
+        model = Interes
+        fields = ['offer_type', 'client','poblacion']
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
 class ClienteRegistrationForm(forms.ModelForm):
     # Añade campos adicionales de Cliente
     imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
-
-    OPCIONES_DEPENDENCIA = [
-        ('personaSolitaria', 'Persona Solitaria'),
-        ('enfermedad', 'Enfermedad'),
-        ('cuidados', 'Cuidados'),
-    ]
-
     first_name = forms.CharField(label='Nombre', required=True)
     last_name = forms.CharField(label='Apellidos', required=True)
-    tipo_dependencia = forms.ChoiceField(label='Tipo de Dependencia', choices=OPCIONES_DEPENDENCIA, required=True)
     email = forms.EmailField(label='Email', required=True)
 
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
@@ -49,20 +69,13 @@ class ClienteRegistrationForm(forms.ModelForm):
             if commit:
                 user.save()
                 # Guarda los campos adicionales de Cliente
-                Cliente.objects.create(user=user, tipo_dependencia=self.cleaned_data['tipo_dependencia'], imagen_perfil=self.cleaned_data['imagen_perfil'])
+                Cliente.objects.create(user=user, imagen_perfil=self.cleaned_data['imagen_perfil'])
             return user, Cliente
 
 class CuidadorRegistrationForm(forms.ModelForm):
     imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
-    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea)
+    experiencia = forms.CharField(label="Experiencia", widget=forms.Textarea)
 
-    CLIENT_CHOICES = (
-        ('DF', 'DISCAPACIDAD FÍSICA'),
-        ('DM', 'DISCAPACIDAD MENTAL'),
-        ('NI', 'NIÑOS'),
-        ('AN', 'ANCIANOS'),
-        ('OT', 'OTROS')
-    )
 
     # Añade campos adicionales de Cuidador
     dni = forms.CharField(label='DNI', max_length=9, required=True)
@@ -71,7 +84,7 @@ class CuidadorRegistrationForm(forms.ModelForm):
         label="Fecha de nacimiento",
         widget=forms.DateInput(attrs={'type': 'date'}),required=True)
     formacion = forms.CharField(label="Formación", required=True)
-    tipo_publico_dirigido = forms.ChoiceField(label='Tipo de Dependencia', choices=CLIENT_CHOICES, required=True)
+    experiencia = forms.CharField(label="Experiencia", required=True)
 
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
@@ -137,19 +150,18 @@ class CuidadorRegistrationForm(forms.ModelForm):
                                         numero_seguridad_social=self.cleaned_data['numero_seguridad_social'],
                                         fecha_nacimiento=self.cleaned_data['fecha_nacimiento'],
                                         formacion=self.cleaned_data['formacion'],
-                                        descripcion=self.cleaned_data['descripcion'],
-                                        tipo_publico_dirigido=self.cleaned_data['tipo_publico_dirigido'])
+                                        experiencia=self.cleaned_data['experiencia'])
             return user, Cuidador
     
 class ClienteProfileForm(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = ['imagen_perfil', 'apellidos', 'tipo_dependencia']
+        fields = ['imagen_perfil']
 
 class CuidadorProfileForm(forms.ModelForm):
     class Meta:
         model = Cuidador
-        fields = ['imagen_perfil', 'dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'descripcion', 'tipo_publico_dirigido']
+        fields = ['imagen_perfil', 'formacion', 'experiencia']
 class SuperuserProfileForm(forms.ModelForm):
     class Meta:
         model = User

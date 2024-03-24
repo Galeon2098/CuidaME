@@ -19,6 +19,7 @@ class EditOfferTestCase(TestCase):
             client='DF',
             description='Original Description',
             price_per_hour=10.50,
+            poblacion='Sevilla',
             address='Calle Velazquez 1, Sevilla',
             lat=37.3887735,  # Manualmente porque sino falla GitHub Actions
             lng=-5.9835773,
@@ -35,6 +36,7 @@ class EditOfferTestCase(TestCase):
             'client': 'AN',
             'description': 'Updated Description',
             'price_per_hour': 15.75,
+            'poblacion': 'Tomares',
             'address': 'Calle Velazquez 2, Sevilla',
             'available': False
         })
@@ -46,6 +48,7 @@ class EditOfferTestCase(TestCase):
         self.assertEqual(updated_offer.client, 'AN')
         self.assertEqual(updated_offer.description, 'Updated Description')
         self.assertEqual(updated_offer.price_per_hour, 15.75)
+        self.assertEqual(updated_offer.poblacion, 'Tomares')
         self.assertEqual(updated_offer.address, 'Calle Velazquez 2, Sevilla')
         self.assertTrue(updated_offer.available)
 
@@ -57,6 +60,7 @@ class EditOfferTestCase(TestCase):
             'client': 'XX',  # Invalid client type
             'description': 'Updated Description',
             'price_per_hour': -5.00,  # Invalid negative price
+            'poblacion': 'Tomares',
             'address': 'Calle Velazquez 4, Sevilla',
             'available': False
         })
@@ -69,6 +73,7 @@ class EditOfferTestCase(TestCase):
         self.assertEqual(unchanged_offer.client, 'DF')
         self.assertEqual(unchanged_offer.description, 'Original Description')
         self.assertEqual(unchanged_offer.price_per_hour, 10.50)
+        self.assertEqual(unchanged_offer.poblacion, 'Sevilla')
         self.assertEqual(unchanged_offer.address, 'Calle Velazquez 5, Sevilla')
         self.assertTrue(unchanged_offer.available)
 
@@ -79,6 +84,7 @@ class EditOfferTestCase(TestCase):
             'client': 'NI',
             'description': 'Attempted Description Update',
             'price_per_hour': 20.00,
+            'poblacion': 'Bormujos',
             'address': 'Calle Velazquez 6, Sevilla',
             'available': False
         })
@@ -92,6 +98,7 @@ class EditOfferTestCase(TestCase):
             'client': 'XX',  # Invalid client type
             'description': 'Updated Description',
             'price_per_hour': -5.00,  # Invalid negative price
+            'poblacion': 'Tomares',
             'address': 'Calle Velazquez 7, Sevilla',
             'available': False
         })
@@ -104,6 +111,7 @@ class EditOfferTestCase(TestCase):
             'client': 'NI',
             'description': 'Attempted Description Update',
             'price_per_hour': 20.00,
+            'poblacion': 'Bormujos',
             'address': 'Calle Velazquez 8, Sevilla',
             'available': False
         })
@@ -126,6 +134,7 @@ class PublishOfferTestCase(TestCase):
             'client': 'DF',
             'description': 'This is a test offer description.',
             'price_per_hour': 10.50,
+            'poblacion': 'Sevilla',
             'address': 'Calle Velazquez 9, Sevilla'
         }
         form = OfferForm(data=form_data)
@@ -138,11 +147,23 @@ class PublishOfferTestCase(TestCase):
             'client': 'DF',
             'description': 'This is a test offer description.',
             'price_per_hour': 10.50,
+            'poblacion': 'Sevilla',
             'address': 'Calle Velazquez 10, Sevilla'
         }
         form = OfferForm(data=form_data)
         self.assertFalse(form.is_valid())
 
+    def test_invalid_publish_offer_form_negative_price(self):
+        form_data = {
+            'title': 'Test Offer',
+            'offer_type': 'CO',
+            'client': 'DF',
+            'description': 'This is a test offer description.',
+            'price_per_hour': -10.50,  # Precio negativo,
+            'poblacion': 'Sevilla'
+        }
+        form = OfferForm(data=form_data)
+        self.assertFalse(form.is_valid())
     # def test_invalid_publish_offer_form_negative_price(self):
     #     form_data = {
     #         'title': 'Test Offer',
@@ -150,6 +171,7 @@ class PublishOfferTestCase(TestCase):
     #         'client': 'DF',
     #         'description': 'This is a test offer description.',
     #         'price_per_hour': -10.50,  # Precio negativo
+    #        'poblacion': 'Sevilla',
     #         'address': 'Calle Velazquez 8, Sevilla'
     #     }
     #     form = OfferForm(data=form_data)
@@ -162,6 +184,7 @@ class PublishOfferTestCase(TestCase):
             'client': 'DF',
             'description': 'This is a test offer description.',
             'price_per_hour': 10.50,
+            'poblacion': 'Sevilla',
             'address': 'Calle Velazquez 11, Sevilla'
         }
         form = OfferForm(data=form_data)
@@ -174,6 +197,7 @@ class PublishOfferTestCase(TestCase):
             'client': 'DF',
             'description': 'This is a test offer description.',
             'price_per_hour': 10.50,
+            'poblacion': 'Sevilla',
             'address': 'Calle Velazquez 12, Sevilla'
         }
         form = OfferForm(data=form_data)
@@ -193,6 +217,7 @@ class OffersTestCase(TestCase):
             description="Descripción de la Oferta 1",
             price_per_hour=50,
             address="Calle Velazquez 13, Sevilla",
+            poblacion="Sevilla",
             lat=37.3887735,  # Example latitude
             lng=-5.9835773,  # Example longitude
             available=True,
@@ -207,6 +232,7 @@ class OffersTestCase(TestCase):
             description="Descripción de la Oferta 2",
             price_per_hour=60,
             address="Calle Velazquez 14, Sevilla",
+            poblacion="Sevilla",
             lat=37.3887736,  # Example latitude
             lng=-5.9835774,  # Example longitude
             available=True,
@@ -246,4 +272,3 @@ class OffersTestCase(TestCase):
     #     self.assertTemplateUsed(response, 'offers/list.html')
     #     self.assertNotContains(response, self.offer1.title)
     #     self.assertContains(response, self.offer2.title)
-

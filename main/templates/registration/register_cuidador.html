@@ -109,26 +109,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="{{ user_form.descripcion.id_for_label }}"><b>Descripción:</b></label>
-                            {{ user_form.descripcion }}
+                            <label for="{{ user_form.experiencia.id_for_label }}"><b>Experiencia:</b></label>
+                            {{ user_form.experiencia }}
                         </div>
-
-                        <div class="form-group">
-                            <label for="{{ user_form.tipo_publico_dirigido.id_for_label }}"><b>Tipo de público al que te
-                                    diriges:</b></label>
-                            {{ user_form.tipo_publico_dirigido }}
-                        </div>
-
-                        <div class="form-group">
-                            <label for="tipo_publico_dirigido"><b>Tipo de cliente al que se dirige:</b></label>
-                            <div class="input-group">
-                                <select class="form-control" id="tipo_publico_dirigido" name="tipo_publico_dirigido" value="{{cuidador.tipo_publico_dirigido}}">
-                                    {% for choice in user_form.tipo_publico_dirigido.field.choices %}
-                                    <option value="{{ choice.0 }}" {% if choice.0 == user_form.tipo_publico_dirigido %}selected{% endif %}>{{ choice.1 }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                          </div>
+                        
                         <div class="form-group">
                             <label for="{{ user_form.password.id_for_label }}"><b>Contraseña:</b></label>
                             {{ user_form.password }}

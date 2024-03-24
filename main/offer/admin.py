@@ -3,8 +3,8 @@ from .models import Offer, Review
 
 @admin.register(Offer)
 class OfferAdmin(admin.ModelAdmin):
-    list_display = ['id','title', 'offer_type', 'client', 'description', 'price_per_hour', 'address', 'lat', 'lng', 'available', 'created', 'updated']
-    readonly_fields = ['title', 'offer_type', 'client', 'description', 'price_per_hour', 'address', 'lat', 'lng', 'available', 'created', 'updated']
+    list_display = ['id','title', 'offer_type', 'client', 'description', 'price_per_hour','poblacion', 'address', 'lat', 'lng', 'available', 'created', 'updated']
+    readonly_fields = ['title', 'offer_type', 'client', 'description', 'price_per_hour', 'poblacion', 'address', 'lat', 'lng', 'available', 'created', 'updated']
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)

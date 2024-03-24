@@ -106,7 +106,7 @@
                         </div>
     
                         <div class="form-group">
-                            <label for="price_per_hour"><b>Precio por hora (€)</b></label>
+                            <label for="price_per_hour"><b>Precio por hora</b></label>
                             <input type="number" step="0.01" class="form-control" id="price_per_hour" name="price_per_hour" placeholder="Precio por hora" value="{{offer.price_per_hour}}">
                             {% if form.price_per_hour.errors %}
                             <p>{{ "El precio debe ser superior a 1.00 e inferior a 100.00" }}</p>
@@ -120,6 +120,19 @@
                                 <p>{{ "La oferta debe tener una dirección" }}</p>
                             {% endif %}
                         </div>
+
+                        <div class="form-group">
+                            <label for="poblacion" style="font-size: 120%;"><b>Población:</b></label>
+                            <input type="text" id="poblacion" name="{{ form.poblacion.name }}" class="form-control" value="{{ form.poblacion.value }}" style="font-size:100%;" list="poblacion-list">
+                            <datalist id="poblacion-list">
+                                {% for choice_value, choice_label in form.poblacion.field.choices %}
+                                    <option value="{{ choice_label }}"></option>
+                                {% endfor %}
+                            </datalist>
+                            {% if form.poblacion.errors %}
+                                <p>{{ "La oferta debe tener una población" }}</p>
+                            {% endif %}
+                        </div>
     
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary" style="width: 50%;font-size: 110%;font-weight: bolder;">Publicar</button>
@@ -131,6 +144,7 @@
     </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVfQWqcC+aIgM5vmzKLvXhPTsyD95zEdN9SiwtcU6NOiz9z4M2L" crossorigin="anonymous"></script>
+  <script src="{% static "js/../../offer/templates/offers/autoCompleto.js" %}"></script>
 </body>
 </html>
 {% endblock %}
