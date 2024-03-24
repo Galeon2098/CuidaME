@@ -52,8 +52,28 @@ INSTALLED_APPS = [
     'main.foro.apps.ForoConfig',
     'channels',
     'cuidaMe',
-    'main.mapa.apps.MapaConfig',
+    'main.mapa.apps.MapaConfig',    'django.contrib.sites',
+    # allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # providers
+    'allauth.socialaccount.providers.google',
 ]
+
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,6 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'cuidaMe.urls'
@@ -160,8 +181,13 @@ CHANNEL_LAYERS = {
 # STRIPE CONFIG
 STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_PUBLIC_KEY_TEST')
 STRIPE_SECRET_KEY_TEST = os.getenv('STRIPE_SECRET_KEY_TEST')
-REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
+REDIRECT_DOMAIN = 'http://127.0.0.1:8000/'
 
+
+#SI DA UN FALLO DE SOCIALAPP DOES NOT EXIST PROBAR A CAMBIAR EL SITE_ID DE NUMERO: 1,2,3....
+SITE_ID = 1
+
+SOCIALACCOUNT_LOGIN_ON_GET=True
 GEOCODER_USER_AGENT = 'cuidaME/1.0'
 
 

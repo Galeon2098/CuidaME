@@ -16,13 +16,6 @@
   <link rel="stylesheet" href="{% static "css/base.css" %}">
   {% block header %}{% endblock header %}
 </head>
-{% if request.user.is_authenticated %}
-{% if not request.user.cliente and not request.user.cuidador %}
-    <script>
-        window.location.href = "{% url 'select_role' %}";
-    </script>
-{% endif %}
-{% endif %}
 <body>
   <header >
     <nav class="navbar navbar-expand-lg base-header-primary" style="width: 100%;">

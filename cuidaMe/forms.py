@@ -37,6 +37,32 @@ class InteresForm(forms.ModelForm):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
+class ClienteRegistrationFormGoogle(forms.ModelForm):
+    password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
+
+    class Meta:
+        model = Cliente
+        fields = []
+
+    # Eliminamos el método save()
+
+class CuidadorRegistrationFormGoogle(forms.ModelForm):
+    dni = forms.CharField(label='DNI', max_length=20)
+    numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=20)
+    fecha_nacimiento = forms.DateField(label="Fecha de nacimiento", widget=forms.DateInput(attrs={'type': 'date'}))
+    formacion = forms.CharField(label="Formación")
+    experiencia = forms.CharField(label="Experiencia")
+
+    password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
+
+    class Meta:
+        model = Cuidador
+        fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia']
+
+    # Eliminamos el método save()
+
 class ClienteRegistrationForm(forms.ModelForm):
     # Añade campos adicionales de Cliente
     imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
