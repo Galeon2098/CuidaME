@@ -285,14 +285,14 @@ class TestCuidadorLogin(TestCase):
     #         'password': 'wrong_password'
     #     }
     #     response = self.client.post(self.login_url, data)
-    #     self.assertEqual(response.status_code, 200)  
+    #     self.assertEqual(response.status_code, 200)
     #     self.assertFalse(response.context['user'].is_authenticated)
     #     data = {
     #         'username': 'nonexistent_user',
     #         'password': 'password123'
     #     }
     #     response = self.client.post(self.login_url, data)
-    #     self.assertEqual(response.status_code, 200)  
+    #     self.assertEqual(response.status_code, 200)
     #     self.assertFalse(response.context['user'].is_authenticated)
 
 class TestScriptingProteccion(TestCase):
