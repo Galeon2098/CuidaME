@@ -50,7 +50,7 @@ class Cuidador(models.Model):
     fecha_nacimiento = models.DateField()
     formacion = models.TextField()
     tipo_publico_dirigido = models.CharField(max_length=50, choices=CLIENT_CHOICES, default='OT')
-    chat_requests_received = models.ManyToManyField('chat.ChatRequest', related_name='caregiver_received_requests')
+    chat_requests_received = models.ManyToManyField('chat.ChatRequest', related_name='caregiver_received_requests', blank=True)
     def __str__(self):
         return self.user.username
 

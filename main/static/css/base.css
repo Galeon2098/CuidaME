@@ -180,3 +180,54 @@
       display: none; /* Oculta la imagen en pantallas más pequeñas */
   }
 }
+
+.create-thread-link {
+  font-weight: bolder;
+  color: #1B4965;
+  font-size: 140%;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.create-thread-icon {
+  width: 24px; 
+  height: auto; 
+  margin-right: 5px;
+}
+
+.thread-card {
+  border-radius: 5px;
+  padding-top: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-decoration: none !important;
+}
+
+.thread-card:hover {
+  background-color: #73c7ff;
+}
+
+.thread-card-title {
+  font-weight: bolder;
+  margin-bottom: 6px;
+  font-size: 180%;
+  color: #62B6CB;
+  -webkit-text-stroke: 1px #1B4965; /* Para navegadores basados en WebKit como Chrome y Safari */
+}
+
+.thread-card-text {
+  color: #1B4965;
+}
+
+.thread-detail-card {
+  border-radius: 5px;
+  background-color: #4681a6;
+  color: #cae9ff;
+}
+
+.thread-comment-card {
+  border-radius: 5px;
+  background-color: #a6d1ed;
+  color: #1B4965;
+}
