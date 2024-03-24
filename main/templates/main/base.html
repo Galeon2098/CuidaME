@@ -27,6 +27,9 @@
             <li class="nav-item" style="padding-left: 5px;">
               <a class="btn" href="{% url 'pricing_plan' %}" role="button">Precios</a>
             </li>
+            <li class="nav-item" style="padding-left: 5px;">
+              <a class="btn" href="{% url 'mapa:mapa' %}" role="button">Mapa</a>
+            </li>
 
             {% if request.user.is_authenticated %}
 
@@ -53,6 +56,10 @@
 
             <li class="nav-item" style="padding-left: 5px;">
               <a class="btn" href="/offer/list" role="button">Ofertas</a>
+            </li>
+
+            <li class="nav-item" style="padding-left: 5px;">
+              <a class="btn" href="/foro/list_threads" role="button">Foro</a>
             </li>
 
             <li class="nav-item" style="padding-left: 5px;">

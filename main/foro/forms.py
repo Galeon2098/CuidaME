@@ -14,9 +14,9 @@ class ThreadForm(forms.ModelForm):
         cleaned_data = super().clean()
         title = cleaned_data.get("title")
         description = cleaned_data.get("description")
-        if len(title) > 75:
+        if title and len(title) > 75:
             raise forms.ValidationError("El título no puede tener más de 75 caracteres.")
-        if len(description) > 300:
+        if description and len(description) > 300:
             self.add_error('description', "La descripción no puede tener más de 300 caracteres.")
         return cleaned_data
 class CommentForm(forms.ModelForm):
@@ -29,7 +29,6 @@ class CommentForm(forms.ModelForm):
         def clean(self):
             cleaned_data = super().clean()
             text = cleaned_data.get("text")
-            if len(text) > 1000:
+            if text and len(text) > 1000:
                 self.add_error('text', "El comentario no puede tener más de 1000 caracteres.")
             return cleaned_data
-

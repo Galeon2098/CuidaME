@@ -4,6 +4,7 @@ from . import views
 app_name = 'foro'
 
 urlpatterns = [
+    path('', views.list_threads, name='list_threads'),
     path('new_thread/', views.new_thread, name='new_thread'),
     path('list_threads/', views.list_threads, name='list_threads'),
     path('thread_detail/<int:thread_id>/', views.thread_detail, name='thread_detail'),
