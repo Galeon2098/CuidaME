@@ -20,6 +20,8 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+BASE_DIR2 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -47,7 +49,7 @@ INSTALLED_APPS = [
     'main.chat.apps.ChatConfig',
     'main.foro.apps.ForoConfig',
     'channels',
-
+    'main.mapa.apps.MapaConfig',
 ]
 
 MIDDLEWARE = [
@@ -91,6 +93,10 @@ DATABASES = {
     }
 }
 
+# URL base para servir archivos multimedia
+MEDIA_URL = '/media/'
+# Define la ruta donde se almacenarán los archivos multimedia cargados por los usuarios
+MEDIA_ROOT = os.path.join(BASE_DIR2, "media")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -152,3 +158,5 @@ CHANNEL_LAYERS = {
 STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_PUBLIC_KEY_TEST')
 STRIPE_SECRET_KEY_TEST = os.getenv('STRIPE_SECRET_KEY_TEST')
 REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
+
+GEOCODER_USER_AGENT = 'cuidaME/1.0'

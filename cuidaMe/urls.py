@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from main import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [path('admin/', admin.site.urls),
     path('', views.start_page, name='start_page'),
@@ -34,6 +37,7 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('edit_ad/', views.edit_ad, name='edit_ad'),
     path('chat/', include('main.chat.urls', namespace='chat')),
     path('pricingPlan/', views.pricing_plan, name='pricing_plan'),
+    path('mapa/', include('main.mapa.urls', namespace='mapa')),
     path('privacy_policy',views.privacy_policy, name='privacy_policy'),
     path('product_page/', views.product_page, name='product_page'), # Con fines de testeo
     path('payment_successful/', views.payment_successful, name='payment_successful'),
@@ -49,3 +53,6 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('foro/', include('main.foro.urls', namespace='foro')),
 ]
 
+# Agrega la ruta de medios para servir archivos multimedia durante el desarrollo
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

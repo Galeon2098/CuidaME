@@ -72,7 +72,7 @@ class EditProfileViewTestCase(TestCase):
         
     def test_edit_profile_cuidador(self):
         
-        self.cuidador = Cuidador.objects.create(user=self.user, dni='12345678A', numero_seguridad_social='12345678900A', fecha_nacimiento='1990-01-01', formacion='Formacion', experiencia='Experiencia', tipo_publico_dirigido='NI')
+        self.cuidador = Cuidador.objects.create(user=self.user, dni='12345678A', numero_seguridad_social='12345678900A', fecha_nacimiento='1990-01-01', formacion='Formacion', descripcion='Descripcion', tipo_publico_dirigido='NI')
         
         self.client.login(username='testuser', password='testpassword')
         response = self.client.get(reverse('edit_profile'))
@@ -83,10 +83,10 @@ class EditProfileViewTestCase(TestCase):
         
         form_data = {
             'dni': '12345678B',
-            'numero_seguridad_social': '00045678900A',
+            'numero_seguridad_social': '000456789004',
             'fecha_nacimiento': '2002-11-22',
             'formacion': 'Test formacion',
-            'experiencia': 'Ninguna',
+            'descripcion': 'Ninguna',
             'tipo_publico_dirigido': 'AN'
         }
         form = CuidadorProfileForm(data=form_data)
@@ -100,7 +100,7 @@ class EditProfileViewTestCase(TestCase):
         self.assertEqual(self.cuidador.numero_seguridad_social, form_data['numero_seguridad_social'])
         self.assertEqual(self.cuidador.fecha_nacimiento, datetime.strptime(form_data['fecha_nacimiento'], '%Y-%m-%d').date())
         self.assertEqual(self.cuidador.formacion, form_data['formacion'])
-        self.assertEqual(self.cuidador.experiencia, form_data['experiencia'])
+        self.assertEqual(self.cuidador.descripcion, form_data['descripcion'])
         self.assertEqual(self.cuidador.tipo_publico_dirigido, form_data['tipo_publico_dirigido'])
         
         self.cuidador.delete()
@@ -167,7 +167,7 @@ class TestCuidadorRegistro(TestCase):
             'numero_seguridad_social': '987654321',
             'fecha_nacimiento': '1990-01-01',
             'formacion': 'Formación cuidador',
-            'experiencia': 'Experiencia cuidador',
+            'descripcion': 'Descripción cuidador',
             'tipo_publico_dirigido': 'Tipo de público dirigido',
             'password': 'password123',
             'password2': 'password123',
@@ -194,7 +194,7 @@ class TestCuidadorRegistro(TestCase):
             'numero_seguridad_social': '1234567890',
             'fecha_nacimiento': '2000-01-01',
             'formacion': 'some_education',
-            'experiencia': 'some_experience',
+            'descripcion': 'some_description',
             'tipo_publico_dirigido': 'some_public',
             'password': 'password123',
             'password2': 'password456',  
@@ -234,7 +234,7 @@ class TestCuidadorRegistro(TestCase):
             'numero_seguridad_social': '1234567890',
             'fecha_nacimiento': '2000-01-01',
             'formacion': 'some_education',
-            'experiencia': 'some_experience',
+            'descripcion': 'some_description',
             'tipo_publico_dirigido': 'some_public',
             'password': 'password123',
             'password2': 'password456',  

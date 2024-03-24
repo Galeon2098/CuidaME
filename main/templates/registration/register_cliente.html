@@ -3,9 +3,10 @@
 
 {% block content %}
 {% load static %}
+
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{% static "css/base.css" %}">
+  <link rel="stylesheet" href="{% static " css/base.css" %}">
   <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 </head>
 
@@ -13,89 +14,104 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-5">
-        <img class="imagen1" src="../../static/images/Raster.png" alt="tipo_dependenciae" style="width: 100%; height: auto; margin: 10% auto;">
+        <img class="imagen1" src="../../static/images/Raster.png" alt="tipo_dependenciae"
+          style="width: 100%; height: auto; margin: 10% auto;">
       </div>
       <div class="col-md-7">
-        <div class="container" style="position: relative; background-color: #62B6CB; border-radius: 5%; width: 70%; min-height: 75%; margin: 10%;">
-            <img src="../../static/images/Logo.png" alt="Logo" style="width: 30%; height: 25%; position: relative; margin-top: -15%; left: 33%;">
+        <div class="container"
+          style="position: relative; background-color: #62B6CB; border-radius: 5%; width: 70%; min-height: 75%; margin: 10%;">
+          <img src="../../static/images/Logo.png" alt="Logo"
+            style="width: 30%; height: 25%; position: relative; margin-top: -15%; left: 33%;">
 
-            <a href="/login">
-                <img src="../../static/images/flecha.png" alt="flecha" class="img-fluid" style="width: 12%; height: auto; position: absolute; top: 5%; left: 5%;">
-              </a>
-              <h2 class="text-center mt-3"><b>Crear cuenta como cliente</b></h2>
-              <form style="font-size: 120%; font-family: Lato; font-weight: bolder; margin-left: 8%; margin-top: 5%;" method="post">
-                
-              {% if form.errors %}
-              <div class="alert alert-danger">
-                  Por favor corrija los siguientes errores:
-                  <ul>
-                      {% for field in form %}
-                          {% for error in field.errors %}
-                          <li>{{ error }}</li>
-                          {% endfor %}
-                      {% endfor %}
-                  </ul>
+
+          <a href="/login">
+            <img src="../../static/images/flecha.png" alt="flecha" class="img-fluid"
+              style="width: 12%; height: auto; position: absolute; top: 5%; left: 5%;">
+          </a>
+          <h2 class="text-center mt-3"><b>Crear cuenta como cliente</b></h2>
+          <form
+            style="font-size: 120%; font-family: Lato, sans-serif; font-weight: bolder; margin-left: 8%; margin-top: 5%;"
+            method="post" enctype="multipart/form-data">
+
+
+            {% if form.errors %}
+            <div class="alert alert-danger">
+              Por favor corrija los siguientes errores:
+              <ul>
+                {% for field in form %}
+                {% for error in field.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+                {% endfor %}
+              </ul>
+            </div>
+
+            {% for field in form %}
+            <div class="form-group">
+              <label for="{{ field.id_for_label }}"><b>{{ field.label }}</b></label>
+              {{ field }}
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="form-group">
+              <label for="{{ user_form.username.id_for_label }}"><b>Nombre de usuario:</b></label>
+              {{ user_form.username }}
+            </div>
+
+            <div class="form-group">
+              <label for="{{ user_form.imagen_perfil.id_for_label }}"><b>Foto de perfil:</b></label>
+              {{ user_form.imagen_perfil }}
+            </div>
+
+            <div class="form-group">
+              <label for="{{ user_form.first_name.id_for_label }}"><b>Nombre:</b></label>
+              {{ user_form.first_name }}
+            </div>
+
+            <div class="form-group">
+              <label for="{{ user_form.last_name.id_for_label }}"><b>Apellido:</b></label>
+              {{ user_form.last_name }}
+            </div>
+
+            <div class="form-group">
+              <label for="{{ user_form.email.id_for_label }}"><b>Correo electrónico:</b></label>
+              {{ user_form.email }}
+            </div>
+
+            <div class="form-group">
+              <label for="tipo_dependencia"><b>Tipo de cliente:</b></label>
+              <div class="input-group">
+                <select class="form-control" id="tipo_dependencia" name="tipo_dependencia"
+                  value="{{cliente.tipo_dependencia}}">
+                  {% for choice in user_form.tipo_dependencia.field.choices %}
+                  <option value="{{ choice.0 }}" {% if choice.0 == user_form.tipo_dependencia %}selected{% endif %}>{{ choice.1 }}</option>
+                  {% endfor %}
+                </select>
               </div>
+            </div>
 
-              {% for field in form %}
-                  <div class="form-group">
-                      <label for="{{ field.id_for_label }}"><b>{{ field.label }}</b></label>
-                      {{ field }}
-                  </div>
-              {% endfor %}  
-              {% else %}
-                <div class="form-group">
-                    <label for="{{ user_form.username.id_for_label }}"><b>Nombre de usuario:</b></label>
-                    {{ user_form.username }}
-                </div>
-            
-                <div class="form-group">
-                  <label for="{{ user_form.first_name.id_for_label }}"><b>Nombre:</b></label>
-                  {{ user_form.first_name }}
-                </div>
-            
-                <div class="form-group">
-                    <label for="{{ user_form.last_name.id_for_label }}"><b>Apellido:</b></label>
-                    {{ user_form.last_name }}
-                </div>
-            
-                <div class="form-group">
-                    <label for="{{ user_form.email.id_for_label }}"><b>Correo electrónico:</b></label>
-                    {{ user_form.email }}
-                </div>
 
-                <div class="form-group">
-                  <label for="tipo_dependencia"><b>Tipo de cliente:</b></label>
-                  <div class="input-group">
-                      <select class="form-control" id="tipo_dependencia" name="tipo_dependencia" value="{{cliente.tipo_dependencia}}">
-                          {% for choice in user_form.tipo_dependencia.field.choices %}
-                          <option value="{{ choice.0 }}" {% if choice.0 == user_form.tipo_dependencia %}selected{% endif %}>{{ choice.1 }}</option>
-                          {% endfor %}
-                      </select>
-                  </div>
-                </div>
-            
-                
-            
-                <div class="form-group">
-                    <label for="{{ user_form.password.id_for_label }}"><b>Contraseña:</b></label>
-                    {{ user_form.password }}
-                </div>
-            
-                <div class="form-group">
-                    <label for="{{ user_form.password2.id_for_label }}"><b>Repetir contraseña:</b></label>
-                    {{ user_form.password2 }}
-                </div>
-                {% endif %}
-            
-                {% csrf_token %}
-                
-                <p style="display: flex; justify-content: center;">
-                    <input style="color: #FFFFFF; font-family: Lato; font-weight: bold; text-align: center; background-color: #1B4965; border-radius: 5%; width: 70%;" type="submit" value="Crear cuenta">
-                </p>
-            </form>
-            
-            
+
+            <div class="form-group">
+              <label for="{{ user_form.password.id_for_label }}"><b>Contraseña:</b></label>
+              {{ user_form.password }}
+            </div>
+
+            <div class="form-group">
+              <label for="{{ user_form.password2.id_for_label }}"><b>Repetir contraseña:</b></label>
+              {{ user_form.password2 }}
+            </div>
+            {% endif %}
+
+            {% csrf_token %}
+
+            <p style="display: flex; justify-content: center;">
+              <input style="color: #FFFFFF; font-family: 'Lato', sans-serif; font-weight: bold; text-align: center; background-color: #1B4965; border-radius: 5%; width: 70%;"
+                type="submit" value="Crear cuenta">
+            </p>
+          </form>
+
+
         </div>
       </div>
     </div>

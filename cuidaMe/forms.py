@@ -3,11 +3,15 @@ from django.contrib.auth.models import User
 from main.models import Cliente, Cuidador
 import datetime, re
 
+
+
 class LoginForm(forms.Form):
     username = forms.CharField(label='Usuario')
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 
 class ClienteRegistrationForm(forms.ModelForm):
+    # Añade campos adicionales de Cliente
+    imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
 
     OPCIONES_DEPENDENCIA = [
         ('personaSolitaria', 'Persona Solitaria'),
@@ -25,7 +29,7 @@ class ClienteRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil']
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -45,10 +49,12 @@ class ClienteRegistrationForm(forms.ModelForm):
             if commit:
                 user.save()
                 # Guarda los campos adicionales de Cliente
-                Cliente.objects.create(user=user, tipo_dependencia=self.cleaned_data['tipo_dependencia'])
+                Cliente.objects.create(user=user, tipo_dependencia=self.cleaned_data['tipo_dependencia'], imagen_perfil=self.cleaned_data['imagen_perfil'])
             return user, Cliente
 
 class CuidadorRegistrationForm(forms.ModelForm):
+    imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
+    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea)
 
     CLIENT_CHOICES = (
         ('DF', 'DISCAPACIDAD FÍSICA'),
@@ -65,7 +71,6 @@ class CuidadorRegistrationForm(forms.ModelForm):
         label="Fecha de nacimiento",
         widget=forms.DateInput(attrs={'type': 'date'}),required=True)
     formacion = forms.CharField(label="Formación", required=True)
-    experiencia = forms.CharField(label="Experiencia", required=True)
     tipo_publico_dirigido = forms.ChoiceField(label='Tipo de Dependencia', choices=CLIENT_CHOICES, required=True)
 
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
@@ -77,7 +82,7 @@ class CuidadorRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil']
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -127,23 +132,24 @@ class CuidadorRegistrationForm(forms.ModelForm):
                 user.save()
                 # Guarda los campos adicionales de Cliente
                 Cuidador.objects.create(user=user, 
+                                        imagen_perfil=self.cleaned_data['imagen_perfil'],
                                         dni=self.cleaned_data['dni'],
                                         numero_seguridad_social=self.cleaned_data['numero_seguridad_social'],
                                         fecha_nacimiento=self.cleaned_data['fecha_nacimiento'],
                                         formacion=self.cleaned_data['formacion'],
-                                        experiencia=self.cleaned_data['experiencia'],
+                                        descripcion=self.cleaned_data['descripcion'],
                                         tipo_publico_dirigido=self.cleaned_data['tipo_publico_dirigido'])
             return user, Cuidador
     
 class ClienteProfileForm(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = ['apellidos', 'tipo_dependencia']
+        fields = ['imagen_perfil', 'apellidos', 'tipo_dependencia']
 
 class CuidadorProfileForm(forms.ModelForm):
     class Meta:
         model = Cuidador
-        fields = ['dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido']
+        fields = ['imagen_perfil', 'dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'descripcion', 'tipo_publico_dirigido']
 class SuperuserProfileForm(forms.ModelForm):
     class Meta:
         model = User

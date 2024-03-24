@@ -10,7 +10,7 @@ class ClienteAdmin(admin.ModelAdmin):
 
 @admin.register(Cuidador)
 class CuidadorAdmin(admin.ModelAdmin):
-    list_display = ['user', 'dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia', 'tipo_publico_dirigido']
+    list_display = ['user', 'dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'descripcion', 'tipo_publico_dirigido']
     raw_id_fields = ['user']
 
 class CustomUserAdmin(BaseUserAdmin):

@@ -114,12 +114,11 @@
                         </div>
     
                         <div class="form-group">
-                            <label for="city"><b>Ciudad</b></label>
-                            <input type="text" class="form-control" id="city" name="city" placeholder="Ciudad" value="{{offer.city}}">
-                            {% if form.city.errors %}
-                                <p>{{ "La oferta debe tener una ciudad" }}</p>
+                            <label for="address"><b>Dirección</b></label>
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Dirección" value="{{offer.address}}">
+                            {% if form.address.errors %}
+                                <p>{{ "La oferta debe tener una dirección" }}</p>
                             {% endif %}
-                            
                         </div>
     
                         <div class="form-group text-center">
