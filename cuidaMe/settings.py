@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.offer.apps.OffersConfig',
     'main.chat.apps.ChatConfig',
+    'main.videochat.apps.VideochatConfig',
     'main.foro.apps.ForoConfig',
     'channels',
     'cuidaMe',
