@@ -1,15 +1,15 @@
 import sqlite3
 import json
 
-CONFIG_FILE_PATH = 'google_key.json'
+CONFIG_FILE_PATH = 'google.json'
 
 # Leer el archivo JSON
 with open(CONFIG_FILE_PATH, 'r') as config_file:
     config_data = json.load(config_file)
 
 # Configurar la variable de configuración EMAIL_HOST_PASSWORD
-CLIENT_ID = config_data.get('CLIENT_ID')
-SECRET = config_data.get('SECRET')
+ID = config_data.get('ID')
+LLA = config_data.get('LLA')
 # Conectar a la base de datos SQLite
 conn = sqlite3.connect('db.sqlite3')
 
@@ -34,7 +34,7 @@ if result == 0:
     # Datos a insertar en socialaccount_socialapp (tupla de valores)
 
 
-    datos_socialapp = (1, 'google', 'CuidaMe', CLIENT_ID, SECRET, '', '', '{}')
+    datos_socialapp = (1, 'google', 'CuidaMe', ID, LLA, '', '', '{}')
     # Ejecutar la sentencia SQL de inserción en socialaccount_socialapp con los datos
     cursor.execute(sql_insert_socialapp, datos_socialapp)
 
