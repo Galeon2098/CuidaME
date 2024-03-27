@@ -34,7 +34,7 @@ class OfferForm(forms.ModelForm):
         widgets = {
             'price_per_hour': forms.NumberInput(attrs={'step': '0.01'})
         }
-
+  
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)

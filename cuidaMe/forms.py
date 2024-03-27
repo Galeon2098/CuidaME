@@ -75,13 +75,18 @@ class ClienteRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil']
+        fields = ['username','imagen_perfil','first_name', 'last_name', 'email', ]
 
     def clean_username(self):
         username = self.cleaned_data['username']
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError("Este nombre de usuario ya está en uso. Elige otro nombre de usuario.")
         return username
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Este correo electrónico ya está en uso.")
+        return email
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -134,6 +139,12 @@ class CuidadorRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Las contraseñas no coinciden.')
         return cd['password2']
+    
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Este correo electrónico ya está en uso.")
+        return email
     
     def clean_dni(self):
         dni = self.cleaned_data['dni']

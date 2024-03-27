@@ -121,8 +121,9 @@
                             <label for="address"><b>Dirección</b></label>
                             <input type="text" class="form-control" id="address" name="address" placeholder="Dirección" value="{{offer.address}}">
                             {% if form.address.errors %}
-                                <p>{{ "La oferta debe tener una dirección" }}</p>
+                            <p>{{ "La oferta debe tener una dirección y debe ser valida" }}</p>
                             {% endif %}
+                          
                         </div>
 
                         <div class="form-group">

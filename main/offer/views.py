@@ -38,16 +38,16 @@ def publishOffer(request):
                 new_offer.lng = g.latlng[1]
                 new_offer.save()
                 users = User.objects.all()
-            for user in users:
-                cliente = Cliente.objects.filter(user=user).exists()
-                if cliente:
-                    intereses = Interes.objects.filter(user_id=user.id)
-                    for interes in intereses:
-                        if (interes.offer_type == new_offer.offer_type
-                        and interes.client == new_offer.client and
-                        interes.poblacion == new_offer.poblacion):
-                            send_offer_mail(user.username,user.email,new_offer.id)
-                            break
+                for user in users:
+                    cliente = Cliente.objects.filter(user=user).exists()
+                    if cliente:
+                        intereses = Interes.objects.filter(user_id=user.id)
+                        for interes in intereses:
+                            if (interes.offer_type == new_offer.offer_type
+                            and interes.client == new_offer.client and
+                            interes.poblacion == new_offer.poblacion):
+                                send_offer_mail(user.username,user.email,new_offer.id)
+                                break
                 return redirect('/offer/my_offers')
             else:
                 # Si la geocodificación falla, muestra un mensaje de error

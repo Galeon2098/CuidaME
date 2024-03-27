@@ -89,7 +89,7 @@
                         <label for="{{ form.address.id }}" style="font-size: 120%;"><b>Dirección:</b></label>
                         <textarea name="{{ form.address.name }}" class="form-control" rows="1" style="font-size:100%;">{{ form.address.value }}</textarea>
                         {% if form.address.errors %}
-                        <p>{{ "La oferta debe tener una dirección" }}</p>
+                        <p>{{ "  <p>{{ "La oferta debe tener una dirección y debe ser valida" }}</p>" }}</p>
                     {% endif %}
                     </div>
                     <div class="form-group">
