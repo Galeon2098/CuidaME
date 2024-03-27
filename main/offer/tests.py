@@ -262,7 +262,7 @@ class OffersTestCase(TestCase):
     def test_search_offers(self):
         response = self.client.post(reverse('offer:searchOffers'), {'search_query': 'Calle Velazquez 13, Sevilla'})
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'offers/search_results.html')
+        self.assertTemplateUsed(response, 'offers/list.html')
         self.assertContains(response, self.offer1.title)
         self.assertNotContains(response, self.offer2.title)
 
