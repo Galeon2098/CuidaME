@@ -99,10 +99,10 @@ class ClienteRegistrationForm(forms.ModelForm):
             return user, Cliente
 
 class CuidadorRegistrationForm(forms.ModelForm):
-    imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
+    imagen_perfil = forms.ImageField(label='Foto de perfil', required=False)
     experiencia = forms.CharField(label="Experiencia", widget=forms.Textarea)
 
-
+    username = forms.CharField(label='Usuario', required=True)
     # Añade campos adicionales de Cuidador
     dni = forms.CharField(label='DNI', max_length=9, required=True)
     numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=12, required=True)
@@ -121,7 +121,7 @@ class CuidadorRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil']
+        fields = ['username','imagen_perfil', 'first_name', 'last_name', 'email','dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia' ]
 
     def clean_username(self):
         username = self.cleaned_data['username']

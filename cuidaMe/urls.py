@@ -23,7 +23,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [path('admin/', admin.site.urls),
     path('', views.start_page, name='start_page'),
-    path('home/', views.index, name='home'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('registro_cliente/', views.register_cliente, name='registro_cliente'),
@@ -60,7 +59,7 @@ urlpatterns = [path('admin/', admin.site.urls),
     path('interes/create/', views.create_interes, name='mis_intereses_create'),
     path('delete_interes/<int:interes_id>/delete/', views.delete_interes, name="delete_interes"),
     path('interes/<int:interes_id>/', views.edit_interes, name="edit_interes"),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Agrega la ruta de medios para servir archivos multimedia durante el desarrollo
 if settings.DEBUG:

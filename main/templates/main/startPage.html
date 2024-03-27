@@ -1,22 +1,8 @@
-{% extends "main/base.html" %}
-
+{% extends 'main/base.html' %}
 {% block content %}
 {% load static %}
 <body class="home-page"> 
     <style>
-        .custom-button {
-            position: absolute; 
-            top: 34%; 
-            left: 22.5%; 
-            transform: translate(-50%, -50%); 
-            padding: 30px 170px; 
-            background-color: #1B4965; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 10px; 
-            z-index: 1;
-        }
-
         .custom-button:hover {
             text-decoration: none;
         }
@@ -33,16 +19,30 @@
         .button-container img {
             max-width: 100%;
             height: auto;
-            display: block;
+            /* display: block; */
             margin: 0 auto; 
         }
+        
+        .button-container a {
+            position: absolute;
+            top: 34%; 
+            left: 22.5%; 
+            padding: 2% 15%;
+            background-color: #1B4965; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 10px; 
+        }
     </style>
-
-    <div class="button-container">
+    
+    <div class="button-container">        
         <img src="{% static 'Images/portadaPrincipal.jpg' %}" alt="Portada Principal" style="max-width: 100%; height: auto;">
-        <a href="/offer/list" class="custom-button">
-            <span class="custom-button-text">Empieza Con Nosotros</span>
+        <a class="btn btn-primary" href="/offer/list" role="button" >
+            Empieza Con Nosotros
         </a>
+    </div>
+    
+    <div class="button-container col-md-1">
     </div>
 </body>
 {% endblock %}

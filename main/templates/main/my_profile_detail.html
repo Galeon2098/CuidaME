@@ -43,12 +43,9 @@
                     <p><strong>First Name:</strong> {{ user.first_name }}</p>
                     <p><strong>Last Name:</strong> {{ user.last_name }}</p>
                     <p><strong>Email:</strong> {{ user.email }}</p>
-
                     {% if user.cuidador %}
-                    <h3 style="text-align: center;">Detalles del Cuidador</h3>
                     <p><strong>Formación:</strong> {{ user.cuidador.formacion }}</p>
                     <p><strong>Experiencia:</strong> {{ user.cuidador.experiencia }}</p>
-
                     {% endif %}
                     {% if user.cuidador %}
                     <div style="text-align: center;">
@@ -58,7 +55,7 @@
                     {% else %}
                     <div style="text-align: center;">
                         <a href="{% url 'edit_profile' %}"><button
-                                style="background-color: #1B4965; color: white; padding-left: 8px; padding-right: 8px; width:60%;">Editar Foto</button></a>
+                                style="background-color: #1B4965; color: white; padding-left: 8px; padding-right: 8px; width:60%; margin: 5px;">Editar Foto</button></a>
                     </div>
                     <div>
                                       

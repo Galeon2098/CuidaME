@@ -38,14 +38,14 @@ if result == 0:
     # Datos a insertar en socialaccount_socialapp (tupla de valores)
 
 
-    datos_socialapp = (10, 'google', 'CuidaMe', CLIENT_ID, SECRET, '', '', '{}')
+    datos_socialapp = (1, 'google', 'CuidaMe', CLIENT_ID, SECRET, '', '', '{}')
     # Ejecutar la sentencia SQL de inserción en socialaccount_socialapp con los datos
     cursor.execute(sql_insert_socialapp, datos_socialapp)
 
     # Definir una sentencia SQL de inserción con marcadores de posición para socialaccount_socialapp_sites
     sql_insert_socialapp_sites = '''INSERT INTO socialaccount_socialapp_sites (id, socialapp_id, site_id) VALUES (?, ?, ?)'''
     # Datos a insertar en socialaccount_socialapp_sites (tupla de valores)
-    datos_socialapp_sites = (1, 10, 10)
+    datos_socialapp_sites = (1, 1, 1)
     # Ejecutar la sentencia SQL de inserción en socialaccount_socialapp_sites con los datos
     cursor.execute(sql_insert_socialapp_sites, datos_socialapp_sites)
 

@@ -1,5 +1,5 @@
 {% extends "main/base.html" %}
-{% block title %}Create an account{% endblock %}
+{% block title %}Crear cuenta cuidador{% endblock %}
 
 {% block content %}
 {% load static %}
@@ -16,14 +16,14 @@
             <div class="col-md-5">
                 <img class="imagen1" src="../../static/images/Raster.png" alt="Cliente" style="width: 100%; height: auto; margin: 10% auto;">
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <div class="container"
-                    style="position: relative; background-color: #62B6CB; border-radius: 5%; width: 70%; min-height: 80%; margin: 10%;">
+                    style="position: relative; background-color: #62B6CB; border-radius: 10px; width: auto; min-height: auto; margin: 10%;">
                     <img src="../../static/images/Logo.png" alt="Logo"
-                        style="width: 30%; height: 25%; position: relative; margin-top: -15%; left: 33%;">
+                        style="width: 30%; height: 25%; position: center; margin-top: -15%; left: 33%;">
                     <a href="/login">
                         <img src="../../static/images/flecha.png" alt="volver" class="img-fluid"
-                            style="width: 12%; height: auto; position: absolute; top: 5%; left: 5%;">
+                            style="width: 12%; height: auto; position: absolute; top: 2%; left: 5%;">
                     </a>
                       <h2 class="text-center mt-3" style="margin-top:7%;"><b>Crear cuenta como cuidador</b></h2>
                       <form style="font-size: 120%; font-family: Lato, sans-serif; font-weight: bolder; margin-left: 8%; margin-top: 5%;" method="post" enctype="multipart/form-data">
@@ -86,7 +86,6 @@
                             <label for="{{ user_form.numero_seguridad_social.id_for_label }}"><b>Número de Seguridad
                                     Social:</b></label>
                             {{ user_form.numero_seguridad_social }}
-                            {{ user_form.numero_seguridad_social }}
                             <!-- Agregar esto para mostrar errores de número de seguridad social -->
                             {% if user_form.numero_seguridad_social.errors %}
                             <ul class="errors">
@@ -126,7 +125,7 @@
                     
                     {% csrf_token %} 
                     <p style="display: flex; justify-content: center;">
-                        <input style="color: #FFFFFF; font-family: Lato; font-weight: bold; text-align: center; background-color: #1B4965; border-radius: 5%; width: 70%;" type="submit" value="Crear cuenta">
+                        <input style="color: #FFFFFF; font-family: Lato; font-weight: bold; text-align: center; margin-bottom: 5px; background-color: #1B4965; border-radius: 5%; width: 70%;" type="submit" value="Crear cuenta">
                     </p>
                     </form>
                 </div>         

@@ -11,15 +11,15 @@ from django.views.decorators.http import require_http_methods
 from .models import Cliente, Cuidador, Interes
 
 # Create your views here.
+
 @require_http_methods(["GET"])
 def start_page(request):
     return render(request, 'main/startPage.html')
-def index(request):
-    return render(request, 'main/home.html')
-
+#Pagina de precios
 def pricing_plan(request):
     return render(request, 'main/pricingPlan.html')
 
+#REGISTRARSE CON GOOGLE
 @login_required
 def register_cliente_google(request):
     if request.method == 'POST':
@@ -45,7 +45,7 @@ def register_cuidador_google(request):
     else:
         cuidador_form = CuidadorRegistrationFormGoogle()
     return render(request, 'registration/google_register_cuidador.html', {'cuidador_form': cuidador_form})
-
+#REGISTRO NORMAL
 def register_cliente(request):
     if request.method == 'POST':
         user_form = ClienteRegistrationForm(request.POST, request.FILES)
@@ -201,8 +201,8 @@ def product_page(request):
             ],
             mode='payment',
             customer_creation='always',
-            success_url=settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url=settings.REDIRECT_DOMAIN + '/payment_cancelled',
+            success_url=settings.REDIRECT_DOMAIN + 'payment_successful?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url=settings.REDIRECT_DOMAIN + 'payment_cancelled',
         )
 
         return redirect(checkout_session.url, code=303)

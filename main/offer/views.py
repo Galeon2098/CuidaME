@@ -72,7 +72,7 @@ def searchOffers(request):
     offers = Offer.objects.all()
     if search_query:
         offers = offers.filter(Q(title__icontains=search_query) | Q(poblacion__icontains=search_query) | Q(address__icontains=search_query) | Q(client__icontains=search_query) | Q(created__icontains=search_query) | Q(price_per_hour__icontains=search_query) |Q(offer_type__icontains=search_query))
-    return render(request, 'offers/search_results.html', {'offers': offers, 'search_query': search_query})
+    return render(request, 'offers/list.html', {'offers': offers, 'search_query': search_query})
 #FILTER OFFERS
 def filterOffers(request):
     min_price_filter = request.POST.get('min_price_filter')
