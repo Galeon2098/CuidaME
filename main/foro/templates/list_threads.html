@@ -1,0 +1,105 @@
+{% extends "main/base.html" %}
+{% block title %}Lista de Hilos{% endblock %}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CuidaME - Lista de Hilos</title>
+  <link rel="stylesheet" href="{% static "css/base.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+  <!-- Agrega esto en el encabezado de tu HTML -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+</head>
+
+<body>
+    <div style="margin: 20px;">
+        <div class="title-container">
+            <h1>Listado de Hilos</h1>
+        </div>
+
+        <div class="light-dark-container">
+            <div class="row">
+                <div class="form-group col-md-6 text-left">
+                    <form class="form-inline my-2 my-lg-0" method="POST" role="search" action="{% url 'foro:search_threads' %}">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <button class="btn light-btn" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <input class="form-control rounded-pill" type="search" placeholder="Buscar" name="search_query" value="{{ search_query }}" aria-label="Search">
+                        </div>
+                    </form>
+                </div>
+                <br>
+
+                <div class="form-group col-md-6 d-flex justify-content-end">
+                    <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'foro:order_threads' %}">
+                        {% csrf_token %}
+                        <div>
+                            <button type="submit" class="btn light-btn">Ordenar por Fecha</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if user.is_authenticated %}
+        <div class="form-group col-md-12 text-left">
+            &nbsp;
+            <a href="{% url 'foro:new_thread' %}" class="create-thread-link">
+                <img src="/static/Images/plus.png" alt="Crear Hilo" class="create-thread-icon">
+                <span>Crear Hilo</span>
+            </a>
+        </div>
+    {% endif %}
+    <br>
+    
+    <div class="form-group col-md-12 text-left">
+        <div class="form-group col-md-12 text-left">
+            {% if threads %}
+                {% for thread in threads %}
+                    <a href="{% url 'foro:thread_detail' thread.id %}" class="card thread-card">
+                        <div>
+                            <h2 class="card-title thread-card-title" style="font-size: 150%;">{{ thread.title }}</h2>
+                            <p class="thread-card-text">
+                                {{ thread.author.username }} - 
+                                {{ thread.date_created.day }} de
+                                {% if thread.date_created.month == 1 %}enero
+                                {% elif thread.date_created.month == 2 %}febrero
+                                {% elif thread.date_created.month == 3 %}marzo
+                                {% elif thread.date_created.month == 4 %}abril
+                                {% elif thread.date_created.month == 5 %}mayo
+                                {% elif thread.date_created.month == 6 %}junio
+                                {% elif thread.date_created.month == 7 %}julio
+                                {% elif thread.date_created.month == 8 %}agosto
+                                {% elif thread.date_created.month == 9 %}septiembre
+                                {% elif thread.date_created.month == 10 %}octubre
+                                {% elif thread.date_created.month == 11 %}noviembre
+                                {% elif thread.date_created.month == 12 %}diciembre
+                                {% endif %}
+                                de {{ thread.date_created|date:" Y" }}
+                            </p>
+                        </div>
+                    </a>
+                    <br>
+                {% endfor %}
+            {% else %}
+                <p style="color: #1B4965;">Aún no hay hilos.</p>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+</body>
+</html>
+{% endblock %}

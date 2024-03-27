@@ -12,8 +12,13 @@
     flex-direction: column;
   }
 
+  .home-page {
+    --primary-bg-color: #1B4965;
+}
+
+
   header {
-    min-height: 50px;
+    min-height: 60px;
   }
   
   main {
@@ -33,7 +38,6 @@
   .base-header-primary {
     display: flex;
     justify-content: space-between;
-    height: 60px;
 
     background-color: #1B4965; 
     
@@ -102,7 +106,7 @@
 
 .offer-card-title {
   font-weight: bolder;
-  font-size: 150%;
+  font-size: 300%;
   color: #62B6CB;
   -webkit-text-stroke: 1px #1B4965; /* Para navegadores basados en WebKit como Chrome y Safari */
   text-stroke: 1px #1B4965; /* Para navegadores que admiten la propiedad text-stroke */
@@ -115,3 +119,118 @@
   border-radius: 3px;
 
 }
+
+.map-container {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 56.25%; /* Proporción de 16:9 (9/16 * 100) */
+  height: 0;
+}
+
+.map-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+#map-form {
+  position: absolute;
+  top: 10px;
+  left: 75%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 80%;
+  box-sizing: border-box;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.address {
+  background-color: #FFF;
+  border: 3px solid #1B4965;
+  border-radius: 29px;
+  width: 500px;
+  height: 40px;
+  padding-left: 10px;
+}
+
+.imagen1 {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Media query para pantallas más grandes, como las de ordenador */
+@media only screen and (width >= 768px) {
+  .imagen1 {
+      display: block; /* Asegúrate de que la imagen se muestre */
+  }
+}
+
+/* Media query para pantallas más pequeñas, como las de móviles */
+@media only screen and (767px >= width) {
+  .imagen1 {
+      display: none; /* Oculta la imagen en pantallas más pequeñas */
+  }
+}
+
+.create-thread-link {
+  font-weight: bolder;
+  color: #1B4965;
+  font-size: 140%;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.create-thread-icon {
+  width: 24px; 
+  height: auto; 
+  margin-right: 5px;
+}
+
+.thread-card {
+  border-radius: 5px;
+  padding-top: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-decoration: none !important;
+}
+
+.thread-card:hover {
+  background-color: #73c7ff;
+}
+
+.thread-card-title {
+  font-weight: bolder;
+  margin-bottom: 6px;
+  font-size: 180%;
+  color: #62B6CB;
+  -webkit-text-stroke: 1px #1B4965; /* Para navegadores basados en WebKit como Chrome y Safari */
+}
+
+.thread-card-text {
+  color: #1B4965;
+}
+
+.thread-detail-card {
+  border-radius: 5px;
+  background-color: #4681a6;
+  color: #cae9ff;
+}
+
+.thread-comment-card {
+  border-radius: 5px;
+  background-color: #a6d1ed;
+  color: #1B4965;
+}
+
+.cute-div { background-color: #f9f9f9; border-radius: 10px; padding: 20px; margin: 20px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }

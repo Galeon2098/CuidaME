@@ -13,12 +13,15 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import json
 
 # Load environment variables from .env file
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+BASE_DIR2 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -45,9 +48,32 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.offer.apps.OffersConfig',
     'main.chat.apps.ChatConfig',
+    'main.videochat.apps.VideochatConfig',
+    'main.foro.apps.ForoConfig',
     'channels',
-
+    'cuidaMe',
+    'main.mapa.apps.MapaConfig',    'django.contrib.sites',
+    # allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # providers
+    'allauth.socialaccount.providers.google',
 ]
+
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,6 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'cuidaMe.urls'
@@ -90,6 +117,10 @@ DATABASES = {
     }
 }
 
+# URL base para servir archivos multimedia
+MEDIA_URL = '/media/'
+# Define la ruta donde se almacenarán los archivos multimedia cargados por los usuarios
+MEDIA_ROOT = os.path.join(BASE_DIR2, "media")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -132,7 +163,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/offer/list/'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
@@ -147,7 +178,35 @@ CHANNEL_LAYERS = {
     },
 }
 
+
+
+#SI DA UN FALLO DE SOCIALAPP DOES NOT EXIST PROBAR A CAMBIAR EL SITE_ID DE NUMERO: 1,2,3....
+SITE_ID = 1
+
+SOCIALACCOUNT_LOGIN_ON_GET=True
+GEOCODER_USER_AGENT = 'cuidaME/1.0'
+LANGUAGE_CODE = 'es-es'
+
+#EMAIL CONFIG
+
+CONFIG_FILE_PATH = 'config.json'
+
+# Leer el archivo JSON
+with open(CONFIG_FILE_PATH, 'r') as config_file:
+    config_data = json.load(config_file)
+
 # STRIPE CONFIG
-STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_PUBLIC_KEY_TEST')
-STRIPE_SECRET_KEY_TEST = os.getenv('STRIPE_SECRET_KEY_TEST')
-REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
+STRIPE_PUBLIC_KEY_TEST = config_data.get('STRIPE_PUBLIC_KEY_TEST')
+STRIPE_SECRET_KEY_TEST = config_data.get('STRIPE_SECRET_KEY_TEST')
+REDIRECT_DOMAIN = 'http://127.0.0.1:8000/'
+
+# Configurar la variable de configuración EMAIL_HOST_PASSWORD
+EMAIL_PASSWORD = config_data.get('EMAIL_HOST_PASSWORD')
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'cuidame09@outlook.com'
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
