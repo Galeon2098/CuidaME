@@ -22,7 +22,7 @@
                         <img src="{% static 'Images/back.png' %}" style="width: 60%; height: auto; margin-top: -50%;">
                     </a>
                 </div>
-                <form method="post" style="font-size: 20px; font-weight: bolder; margin-top: 10%;">
+                <form method="post" style="font-size: 20px; font-weight: bolder; margin-top: 10%;" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <div class="d-flex justify-content-center">

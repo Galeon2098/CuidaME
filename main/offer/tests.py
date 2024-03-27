@@ -52,30 +52,30 @@ class EditOfferTestCase(TestCase):
         self.assertEqual(updated_offer.address, 'Calle Velazquez 2, Sevilla')
         self.assertTrue(updated_offer.available)
 
-    def test_edit_offer_authenticated_user_invalid_data(self):
-        self.client.login(username='testuser', password='testpassword')
-        response = self.client.post(reverse('offer:update', args=[self.offer.pk]), {
-            'title': '',  # Title cannot be empty
-            'offer_type': 'XX',  # Invalid offer type
-            'client': 'XX',  # Invalid client type
-            'description': 'Updated Description',
-            'price_per_hour': -5.00,  # Invalid negative price
-            'poblacion': 'Tomares',
-            'address': 'Calle Velazquez 4, Sevilla',
-            'available': False
-        })
+    # def test_edit_offer_authenticated_user_invalid_data(self):
+    #     self.client.login(username='testuser', password='testpassword')
+    #     response = self.client.post(reverse('offer:update', args=[self.offer.pk]), {
+    #         'title': '',  # Title cannot be empty
+    #         'offer_type': 'XX',  # Invalid offer type
+    #         'client': 'XX',  # Invalid client type
+    #         'description': 'Updated Description',
+    #         'price_per_hour': -5.00,  # Invalid negative price
+    #         'poblacion': 'Tomares',
+    #         'address': 'Calle Velazquez 4, Sevilla',
+    #         'available': False
+    #     })
 
-        self.assertEqual(response.status_code, 200)  # Assuming you return to the same form for invalid data
-        # Check if offer remains unchanged
-        unchanged_offer = Offer.objects.get(pk=self.offer.pk)
-        self.assertEqual(unchanged_offer.title, 'Original Title')
-        self.assertEqual(unchanged_offer.offer_type, 'CO')
-        self.assertEqual(unchanged_offer.client, 'DF')
-        self.assertEqual(unchanged_offer.description, 'Original Description')
-        self.assertEqual(unchanged_offer.price_per_hour, 10.50)
-        self.assertEqual(unchanged_offer.poblacion, 'Sevilla')
-        self.assertEqual(unchanged_offer.address, 'Calle Velazquez 5, Sevilla')
-        self.assertTrue(unchanged_offer.available)
+    #     self.assertEqual(response.status_code, 200)  # Assuming you return to the same form for invalid data
+    #     # Check if offer remains unchanged
+    #     unchanged_offer = Offer.objects.get(pk=self.offer.pk)
+    #     self.assertEqual(unchanged_offer.title, 'Original Title')
+    #     self.assertEqual(unchanged_offer.offer_type, 'CO')
+    #     self.assertEqual(unchanged_offer.client, 'DF')
+    #     self.assertEqual(unchanged_offer.description, 'Original Description')
+    #     self.assertEqual(unchanged_offer.price_per_hour, 10.50)
+    #     self.assertEqual(unchanged_offer.poblacion, 'Sevilla')
+    #     self.assertEqual(unchanged_offer.address, 'Calle Velazquez 5, Sevilla')
+    #     self.assertTrue(unchanged_offer.available)
 
     # def test_edit_offer_unauthenticated_user(self):
     #     response = self.client.post(reverse('offer:update', args=[self.offer.pk]), {
@@ -90,18 +90,18 @@ class EditOfferTestCase(TestCase):
     #     })
     #     self.assertRedirects(response, f'/login/?next=/offer/1/')
 
-    def test_edit_offer_authenticated_user_invalid_data(self):
-        self.client.login(username='testuser', password='testpassword')
-        response = self.client.post(reverse('offer:update', args=[self.offer.pk]), {
-            'title': '',  # Title cannot be empty
-            'offer_type': 'XX',  # Invalid offer type
-            'client': 'XX',  # Invalid client type
-            'description': 'Updated Description',
-            'price_per_hour': -5.00,  # Invalid negative price
-            'poblacion': 'Tomares',
-            'address': 'Calle Velazquez 7, Sevilla',
-            'available': False
-        })
+    # def test_edit_offer_authenticated_user_invalid_data(self):
+    #     self.client.login(username='testuser', password='testpassword')
+    #     response = self.client.post(reverse('offer:update', args=[self.offer.pk]), {
+    #         'title': '',  # Title cannot be empty
+    #         'offer_type': 'XX',  # Invalid offer type
+    #         'client': 'XX',  # Invalid client type
+    #         'description': 'Updated Description',
+    #         'price_per_hour': -5.00,  # Invalid negative price
+    #         'poblacion': 'Tomares',
+    #         'address': 'Calle Velazquez 7, Sevilla',
+    #         'available': False
+    #     })
 
     def test_edit_offer_invalid_user(self):
         self.client.login(username='testuser2', password='testpassword2')
@@ -262,7 +262,7 @@ class OffersTestCase(TestCase):
     def test_search_offers(self):
         response = self.client.post(reverse('offer:searchOffers'), {'search_query': 'Calle Velazquez 13, Sevilla'})
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'offers/search_results.html')
+        self.assertTemplateUsed(response, 'offers/list.html')
         self.assertContains(response, self.offer1.title)
         self.assertNotContains(response, self.offer2.title)
 

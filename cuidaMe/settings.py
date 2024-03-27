@@ -178,10 +178,6 @@ CHANNEL_LAYERS = {
     },
 }
 
-# STRIPE CONFIG
-STRIPE_PUBLIC_KEY_TEST = os.getenv('STRIPE_PUBLIC_KEY_TEST')
-STRIPE_SECRET_KEY_TEST = os.getenv('STRIPE_SECRET_KEY_TEST')
-REDIRECT_DOMAIN = 'http://127.0.0.1:8000/'
 
 
 #SI DA UN FALLO DE SOCIALAPP DOES NOT EXIST PROBAR A CAMBIAR EL SITE_ID DE NUMERO: 1,2,3....
@@ -189,7 +185,7 @@ SITE_ID = 1
 
 SOCIALACCOUNT_LOGIN_ON_GET=True
 GEOCODER_USER_AGENT = 'cuidaME/1.0'
-
+LANGUAGE_CODE = 'es-es'
 
 #EMAIL CONFIG
 
@@ -198,6 +194,11 @@ CONFIG_FILE_PATH = 'config.json'
 # Leer el archivo JSON
 with open(CONFIG_FILE_PATH, 'r') as config_file:
     config_data = json.load(config_file)
+
+# STRIPE CONFIG
+STRIPE_PUBLIC_KEY_TEST = config_data.get('STRIPE_PUBLIC_KEY_TEST')
+STRIPE_SECRET_KEY_TEST = config_data.get('STRIPE_SECRET_KEY_TEST')
+REDIRECT_DOMAIN = 'http://127.0.0.1:8000/'
 
 # Configurar la variable de configuración EMAIL_HOST_PASSWORD
 EMAIL_PASSWORD = config_data.get('EMAIL_HOST_PASSWORD')

@@ -36,8 +36,8 @@ class Offer(models.Model):
     lat = models.FloatField(verbose_name='Latitud')
     lng = models.FloatField(verbose_name='Longitud')
     available = models.BooleanField(default=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = models.DateField(auto_now_add=True)
+    updated = models.DateField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     Cuidador.add_to_class('Total_average_rating', models.FloatField(default=0))
 

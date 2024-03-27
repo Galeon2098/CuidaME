@@ -75,13 +75,18 @@ class ClienteRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil']
+        fields = ['username','imagen_perfil','first_name', 'last_name', 'email', ]
 
     def clean_username(self):
         username = self.cleaned_data['username']
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError("Este nombre de usuario ya está en uso. Elige otro nombre de usuario.")
         return username
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Este correo electrónico ya está en uso.")
+        return email
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -99,10 +104,10 @@ class ClienteRegistrationForm(forms.ModelForm):
             return user, Cliente
 
 class CuidadorRegistrationForm(forms.ModelForm):
-    imagen_perfil = forms.ImageField(label='Imagen de perfil', required=False)
+    imagen_perfil = forms.ImageField(label='Foto de perfil', required=False)
     experiencia = forms.CharField(label="Experiencia", widget=forms.Textarea)
 
-
+    username = forms.CharField(label='Usuario', required=True)
     # Añade campos adicionales de Cuidador
     dni = forms.CharField(label='DNI', max_length=9, required=True)
     numero_seguridad_social = forms.CharField(label='Número seguridad social', max_length=12, required=True)
@@ -121,7 +126,7 @@ class CuidadorRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'imagen_perfil']
+        fields = ['username','imagen_perfil', 'first_name', 'last_name', 'email','dni', 'numero_seguridad_social', 'fecha_nacimiento', 'formacion', 'experiencia' ]
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -134,6 +139,12 @@ class CuidadorRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Las contraseñas no coinciden.')
         return cd['password2']
+    
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Este correo electrónico ya está en uso.")
+        return email
     
     def clean_dni(self):
         dni = self.cleaned_data['dni']

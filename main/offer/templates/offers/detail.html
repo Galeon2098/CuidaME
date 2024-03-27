@@ -115,7 +115,6 @@
                 </p>
                 <p class="card-text offer-card-text"><strong>Poblacion:</strong> {{ offer.poblacion }}</p>
                 <p class="card-text offer-card-text"><strong>Dirección:</strong> {{ offer.address }}</p>
-                <hr>
                 <p class="card-text offer-card-text" style="margin-bottom: 1px;"><strong>Descripción:</strong></p>
                 <div class="offer-card-description" style="margin-bottom:5%;">
                     <p class="card-text offer-card-text" style="margin-top: 0px; margin-left: 5px; margin-right: 5px;">{{ offer.description }}</p>
@@ -172,27 +171,29 @@
                 </div>
                   
                   
-
+                {% if  request.user.cliente %}
                 <div style="display: flex; align-items: center; justify-content: center;">
                     <button type="submit" onclick="mostrarFormulario()" class="btn btn-primary" >
                         Valorar
                     </button>
                 </div>
-                    
+                
                 <div style="display: flex; align-items: center; justify-content: center;">
                     <form method="post" action="{% url 'chat:send_chat_request' cuidador_id=offer.user.cuidador.id offer_id=offer.id %}">
                         <button type="submit" class="btn btn-primary">Enviar Solicitud de Chat</button>
                         {% csrf_token %}       
                     </form>
                 </div>
+                {% endif %}
+                <div style="display: flex; align-items: start; justify-content: center; margin:3%;">
+                    <a class="btn "href="{% url 'offer:list' %}"role="button">Atrás</a>
+                </div>
             </div>
         </div>
-        
+   
     </div>
 
-    <div style="display: flex; align-items: start; justify-content: center; margin:3%;">
-        <a class="btn "href="{% url 'offer:list' %}"role="button">Atrás</a>
-    </div>
+ 
 
 
 

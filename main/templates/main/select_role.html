@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
 
 {% block title %}Iniciar sesión{% endblock %}
 
@@ -29,7 +29,7 @@
                   <p style="display: flex; justify-content: center; font-family: Lato; font-weight: bold;">Tu nombre y tu contraseña no coinciden. Inténtelo de nuevo</p>
                 {% else %}
                 <h2 class="text-center mt-3"><b>Unete como:</b></h2>
-                    <a class="btn" href="{% url "google_registro_cliente" %}">&nbsp;Cliente&nbsp;</a>
+                    <a class="btn" href="{% url "google_registro_cliente" %}" style="margin-bottom: 5px;">&nbsp;Cliente&nbsp;</a>
                     <a class="btn" href="{% url "google_registro_cuidador" %}">&nbsp;Cuidador</a>
                   </h5>
                 {% endif %}

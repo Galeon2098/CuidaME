@@ -39,7 +39,7 @@
                     <td>{{ offer.title }}</td>
                     <td>{{ offer.get_offer_type_display }}</td>
                     <td>{{ offer.description }}</td>
-                    <td class="num">${{ offer.price_per_hour }}</td>
+                    <td class="num">{{ offer.price_per_hour }} €</td>
                     <td>{{ offer.get_client_display }}</td>
                     <td>{{ offer.created }}</td>
                     <td>
@@ -55,7 +55,7 @@
     {% if show_publish_button %}
         <a class="btn" href="/offer/publish/" role="button">Publicar oferta</a><br>
     {% else %}
-        <p>Numero de ofertas limite alcanzado. Borra alguna oferta para poder publicar</p>
+        <p>Número de ofertas límite alcanzado. Borra alguna oferta para poder publicar más o <a href="{% url 'pricing_plan' %}"> suscríbete</a> para tener más funcionalidades</p> 
     {% endif %}
     <br>
     

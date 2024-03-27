@@ -21,13 +21,20 @@
 
     <main class="container pt-4 pb-3" style="margin: 1%; max-width: 95%;">
         <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">
+           
 
             <img src="{% static 'Images/carer.png' %}" alt="Caregiver" class="img-fluid" style="width: 100%; max-width: 50%; height: auto; margin-bottom: 100px;">
             <div class="col-md-6" style="background-color: #62B6CB; color: #1B4965; padding: 5%; border-radius: 10%; font-size: 100%;">
                 <div class="container-fluid" style="display: flex; height: 30%;">
                 </div>
+                <div style="display: flex; align-items: start; justify-content: left; margin-bottom: 5%;">
+                    <a href="{% url 'offer:my_offers' %}" role="button">
+                        <img src="/static/Images/back.png" alt="Atrás" style="max-width: 80px;">
+                    </a>
+                </div>
 
                 <div class="container" style="display: flex; justify-content: center; position: relative;">
+                    
                     {% if user.profile.photo %}
                         <img src="{{ user.profile.photo.url }}" class="img-fluid" style="width: 35%; height: auto; border-radius: 100%; margin-top: -30%;">
                     {% else %}
@@ -82,7 +89,7 @@
                         <label for="{{ form.address.id }}" style="font-size: 120%;"><b>Dirección:</b></label>
                         <textarea name="{{ form.address.name }}" class="form-control" rows="1" style="font-size:100%;">{{ form.address.value }}</textarea>
                         {% if form.address.errors %}
-                        <p>{{ "La oferta debe tener una dirección" }}</p>
+                        <p>{{ "  <p>{{ "La oferta debe tener una dirección y debe ser valida" }}</p>" }}</p>
                     {% endif %}
                     </div>
                     <div class="form-group">
@@ -100,17 +107,10 @@
 
 
                     <div class="form-group d-flex justify-content-center">
-                        <button type="submit" class="btn btn-danger remove_button" style="width: 50%; min-width: 50%; margin-right: 10px; font-size: 110%; background-color: #EC5252; color: white; font-weight: bolder;">Eliminar Anuncio</button>
                         <button type="submit" class="btn btn-primary update_button" style="width: 50%; font-size: 110%; font-weight: bolder;">Actualizar</button>
                     </div>
                 </form>
-                {% if messages %}
-                    <div class="alert alert-danger mt-3">
-                    {% for message in messages %}
-                        <strong>Error:</strong> {{ message }}
-                    {% endfor %}
-                    </div>
-                {% endif %}
+                
             </div>
         </div>
     </main>
