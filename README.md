@@ -28,3 +28,4 @@ Enlace a BlueJay:  [![Bluejay Dashboard](https://img.shields.io/badge/Bluejay-Da
 Credenciales para acceder a BlueJay:<br>
 Usuario: user  <br>
 Contraseña: bluejay
+

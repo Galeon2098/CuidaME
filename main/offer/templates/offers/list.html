@@ -1,4 +1,5 @@
 {% extends "main/base.html" %}
+{% block title %}Lista de ofertas{% endblock %}
 {% block content %}
 {% load static %}
 
@@ -9,6 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CuidaME - Lista de Ofertas</title>
   <link rel="stylesheet" href="{% static "css/base.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
   <!-- Agrega esto en el encabezado de tu HTML -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -23,8 +25,16 @@
         <div class="light-dark-container">
             <form class="form-inline my-2 my-lg-0" method="POST" role="search" action="{% url 'offer:searchOffers' %}">
                 {% csrf_token %}
-                <button class="btn light-btn" type="submit">Buscar</button>
-                <input class="form-control me-2 mr-sm-2" type="search" placeholder="Buscar" name="search_query" value="{{ search_query }}" aria-label="Search" style="margin-right: 0px !important; width: 25%;">
+                <div class="input-group">
+                    <div class="input-group-append">
+                        <button class="btn light-btn" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                              </svg>
+                        </button>
+                    </div>
+                    <input class="form-control rounded-pill" type="search" placeholder="Buscar" name="search_query" value="{{ search_query }}" aria-label="Search">
+                </div>
             </form>
             <br>
             <form method="post" action="{% url 'offer:filterOffers' %}" class="row" style:"margin: 0px !important;">
@@ -73,8 +83,9 @@
                 </div>
             
                 <div class="form-group col-12 text-center">
-                    <button type="submit" class="btn light-btn w-25">Aplicar Filtro</button>
+                    <button type="submit" class="btn light-btn">Aplicar Filtro</button>
                 </div>
+                
             </form>
         </div>
 
@@ -114,7 +125,8 @@
                                 Otros
                             {% endif %}
                         </p>
-                        <p class="card-text offer-card-text text-center"><strong>Ciudad:</strong> {{ offer.city }}</p>
+                        <p class="card-text offer-card-text text-center"><strong>Dirección:</strong> {{ offer.address }}</p>
+                        <p class="card-text offer-card-text text-center"><strong>Población:</strong> {{ offer.poblacion }}</p>
                         <hr>
                         <div class="text-center">
                             <form action="{{ offer.get_absolute_url }}" method="get">

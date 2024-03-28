@@ -131,7 +131,7 @@ ENV/
 env.bak/
 venv.bak/
 my_env
-secret.json
+
 
 # Spyder project settings
 .spyderproject
@@ -165,3 +165,5 @@ cython_debug/
 #.idea/
 
 #Archivos temporales
+secret.json
+main/migrations/0002_alter_cuidador_chat_requests_received_and_more.py

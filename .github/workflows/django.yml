@@ -46,6 +46,7 @@ jobs:
       run: |
         python manage.py makemigrations
         python manage.py migrate
+        python datos_google.py
     - name: Run tests
       run: |
         coverage run --branch --source=. ./manage.py test  --keepdb
@@ -55,4 +56,6 @@ jobs:
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
         coverage-reports: coverage.xml
+      env:
+          CODACY_IGNORE_PATTERNS: "secret.json"
 

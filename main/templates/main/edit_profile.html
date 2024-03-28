@@ -1,4 +1,6 @@
+<!DOCTYPE html>
 {% extends "main/base.html" %}
+{% block title %}Editar perfil{% endblock %}
 {% block content %}
 {% load static %}
 
@@ -7,7 +9,7 @@
 <main class="container pt-5 pb-3">
     <div class="row d-flex align-items-center justify-content-between" style="margin-bottom: 10%; margin-top: 5%;">
         <div class="col-md-6">
-            <img src="{% static 'Images/anciano.png' %}" alt="anciano" class="img-fluid"
+            <img class="imagen1" src="{% static 'Images/anciano.png' %}" alt="anciano" class="img-fluid"
                 style="width: 100%; max-width: 660px; height: auto;">
         </div>
         <div class="col-md-6"
@@ -20,13 +22,14 @@
                         <img src="{% static 'Images/back.png' %}" style="width: 60%; height: auto; margin-top: -50%;">
                     </a>
                 </div>
-                <form method="post" style="font-size: 20px; font-weight: bolder; margin-top: 10%;">
+                <form method="post" style="font-size: 20px; font-weight: bolder; margin-top: 10%;" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <div class="d-flex justify-content-center">
-                      <button type="submit" class="btn btn-primary mt-3" style="width:60%; font-size: 20px;">Actualizar</button>
+                        <button type="submit" class="btn btn-primary mt-3"
+                            style="width:60%; font-size: 20px;">Actualizar</button>
                     </div>
-                  </form>
+                </form>
 
             </div>
         </div>
@@ -34,4 +37,3 @@
 </main>
 
 {% endblock %}
-

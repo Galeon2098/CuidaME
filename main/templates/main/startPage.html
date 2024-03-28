@@ -1,0 +1,48 @@
+{% extends 'main/base.html' %}
+{% block content %}
+{% load static %}
+<body class="home-page"> 
+    <style>
+        .custom-button:hover {
+            text-decoration: none;
+        }
+
+        .custom-button-text {
+            font-size: 20px; 
+            line-height: 1; 
+        }
+
+        .button-container {
+            position: relative;
+        }
+
+        .button-container img {
+            max-width: 100%;
+            height: auto;
+            /* display: block; */
+            margin: 0 auto; 
+        }
+        
+        .button-container a {
+            position: absolute;
+            top: 34%; 
+            left: 22.5%; 
+            padding: 2% 15%;
+            background-color: #1B4965; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 10px; 
+        }
+    </style>
+    
+    <div class="button-container">        
+        <img src="{% static 'Images/portadaPrincipal.jpg' %}" alt="Portada Principal" style="max-width: 100%; height: auto;">
+        <a class="btn btn-primary" href="/offer/list" role="button" >
+            Empieza Con Nosotros
+        </a>
+    </div>
+    
+    <div class="button-container col-md-1">
+    </div>
+</body>
+{% endblock %}

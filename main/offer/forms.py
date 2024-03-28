@@ -1,5 +1,6 @@
 from django import forms
 from .models import Offer
+from main.offer.choices import POB_CHOICES
 
 class OfferForm(forms.ModelForm):
     TYPE_CHOICES = (
@@ -23,12 +24,17 @@ class OfferForm(forms.ModelForm):
     client = forms.ChoiceField(label='Tipo de cliente', choices=CLIENT_CHOICES, initial='OT')
     description = forms.CharField(label='Descripción', required=True, widget=forms.Textarea(attrs={'rows': 10, 'cols': 70}))
     price_per_hour = forms.DecimalField(label='Precio por hora', max_digits=10, decimal_places=2)
-    city = forms.CharField(label='Ciudad')                            
+    address = forms.CharField(label='Dirección')
+    poblacion = forms.ChoiceField(label='Población', choices=POB_CHOICES, initial='Sevilla')
     
     class Meta:
         model = Offer
-        fields = ['title', 'offer_type', 'client', 'description', 'price_per_hour', 'city']
 
+        fields = ['title', 'offer_type', 'client', 'description', 'price_per_hour', 'address','poblacion']
+        widgets = {
+            'price_per_hour': forms.NumberInput(attrs={'step': '0.01'})
+        }
+  
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
