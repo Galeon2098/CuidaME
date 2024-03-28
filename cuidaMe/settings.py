@@ -129,7 +129,7 @@ DATABASES = {
         'NAME': 'cuidaME',
         'USER': 'cuidaMEUser',
         'PASSWORD': get_secret("POSTGRES_PASSWORD"),
-        'HOST': '35.187.82.200',
+        'HOST': 'localhost',
         'PORT': '5432',
     'OPTIONS': {
             'client_encoding': 'UTF8',
