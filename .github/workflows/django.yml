@@ -25,8 +25,7 @@ jobs:
         pyversion: ['3.10']
 
     runs-on: ubuntu-latest
-    ignorePatterns:
-      - "secret.json"
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{matrix.pyversion}}
@@ -57,4 +56,6 @@ jobs:
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
         coverage-reports: coverage.xml
+      env:
+          CODACY_IGNORE_PATTERNS: "secret.json"
 
