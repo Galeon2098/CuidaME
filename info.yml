@@ -1,0 +1,72 @@
+project:
+  name: 'ISPP-2024-L2-09'
+  owner: 'L2'
+  teamId: '09'
+  identities: {}
+  notifications:
+    email: 'mjgranados@gmail.com'
+  members:
+    member1:
+      name: 'Manuel'
+      surname: 'Granados' 
+      githubUsername: 'manueljgranados'
+    member2:
+      name: 'Alvaro'
+      surname: 'Castellano' 
+      githubUsername: 'alvarocastellano'
+    member3:
+      name: 'Antonio'
+      surname: 'Suarez' 
+      githubUsername: 'antsuagar'
+    member4:
+      name: 'Carlos'
+      surname: 'del Rio' 
+      githubUsername: 'carlosdelrioperez'
+    member5:
+      name: 'Cristina'
+      surname: 'Garcia' 
+      githubUsername: 'crigarher'
+    member6:
+      name: 'Daniel'
+      surname: 'Diañez' 
+      githubUsername: 'dandiasua02'
+    member7:
+      name: 'Diego'
+      surname: 'Marquez' 
+      githubUsername: 'diemargon4'
+    member8:
+      name: 'Fausto'
+      surname: 'Vazquez' 
+      githubUsername: 'fausto4VR'
+    member9:
+      name: 'Javier'
+      surname: 'de la Prada' 
+      githubUsername: 'Galeon2098'
+    member10:
+      name: 'Gabriel'
+      surname: 'Vidal'
+      githubUsername: 'GaVidalT'
+    member11:
+      name: 'Joaquin'
+      surname: 'Restoy' 
+      githubUsername: 'joaquin-restoy'
+    member12:
+      name: 'Juan Antonio'
+      surname: 'Jimenez' 
+      githubUsername: 'JuanAntonioJimenezdelVillar'
+    member13:
+      name: 'Juan Carlos'
+      surname: 'Leon'
+      githubUsername: 'jualeomad'
+    member14:
+      name: 'Lucia'
+      surname: 'Perez'
+      githubUsername: 'Lucperrom'
+    member15:
+      name: 'Mohanad'
+      surname: 'Abulatifa'
+      githubUsername: 'mohanadabulatifa'
+    member16:
+      name: 'Rafael'
+      surname: 'Garcia'
+      githubUsername: 'rafgargal'

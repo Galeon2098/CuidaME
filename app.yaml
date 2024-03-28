@@ -1,0 +1,16 @@
+runtime: python310
+
+entrypoint: gunicorn cuidaMe.wsgi:application --workers 1 --threads 8 -b :$PORT
+env_variables:
+    # Tus variables de entorno aquí
+  APPENGINE_URL: CuidaMe.ew.r.appspot.com
+  DJANGO_SETTINGS_MODULE: "cuidaMe.settings"
+  
+
+    
+handlers:
+  - url: /static
+    static_dir: static/
+
+  - url: /.*
+    script: auto
