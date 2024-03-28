@@ -12,7 +12,7 @@ from .models import Cliente, Cuidador, Interes
 
 # Create your views here.
 
-@require_http_methods(["GET"])
+#Pagina de inicio
 def start_page(request):
     return render(request, 'main/startPage.html')
 #Pagina de precios
