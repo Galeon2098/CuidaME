@@ -131,7 +131,7 @@ ENV/
 env.bak/
 venv.bak/
 my_env
-secret.json
+
 
 # Spyder project settings
 .spyderproject
