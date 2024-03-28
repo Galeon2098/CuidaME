@@ -3,7 +3,7 @@ runtime: python310
 entrypoint: gunicorn cuidaMe.wsgi:application --workers 1 --threads 8 -b :$PORT
 env_variables:
     # Tus variables de entorno aquí
-  APPENGINE_URL: CuidaMe.ew.r.appspot.com
+  APPENGINE_URL: cuidamesprint2.ew.r.appspot.com
   DJANGO_SETTINGS_MODULE: "cuidaMe.settings"
   DATABASE_URL: "postgres://cuidaMEUser:nYqs$D6TbFrhZz%WRa4dns@/cuidaME?host=/cloudsql/cuidamesprint2:europe-west1:cuidame-sprint2"
   
